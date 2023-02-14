@@ -1,7 +1,9 @@
+import DoiSearch, { DoiSearchResultsProps } from "../islands/doi_search.tsx";
+import PubsHistogram  from "../islands/pubs_histogram.tsx";
+import { SlimPublication } from "../@interfaces/slim_publication.ts";
+
 import { HandlerContext, Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-
-import DoiSearch, { DoiSearchResultsProps } from "../islands/doi_search.tsx";
 
 export const handler: Handlers<DoiSearchResultsProps> = {
   async GET(request: Request, context: HandlerContext) {
@@ -34,6 +36,7 @@ export default function ApnPubs({ data }: PageProps<DoiSearchResultsProps>) {
     <>
       <Head>
         <title>Pubs – Akvaplan-niva</title>
+
       </Head>
       <DoiSearch q={q} results={results} />
     </>

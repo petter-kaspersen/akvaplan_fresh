@@ -1,7 +1,7 @@
-import { SlimPublication } from "../@interfaces/slim_publication.ts";
-
-import { useSignal } from "@preact/signals";
+import PubsHistogram from "../islands/pubs_histogram.tsx";
 import { SlimCard } from "../components/slim_card.tsx";
+import { SlimPublication } from "../@interfaces/slim_publication.ts";
+import { useSignal } from "@preact/signals";
 
 export interface DoiSearchResultsProps {
   results: SlimPublication[];
@@ -9,8 +9,8 @@ export interface DoiSearchResultsProps {
   start?: number;
 }
 
+// @todo Implement proper search, currently just naive string filtering
 const lowjson = (x: unknown) => JSON.stringify(x).toLocaleLowerCase();
-
 const naiveSearchFilter = (value) => (slim, i) =>
   lowjson(slim).includes(value.toLocaleLowerCase());
 
@@ -45,6 +45,7 @@ export default function DoiSearchResults(
           <button type="submit">Search</button>
         </form>
       </label>
+      <PubsHistogram period="2000/"/>
       {filtered.value.slice(0, 100).map((slim, n) => (
         <SlimCard slim={slim} n={n} />
       ))}
