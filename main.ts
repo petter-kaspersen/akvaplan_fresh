@@ -11,4 +11,4 @@ import manifest from "./fresh.gen.ts";
 // import twindConfig from "./twind.config.ts";
 // const twind = twindPlugin(twindConfig);
 
-await start(manifest, { plugins: [] });
+await start(manifest, { plugins: [],  port: 7777 });
