@@ -13,6 +13,12 @@ export default function Home() {
             <a href="/pubs">Publikasjoner</a>
           </li>
         </ul>
+
+        <ul>
+          <li>
+            <a href="/components/card">Card</a>
+          </li>
+        </ul>
       </nav>
     </>
   );
