@@ -34,7 +34,7 @@ export function Page({ class: extraClass = "", title, ...props }: PageProps) {
 
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&family=Roboto+Flex"
       />
     </Head>
   );

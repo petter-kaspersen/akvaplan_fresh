@@ -24,6 +24,7 @@ body {
   width: 100vw;
   height: 100vh;
   background: var(--primary-bg);
+  font-family: "Roboto Flex", sans-serif;
 }
 /* * {
   box-sizing: border-box;
