@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap");
+
+:root .dark-theme {
+  --primary-bg: #0f364a;
+  --primary-link: #57c3c6;
+  --primary-link-hover: #ffffff;
+  --primary-link-visited: #b3b3b3;
+  --section-bg: rgba(255, 255, 255, 0.1);
+}
+
+:root .light-theme {
+  --primary-bg: #ffffff;
+  --primary-link: #36647d;
+  --primary-hover: #3a9c9e;
+  --primary-link-visited: #757575;
+  --section-bg: rgba(26, 92, 122, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+p,
+span {
+  font-family: "Heebo";
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background: var(--primary-bg);
+}
