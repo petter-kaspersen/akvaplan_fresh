@@ -6,19 +6,31 @@ interface Props {
 
 const styles = (props: PropsWithChildren & Props) => {
   return (
-    <style jsx>{`
-      .card {
-        width: 410px;
-        height: 310px;
-        background: var(--section-bg);
-      }
+    <style jsx>
+      {`
 
+      .card {
+        background: var(--section-bg);
+        border-radius: var(--radius-2);
+        padding: var(--size-fluid-3);
+        box-shadow: var(--shadow-2);
+      
+        &:hover {
+          box-shadow: var(--shadow-3);
+        }
+      
+        @media (--motionOK) {
+          animation: var(--animation-fade-in);
+        }
+      }
       .card-background {
         background-image: url(${props.backgroundImage});
         background-repeat: no-repeat;
         background-size: cover;
       }
-    `}</style>
+
+    `}
+    </style>
   );
 };
 
