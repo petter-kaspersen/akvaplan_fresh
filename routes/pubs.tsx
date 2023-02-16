@@ -1,6 +1,7 @@
 import DoiSearch, { DoiSearchResultsProps } from "../islands/doi_search.tsx";
-import PubsHistogram  from "../islands/pubs_histogram.tsx";
-import { SlimPublication } from "../@interfaces/slim_publication.ts";
+import PubsHistogram from "../islands/pubs_histogram.tsx";
+import { SlimPublication } from "@interfaces/slim_publication.ts";
+import { Page } from "../components/page.tsx";
 
 import { HandlerContext, Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
@@ -33,12 +34,8 @@ export const handler: Handlers<DoiSearchResultsProps> = {
 export default function ApnPubs({ data }: PageProps<DoiSearchResultsProps>) {
   const { results, q } = data;
   return (
-    <>
-      <Head>
-        <title>Pubs – Akvaplan-niva</title>
-
-      </Head>
+    <Page title="Pubs" color-scheme="dark">
       <DoiSearch q={q} results={results} />
-    </>
+    </Page>
   );
 }
