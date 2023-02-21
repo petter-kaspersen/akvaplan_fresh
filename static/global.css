@@ -1,6 +1,8 @@
+
+
 :root .dark-theme {
-  --primary-bg: #0f364a;
-  --primary-link: #57c3c6;
+  --primary-bg: hsl(200, 66%, 17%);
+  --primary-link: hsl(182, 49%, 56%);
   --primary-link-hover: #ffffff;
   --primary-link-visited: #b3b3b3;
   --section-bg: rgba(255, 255, 255, 0.1);

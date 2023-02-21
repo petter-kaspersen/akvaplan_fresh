@@ -34,7 +34,7 @@ export const handler: Handlers<DoiSearchResultsProps> = {
 export default function ApnPubs({ data }: PageProps<DoiSearchResultsProps>) {
   const { results, q } = data;
   return (
-    <Page title="Pubs" color-scheme="dark">
+    <Page title="Pubs">
       <DoiSearch q={q} results={results} />
     </Page>
   );

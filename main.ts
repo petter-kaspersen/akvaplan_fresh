@@ -4,11 +4,12 @@
 /// <reference lib="dom.asynciterable" />
 /// <reference lib="deno.ns" />
 
-import { start } from "$fresh/server.ts";
+import { RenderFunction, start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 
-// import twindPlugin from "$fresh/plugins/twind.ts";
-// import twindConfig from "./twind.config.ts";
-// const twind = twindPlugin(twindConfig);
-
-await start(manifest, { plugins: [],  port: 7777 });
+// https://github.com/denoland/fresh/issues/920
+const render: RenderFunction = (ctx, defaultRender) => {
+  ctx.lang = "nb";
+  defaultRender();
+};
+await start(manifest, { render, plugins: [], port: 7777 });

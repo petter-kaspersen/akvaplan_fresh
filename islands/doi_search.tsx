@@ -1,6 +1,6 @@
 import PubsHistogram from "../islands/pubs_histogram.tsx";
 import { SlimCard } from "../components/slim_card.tsx";
-import { SlimPublication } from "@interfaces/slim_publication.ts";
+import { type SlimPublication } from "@interfaces/slim_publication.ts";
 import { useSignal } from "@preact/signals";
 
 export interface DoiSearchResultsProps {
@@ -11,7 +11,7 @@ export interface DoiSearchResultsProps {
 
 // @todo Implement proper search, currently just naive string filtering
 const lowjson = (x: unknown) => JSON.stringify(x).toLocaleLowerCase();
-const naiveSearchFilter = (value) => (slim, i) =>
+const naiveSearchFilter = (value: string) => (slim, i) =>
   lowjson(slim).includes(value.toLocaleLowerCase());
 
 export default function DoiSearchResults(
@@ -33,7 +33,7 @@ export default function DoiSearchResults(
   }
 
   return (
-    <main>
+    <main style={{ background: "var(--surface1)" }}>
       <label>
         Søk i publikasjoner
         <form autocomplete="off">

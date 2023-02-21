@@ -10,8 +10,9 @@ export default function Home() {
         <ul>
           <li>
             <a href="/pubs">Publikasjoner</a>
-            <a href="/components/card">Card</a>
-            <a href="/theme">Theme</a>
+          </li>
+          <li>
+            <a href="/pref">Innstillinger</a>
           </li>
         </ul>
       </nav>

@@ -8,6 +8,7 @@ export interface SlimPublication {
   authors?: Author[];
   license?: string;
   cites?: number;
+  pdf?: string;
 }
 
 export interface Author {

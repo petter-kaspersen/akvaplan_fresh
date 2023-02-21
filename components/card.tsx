@@ -36,8 +36,14 @@ const styles = (props: PropsWithChildren & Props) => {
 
 export function Card(props: PropsWithChildren & Props) {
   return (
-    <div class={`card ${props.backgroundImage ? "card-background" : ""}`}>
-      {styles(props)}
+    <div
+      class={`card ${props.backgroundImage ? "card-background" : ""}`}
+      style={{
+        background: "var(--surface1)",
+        padding: "var(--size-fluid-1)",
+        borderRadius: "var(--radius-2)",
+      }}
+    >
       {props.children}
     </div>
   );
