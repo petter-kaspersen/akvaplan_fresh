@@ -1,10 +1,13 @@
+import { installGlobals } from "https://deno.land/x/virtualstorage@0.1.0/mod.ts";
+installGlobals();
+
 interface ThemeProps {
   theme?: string;
 }
 
 const defaultTheme = "blue";
 
-const storage = sessionStorage;
+const storage = localStorage;
 
 export const getTheme = (
   el = globalThis?.document?.documentElement,
