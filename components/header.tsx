@@ -1,21 +1,22 @@
-//https://github.com/denoland/fresh/issues/371#issuecomment-1172915981
-
-//
-export function Header() {
+import AkvaplanLogo from "./akvaplan_logo.tsx";
+import op from "open-props";
+export function Header({ href = "/", HeaderLogo = AkvaplanLogo }) {
   return (
     <header
       style={{
-        minHeight: "64px",
-        background: "black",
         margin: 0,
-        padding: "4px",
-        color: "white",
+        padding: op.borderSize3,
         display: "grid",
         placeItems: "center",
+        background: "var(--surface1)",
+        color: "var(--text1)",
       }}
     >
-      <a href="/">
-        <img src="/akvaplan_logo.svg" width="180" alt="logo" />
+      <a
+        href={href}
+        style="min-width: 200px; height: auto;"
+      >
+        <HeaderLogo />
       </a>
     </header>
   );

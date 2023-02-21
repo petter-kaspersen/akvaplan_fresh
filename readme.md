@@ -13,6 +13,10 @@ Start development server:
 deno task dev
 ```
 
+### Theming/styling
+
+[OpenProps](https://open-props.style/) are used for consistent styling.
+
 ### Data services
 
 The app relies on the following data services:

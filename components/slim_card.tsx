@@ -2,7 +2,18 @@ import { Card } from "./card.tsx";
 import { SlimPublication } from "@interfaces/slim_publication.ts";
 
 export function SlimCard(props: { slim: SlimPublication; n: number }) {
-  const { title, doi, published, ...rest } = props.slim;
+  const {
+    title,
+    doi,
+    container,
+    printed,
+    type,
+    published,
+    license,
+    pdf,
+    cites,
+    authors,
+  } = props.slim;
   const n = props.n;
   return (
     <Card>
@@ -15,7 +26,6 @@ export function SlimCard(props: { slim: SlimPublication; n: number }) {
         ({published})
       </time>
       <code>
-        {JSON.stringify(rest)}
       </code>
     </Card>
   );
