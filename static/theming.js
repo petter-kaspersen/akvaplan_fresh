@@ -2,7 +2,7 @@
 
 const themes = ["dark", "dim", "blue", "light"];
 const defaultTheme = "blue";
-const storage = sessionStorage;
+const storage = localStorage;
 
 const getTheme = (el) => {
   el = el ?? globalThis?.document?.documentElement;
