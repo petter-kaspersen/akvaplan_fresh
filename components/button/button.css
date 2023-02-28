@@ -23,39 +23,33 @@ button {
   border: var(--border-size-2) solid var(--surface3);
   border-radius: var(--radius-5);
   text-align: center;
-  justify-content:center;
+  justify-content: center;
+  align-items: center;
   /* transition: border-color .5s var(--ease-2) 1s; */
 }
 
 button:hover,button:focus {
-  border: var(--border-size-2) solid var(--accent);
-}
-
-button[aria-pressed="true"],button:focus { 
   border: var(--border-size-2) solid var(--surface4);
 }
 
-:where(button,input:is([type=button],[type=submit],[type=reset]))[disabled]{
-  --_bg:none;
-  --_text:var(--gray-6);
-  box-shadow:var(--shadow-1);
-  cursor:not-allowed
+button[aria-pressed="true"],button:focus {
+  border: var(--border-size-2) solid var(--accent);
 }
 
+:where(button,input:is([type=button],[type=submit],[type=reset]))[disabled]{
+  cursor:not-allowed
+}
 :where(button,input:is([type=button],[type=submit],[type=reset])):where(:not(:active):hover){
-  --_highlight-size:var(--size-2);
   transition-delay:0s;
   transition-duration:.25s;
-  color:red;
 }
-:where(button,input:is([type=button],[type=submit],[type=reset]))>:where(svg){
-  block-size:var(--_icon-size);
-  filter:drop-shadow(var(--_ink-shadow));
-  flex-shrink:0;
-  inline-size:var(--_icon-size)
+
+:where(button,input:is([type=button],[type=submit],[type=reset]))>:where(svg) {
+  /*block-size: var(--_icon-size);
+  inline-size:var(--_icon-size)*/
 }
-:where(button,input:is([type=button],[type=submit],[type=reset]))>:where(svg>*){
-  stroke:var(--_icon-color);
-  stroke-width:var(--border-size-2)
+:where(button,input:is([type=button],[type=submit],[type=reset]))>:where(svg>*) {
+  /*stroke:var(--_icon-color);
+  stroke-width:var(--border-size-2)*/
 }
 

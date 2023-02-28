@@ -13,9 +13,8 @@ export const getColorScheme = (el = undefined) => {
 };
 export const theme = signal(getColorScheme());
 
-const store = (name, storage = undefined) => {
+const storeColorScheme = (name, storage = getStorage()) => {
   if (themes.has(name)) {
-    storage = storage ?? getStorage();
     if (storage?.getItem && storage?.getItem("theme") !== name) {
       storage.setItem("theme", name);
     }
@@ -32,7 +31,7 @@ export const setColorScheme = (
 
     // Persist to localStorage if set on root html
     if (undefined === el || el === getRoot()) {
-      store(name);
+      storeColorScheme(name);
     }
     // Set attribute
     el = el ?? getRoot();
@@ -42,12 +41,15 @@ export const setColorScheme = (
   }
 };
 
-export const remove = (
-  { selector = "[color-scheme]", storage = undefined } = {},
-) => {
-  for (const el of document.querySelectorAll(selector)) {
+export const removeColorScheme = (el = getRoot()) => {
+  // const selector = "[color-scheme]";
+  // for (const el of document.querySelectorAll(selector)) {
+  //   el.removeAttribute("color-scheme");
+  // }
+  if (el?.hasAttribute("color-scheme")) {
     el.removeAttribute("color-scheme");
   }
+  const storage = getStorage();
   if (storage?.removeItem) {
     storage.removeItem("theme");
   }
@@ -61,7 +63,7 @@ export const addColorSchemeChangeHandlers = () => {
   );
   matchMedia("(prefers-color-scheme: light)").addEventListener(
     "change",
-    ({ matches }) => matches && set("light", el),
+    ({ matches }) => matches && setColorScheme("light", el),
   );
 };
 
@@ -69,7 +71,7 @@ export const buildInitTheming = () =>
   `(() => {
     const themes = new Set(${JSON.stringify([...themes])});
     const defaultTheme = "${defaultTheme}";
-    const store = ${String(store)};
+    const storeColorScheme = ${String(storeColorScheme)};
     const getRoot = ${String(getRoot)};
     const getStorage = ${String(getStorage)};
     const setColorScheme = ${String(setColorScheme)};

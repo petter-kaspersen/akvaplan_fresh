@@ -30,15 +30,17 @@ export const hasNordicOrSami = (languages: readonly string[] | Set<string>) => {
     );
 };
 
-export const fallbackLang = () =>
-  globalThis?.navigator
-    ? hasNordicOrSami(navigator.languages) ? "no" : "en"
-    : defaultLang;
+export const fallbackLang = (languages = []) => {
+  const set = new Set(languages);
+  if (set.size === 0) {
+    return defaultLang;
+  }
+  return hasNordicOrSami(languages) ? "no" : "en";
+};
 
 export const languages = new Set(tr.keys());
 
-export const getLang = (el: HTMLElement | undefined = undefined): string => {
-  el = el ?? getRoot();
+export const getLang = (el: HTMLElement = getRoot()): string => {
   if (el?.hasAttribute("lang")) {
     return el.getAttribute("lang") ?? fallbackLang();
   }
@@ -58,6 +60,12 @@ const storeLang = (
   }
 };
 
+export const removeLang = (el: HTMLElement = getRoot()) => {
+  if (el?.hasAttribute("lang")) {
+    el.removeAttribute("lang");
+  }
+  getStorage()?.removeItem("lang");
+};
 // Dictionary is computed from lang signal
 const dict = computed(() => tr.get(lang.value));
 
@@ -67,7 +75,9 @@ export const setLang = (
 ) => {
   if (languages.has(name)) {
     // update signal
-    lang.value = name;
+    if (lang?.value) {
+      lang.value = name;
+    }
 
     // persist (if el===root)
     if (undefined === el || el === getRoot()) {
@@ -81,9 +91,7 @@ export const setLang = (
   }
 };
 
-export const t = (
-  key: string,
-) => signal<string>(dict?.value?.get(key) ?? key);
+export const t = (key: string) => signal<string>(dict?.value?.get(key) ?? key);
 
 export const buildInitLang = () =>
   `(() => {
@@ -94,7 +102,8 @@ export const buildInitLang = () =>
     const getStorage = ${String(getStorage)};
     const setLang = ${String(setLang)};
     const storeLang = ${String(storeLang)};
-    const lang = getStorage().getItem("lang") ?? fallbackLang();
-    setLang(lang);
+    const lang = getStorage().getItem("lang");
+    const fallback = fallbackLang(navigator.languages);
+    setLang(lang??fallback);
   })();
 `;
