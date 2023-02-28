@@ -1,8 +1,9 @@
 import { signal } from "@preact/signals";
 export const defaultTheme = "blue";
 export const themes = new Set(["dark", "dim", "blue", "light"]);
-
 const getRoot = () => globalThis?.document?.documentElement;
+const getStorage = () => globalThis?.localStorage;
+
 export const getColorScheme = (el = undefined) => {
   el = el ?? getRoot();
   if (el?.getAttribute) {
@@ -14,7 +15,7 @@ export const theme = signal(getColorScheme());
 
 const store = (name, storage = undefined) => {
   if (themes.has(name)) {
-    storage = storage ?? localStorage;
+    storage = storage ?? getStorage();
     if (storage?.getItem && storage?.getItem("theme") !== name) {
       storage.setItem("theme", name);
     }
@@ -70,11 +71,12 @@ export const buildInitTheming = () =>
     const defaultTheme = "${defaultTheme}";
     const store = ${String(store)};
     const getRoot = ${String(getRoot)};
+    const getStorage = ${String(getStorage)};
     const setColorScheme = ${String(setColorScheme)};
     const addColorSchemeChangeHandlers = ${
     String(addColorSchemeChangeHandlers)
   };
-    const theme = localStorage.getItem("theme") ?? defaultTheme;
+    const theme = getStorage().getItem("theme") ?? defaultTheme;
     if (theme !== "${defaultTheme}") {
       setColorScheme(theme);
     }

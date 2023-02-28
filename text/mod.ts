@@ -8,8 +8,27 @@ const no = new Map<string, string>(Object.entries(_no));
 const tr = new Map([["en", en], ["no", no]]);
 
 const getRoot = () => globalThis?.document?.documentElement;
+const getStorage = () => globalThis?.localStorage;
 
 export const defaultLang = "no";
+
+export const hasNordicOrSami = (languages: readonly string[] | Set<string>) => {
+  const scandinavian = new Set([
+    "no",
+    "nn",
+    "nb",
+    "se",
+    "smi",
+    "da",
+    "is",
+    "fo",
+    "sv",
+  ]);
+  return new Set([...languages].map((l) => scandinavian.has(l.substring(0, 3))))
+    .has(
+      true,
+    );
+};
 
 export const fallbackLang = () =>
   globalThis?.navigator
@@ -18,16 +37,12 @@ export const fallbackLang = () =>
 
 export const languages = new Set(tr.keys());
 
-export const getLang = ({ el, storage } = {}): string => {
-  el = el ?? globalThis?.document?.documentElement;
-  storage = storage ?? localStorage;
-  if (globalThis?.document?.documentElement.hasAttribute("lang")) {
-    return document.documentElement.getAttribute("lang") ?? defaultLang;
+export const getLang = (el: HTMLElement | undefined = undefined): string => {
+  el = el ?? getRoot();
+  if (el?.hasAttribute("lang")) {
+    return el.getAttribute("lang") ?? fallbackLang();
   }
-  if (globalThis.localStorage) {
-    return localStorage.getItem("lang") ?? defaultLang;
-  }
-  return defaultLang;
+  return fallbackLang();
 };
 export const lang = signal<string>(getLang());
 
@@ -36,7 +51,7 @@ const storeLang = (
   storage: Storage | undefined = undefined,
 ) => {
   if (languages.has(name)) {
-    storage = storage ?? localStorage;
+    storage = storage ?? getStorage();
     if (storage.getItem("lang") !== name) {
       storage.setItem("lang", name);
     }
@@ -63,7 +78,6 @@ export const setLang = (
     if (el.getAttribute("lang") !== name) {
       el.setAttribute("lang", name);
     }
-    console.log(el);
   }
 };
 
@@ -71,33 +85,16 @@ export const t = (
   key: string,
 ) => signal<string>(dict?.value?.get(key) ?? key);
 
-export const hasNordicOrSami = (languages: readonly string[] | Set<string>) => {
-  const scandinavian = new Set([
-    "no",
-    "nn",
-    "nb",
-    "se",
-    "smi",
-    "da",
-    "is",
-    "fo",
-    "sv",
-  ]);
-  return new Set([...languages].map((l) => scandinavian.has(l.substring(0, 3))))
-    .has(
-      true,
-    );
-};
-
 export const buildInitLang = () =>
   `(() => {
     const languages = new Set(${JSON.stringify([...languages])});
     const hasNordicOrSami = ${String(hasNordicOrSami)};
     const fallbackLang = ${String(fallbackLang)};
     const getRoot = ${String(getRoot)};
+    const getStorage = ${String(getStorage)};
     const setLang = ${String(setLang)};
     const storeLang = ${String(storeLang)};
-    const lang = localStorage.getItem("lang") ?? fallbackLang();
+    const lang = getStorage().getItem("lang") ?? fallbackLang();
     setLang(lang);
   })();
 `;
