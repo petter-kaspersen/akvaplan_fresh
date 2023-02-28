@@ -1,9 +1,37 @@
 # akvaplan_fresh
 
-https://akvaplan.deno.dev/
+- Production: (not yet)
+- Preview: https://akvaplan.deno.dev/
 
-Akvaplan-niva web app created with [Deno](https://deno.land) and
-[Fresh](https://fresh.deno.dev/).
+### Tech stack
+
+- [Deno](https://deno.land) / [Deploy](https://deno.com/deploy)
+- [Fresh](https://fresh.deno.dev/)
+- [Preact](https://preactjs.com/)/Signals
+
+## 
+
+Design language
+
+Foundations
+
+- Styling
+- Color
+- Icons
+- Layout
+
+Components Button Badge & Pill
+
+Alert Patterns Evergreen features a UI design language for enterprise-grade web
+applications.
+
+Go to Patterns
+
+Empty States
+
+Table Layout
+
+Error Messages
 
 ### Development
 

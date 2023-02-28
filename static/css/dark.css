@@ -44,6 +44,9 @@
   --surface-shadow: var(--surface-shadow-dark);
   --shadow-strength: var(--shadow-strength-dark);
   --link: hsl(182, 49%, 56%);
+  --logo-wave-1: #005392;
+  --logo-wave-0: #00A2B2;
+  --error: red;
 }
 
 [color-scheme="dim"] {
@@ -59,6 +62,9 @@
   --surface-shadow: var(--surface-shadow-dim);
   --shadow-strength: var(--shadow-strength-dim);
   --link: hsl(182, 49%, 56%);
+  --logo-wave-1: #005392;
+  --logo-wave-0: #00A2B2;
+  --error: red;
 }
 
 

@@ -1,11 +1,9 @@
 [color-scheme="light"] {
   color-scheme: light;
-
-  --brand: hsl(var(--brand-hue) var(--brand-saturation) var(--brand-lightness));
   --text1: hsl(var(--brand-hue) var(--brand-saturation) 10%);
   --text2: hsl(var(--brand-hue) 30% 30%);
   --surface1: hsl(var(--brand-hue) 20% 99%);
-  --surface2: hsl(var(--brand-hue) 25% 97%);
+  --surface2: hsl(var(--brand-hue) 25% 94%);
   --surface3: hsl(var(--brand-hue) 20% 92%);
   --surface4: hsl(var(--brand-hue) 20% 90%);
   --surface-shadow: var(--brand-hue) 10% 20%;
@@ -14,13 +12,15 @@
 
   --logo-blue: #005392;
   --logo-green: #00A2B2;
+  --logo-wave-1: #005392;
+  --logo-wave-0: #00A2B2;
+  --accent: #3a9c9e;
+  --error: red;
 
 }
 
 [color-scheme="blue"] {
   color-scheme: light;
-
-  --brand: hsl(var(--brand-hue) var(--brand-saturation) var(--brand-lightness));
   --text1: hsl(var(--brand-hue) 15% 75%);
   --text2: hsl(var(--brand-hue) 10% 61%);
   --surface1: hsl(var(--brand-hue) var(--brand-saturation) var(--brand-lightness));
@@ -30,4 +30,7 @@
   --surface-shadow: var(--brand-hue) 30% 13%;
   --shadow-strength: .2;
   --link: hsl(182, 49%, 56%);
+  --logo-wave-1: #005392;
+  --logo-wave-0: #00A2B2;
+  --error: red;
 }
