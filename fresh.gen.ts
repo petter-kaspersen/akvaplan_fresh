@@ -6,17 +6,11 @@ import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_404.tsx";
 import * as $1 from "./routes/_500.tsx";
 import * as $2 from "./routes/_middleware.ts";
-import * as $3 from "./routes/article/[slug].tsx";
-import * as $4 from "./routes/components/card.tsx";
-import * as $5 from "./routes/components/index.tsx";
-import * as $6 from "./routes/doi.tsx";
-import * as $7 from "./routes/en/privacy.tsx";
-import * as $8 from "./routes/index.tsx";
-import * as $9 from "./routes/mynewsdesk-articles/[slug].tsx";
-import * as $10 from "./routes/news.tsx";
-import * as $11 from "./routes/no/personvern.tsx";
-import * as $12 from "./routes/pref.tsx";
-import * as $13 from "./routes/pubs.tsx";
+import * as $3 from "./routes/components/card.tsx";
+import * as $4 from "./routes/doi.tsx";
+import * as $5 from "./routes/index.tsx";
+import * as $6 from "./routes/pref.tsx";
+import * as $7 from "./routes/pubs.tsx";
 import * as $$0 from "./islands/doi_search.tsx";
 import * as $$1 from "./islands/home_sections.tsx";
 import * as $$2 from "./islands/lang_switcher.tsx";
@@ -29,17 +23,11 @@ const manifest = {
     "./routes/_404.tsx": $0,
     "./routes/_500.tsx": $1,
     "./routes/_middleware.ts": $2,
-    "./routes/article/[slug].tsx": $3,
-    "./routes/components/card.tsx": $4,
-    "./routes/components/index.tsx": $5,
-    "./routes/doi.tsx": $6,
-    "./routes/en/privacy.tsx": $7,
-    "./routes/index.tsx": $8,
-    "./routes/mynewsdesk-articles/[slug].tsx": $9,
-    "./routes/news.tsx": $10,
-    "./routes/no/personvern.tsx": $11,
-    "./routes/pref.tsx": $12,
-    "./routes/pubs.tsx": $13,
+    "./routes/components/card.tsx": $3,
+    "./routes/doi.tsx": $4,
+    "./routes/index.tsx": $5,
+    "./routes/pref.tsx": $6,
+    "./routes/pubs.tsx": $7,
   },
   islands: {
     "./islands/doi_search.tsx": $$0,
