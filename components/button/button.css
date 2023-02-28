@@ -23,6 +23,7 @@ button {
   border: var(--border-size-2) solid var(--surface3);
   border-radius: var(--radius-5);
   text-align: center;
+  justify-content:center;
   /* transition: border-color .5s var(--ease-2) 1s; */
 }
 
@@ -32,44 +33,6 @@ button:hover,button:focus {
 
 button[aria-pressed="true"],button:focus { 
   border: var(--border-size-2) solid var(--surface4);
-}
-
-:where(button,input:is([type=button],[type=submit],[type=reset])),:where(input[type=file])::-webkit-file-upload-button,:where(input[type=file])::file-selector-button{
-  --_accent:initial;
-  --_text:initial;
-  --_size:initial;
-  --_bg-light:#fff;
-  --_bg-dark:var(--surface-3);
-  --_bg:var(--_bg-light);
-  --_border:var(--surface-3);
-  --_highlight-size:0;
-  --_highlight-light:hsl(var(--gray-5-hsl)/25%);
-  --_highlight-dark:hsl(var(--gray-12-hsl)/25%);
-  --_highlight:var(--_highlight-light);
-  --_ink-shadow-light:0 1px 0 var(--gray-3);
-  --_ink-shadow-dark:0 1px 0 var(--surface-1);
-  --_ink-shadow:var(--_ink-shadow-light);
-  --_icon-size:2ch;
-  --_icon-color:var(--_accent,var(--link));
-  -webkit-tap-highlight-color:transparent;
-  -webkit-touch-callout:none;
-  align-items:center;
-  background:var(--_bg);
-  border:var(--border-size-2) solid var(--_border);
-  border-radius:var(--radius-2);
-  box-shadow:var(--shadow-2),0 1px var(--surface-3),0 0 0 var(--_highlight-size) var(--_highlight);
-  color:var(--_text);
-  display:inline-flex;
-  font-size:var(--_size);
-  font-weight:var(--font-weight-7);
-  gap:var(--size-2);
-  justify-content:center;
-  padding-block:.75ch;
-  padding-inline:1.75ch;
-  text-align:center;
-  text-shadow:var(--_ink-shadow);
-  
-  user
 }
 
 :where(button,input:is([type=button],[type=submit],[type=reset]))[disabled]{
