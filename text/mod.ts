@@ -71,7 +71,7 @@ export const t = (
   key: string,
 ) => signal<string>(dict?.value?.get(key) ?? key);
 
-const hasNordicOrSami = (languages: readonly string[] | Set<string>) => {
+export const hasNordicOrSami = (languages: readonly string[] | Set<string>) => {
   const scandinavian = new Set([
     "no",
     "nn",
