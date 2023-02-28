@@ -1,5 +1,5 @@
 import { Card } from "./card.tsx";
-import { SlimPublication } from "@interfaces/slim_publication.ts";
+import { SlimPublication } from "../@interfaces/slim_publication.ts";
 
 export function SlimCard(props: { slim: SlimPublication; n: number }) {
   const {

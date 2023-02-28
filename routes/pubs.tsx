@@ -1,6 +1,6 @@
 import DoiSearch, { DoiSearchResultsProps } from "../islands/doi_search.tsx";
 import PubsHistogram from "../islands/pubs_histogram.tsx";
-import { SlimPublication } from "@interfaces/slim_publication.ts";
+import { SlimPublication } from "../@interfaces/slim_publication.ts";
 import { Page } from "../components/page.tsx";
 
 import { HandlerContext, Handlers, PageProps } from "$fresh/server.ts";
