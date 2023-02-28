@@ -5,31 +5,37 @@
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_404.tsx";
 import * as $1 from "./routes/_500.tsx";
-import * as $2 from "./routes/components/card.tsx";
-import * as $3 from "./routes/doi.tsx";
-import * as $4 from "./routes/index.tsx";
-import * as $5 from "./routes/pref.tsx";
-import * as $6 from "./routes/pubs.tsx";
+import * as $2 from "./routes/_middleware.ts";
+import * as $3 from "./routes/components/card.tsx";
+import * as $4 from "./routes/doi.tsx";
+import * as $5 from "./routes/index.tsx";
+import * as $6 from "./routes/pref.tsx";
+import * as $7 from "./routes/pubs.tsx";
 import * as $$0 from "./islands/doi_search.tsx";
-import * as $$1 from "./islands/lang_switcher.tsx";
-import * as $$2 from "./islands/pubs_histogram.tsx";
-import * as $$3 from "./islands/theme_switcher.tsx";
+import * as $$1 from "./islands/home_sections.tsx";
+import * as $$2 from "./islands/lang_switcher.tsx";
+import * as $$3 from "./islands/pubs_histogram.tsx";
+import * as $$4 from "./islands/text.tsx";
+import * as $$5 from "./islands/theme_switcher.tsx";
 
 const manifest = {
   routes: {
     "./routes/_404.tsx": $0,
     "./routes/_500.tsx": $1,
-    "./routes/components/card.tsx": $2,
-    "./routes/doi.tsx": $3,
-    "./routes/index.tsx": $4,
-    "./routes/pref.tsx": $5,
-    "./routes/pubs.tsx": $6,
+    "./routes/_middleware.ts": $2,
+    "./routes/components/card.tsx": $3,
+    "./routes/doi.tsx": $4,
+    "./routes/index.tsx": $5,
+    "./routes/pref.tsx": $6,
+    "./routes/pubs.tsx": $7,
   },
   islands: {
     "./islands/doi_search.tsx": $$0,
-    "./islands/lang_switcher.tsx": $$1,
-    "./islands/pubs_histogram.tsx": $$2,
-    "./islands/theme_switcher.tsx": $$3,
+    "./islands/home_sections.tsx": $$1,
+    "./islands/lang_switcher.tsx": $$2,
+    "./islands/pubs_histogram.tsx": $$3,
+    "./islands/text.tsx": $$4,
+    "./islands/theme_switcher.tsx": $$5,
   },
   baseUrl: import.meta.url,
   config,

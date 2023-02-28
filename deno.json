@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev": "deno run --allow-env --allow-read --allow-run --allow-write=.,/tmp --allow-net --watch=static/,routes/ dev.ts"
+    "dev": "deno run --allow-env --allow-read --allow-write=fresh.gen.ts,/tmp --allow-run --allow-net=:7777,deno.land,esm.sh,www.mynewsdesk.com,dois.deno.dev --watch=static/,routes/ dev.ts"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {

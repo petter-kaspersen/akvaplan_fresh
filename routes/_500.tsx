@@ -9,7 +9,7 @@ export default function InternalServerError({ error }: ErrorPageProps) {
   return (
     <html lang="en">
       <Page title={title} lang={lang}>
-        <main style={{ fontFamily: "monospace" }}>
+        <main style={{ fontFamily: "monospace", fontSize: "1rem" }}>
           <h1>{title}</h1>
 
           <details>

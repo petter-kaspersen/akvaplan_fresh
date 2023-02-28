@@ -1,0 +1,98 @@
+button:not([color-scheme]) {
+  background-color: transparent
+}
+
+button[color-scheme] {
+  background-color: var(--surface2);
+}
+
+button {
+  color: var(--text1);
+  min-height: 1rem;
+  min-width: 3rem;
+  margin: var(--size-1);
+  display: inline-flex;
+  white-space: nowrap;
+  font-size: var(--font-size-fluid-1);
+  font-weight: var(--font-weight-7);
+  padding-left: var(--size-7);
+  padding-right: var(--size-7);
+  padding-top: var(--size-2);
+  padding-bottom: var(--size-2);
+
+  border: var(--border-size-2) solid var(--surface3);
+  border-radius: var(--radius-5);
+  text-align: center;
+  /* transition: border-color .5s var(--ease-2) 1s; */
+}
+
+button:hover,button:focus {
+  border: var(--border-size-2) solid var(--accent);
+}
+
+button[aria-pressed="true"],button:focus { 
+  border: var(--border-size-2) solid var(--surface4);
+}
+
+:where(button,input:is([type=button],[type=submit],[type=reset])),:where(input[type=file])::-webkit-file-upload-button,:where(input[type=file])::file-selector-button{
+  --_accent:initial;
+  --_text:initial;
+  --_size:initial;
+  --_bg-light:#fff;
+  --_bg-dark:var(--surface-3);
+  --_bg:var(--_bg-light);
+  --_border:var(--surface-3);
+  --_highlight-size:0;
+  --_highlight-light:hsl(var(--gray-5-hsl)/25%);
+  --_highlight-dark:hsl(var(--gray-12-hsl)/25%);
+  --_highlight:var(--_highlight-light);
+  --_ink-shadow-light:0 1px 0 var(--gray-3);
+  --_ink-shadow-dark:0 1px 0 var(--surface-1);
+  --_ink-shadow:var(--_ink-shadow-light);
+  --_icon-size:2ch;
+  --_icon-color:var(--_accent,var(--link));
+  -webkit-tap-highlight-color:transparent;
+  -webkit-touch-callout:none;
+  align-items:center;
+  background:var(--_bg);
+  border:var(--border-size-2) solid var(--_border);
+  border-radius:var(--radius-2);
+  box-shadow:var(--shadow-2),0 1px var(--surface-3),0 0 0 var(--_highlight-size) var(--_highlight);
+  color:var(--_text);
+  display:inline-flex;
+  font-size:var(--_size);
+  font-weight:var(--font-weight-7);
+  gap:var(--size-2);
+  justify-content:center;
+  padding-block:.75ch;
+  padding-inline:1.75ch;
+  text-align:center;
+  text-shadow:var(--_ink-shadow);
+  
+  user
+}
+
+:where(button,input:is([type=button],[type=submit],[type=reset]))[disabled]{
+  --_bg:none;
+  --_text:var(--gray-6);
+  box-shadow:var(--shadow-1);
+  cursor:not-allowed
+}
+
+:where(button,input:is([type=button],[type=submit],[type=reset])):where(:not(:active):hover){
+  --_highlight-size:var(--size-2);
+  transition-delay:0s;
+  transition-duration:.25s;
+  color:red;
+}
+:where(button,input:is([type=button],[type=submit],[type=reset]))>:where(svg){
+  block-size:var(--_icon-size);
+  filter:drop-shadow(var(--_ink-shadow));
+  flex-shrink:0;
+  inline-size:var(--_icon-size)
+}
+:where(button,input:is([type=button],[type=submit],[type=reset]))>:where(svg>*){
+  stroke:var(--_icon-color);
+  stroke-width:var(--border-size-2)
+}
+

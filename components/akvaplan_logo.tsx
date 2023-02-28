@@ -1,6 +1,8 @@
 export default () => (
   <svg
     class="akvaplan-logo"
+    width="100%"
+    height="48px"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 127.11 30.276"
     aria-label="Akvaplan-niva"
@@ -35,12 +37,12 @@ export default () => (
     </g>
     <g part="waves" class="waves">
       <path
-        fill="var(--logo-green)"
+        fill="var(--logo-wave-0)"
         d="M78.87 21.72C60.81 10 59.93 31 45 23.6c16.84 11 17.49-10.36 33.91-1.88"
       >
       </path>
       <path
-        fill="var(--logo-blue)"
+        fill="var(--logo-wave-1)"
         d="M83.2 25.18c-18.06-11.72-18.94 9.25-33.9 1.87 16.83 11 17.48-10.36 33.9-1.87"
       >
       </path>

@@ -1,6 +1,7 @@
 import AkvaplanLogo from "./akvaplan_logo.tsx";
 import op from "open-props";
-export function Header({ href = "/", HeaderLogo = AkvaplanLogo }) {
+import { lang, t } from "akvaplan_fresh/text/mod.ts";
+export function Header({ href = "/", HeaderLogo = AkvaplanLogo, nav = [] }) {
   return (
     <header
       style={{
@@ -12,12 +13,18 @@ export function Header({ href = "/", HeaderLogo = AkvaplanLogo }) {
         color: "var(--text1)",
       }}
     >
-      <a
-        href={href}
-        style="min-width: 200px; height: auto;"
-      >
+      <a href={href}>
         <HeaderLogo />
       </a>
+      <ul>
+        {nav.map(({ href, text }) => (
+          <li>
+            <a href={href}>
+              {text}
+            </a>
+          </li>
+        ))}
+      </ul>
     </header>
   );
 }

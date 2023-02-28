@@ -6,20 +6,21 @@
   --logo-blue: #fff;
   --logo-green: #fff;
   --accent: hsl(182, 49%, 56%);
-
+  --brand: hsl(var(--brand-hue),var(--brand-saturation),var(--brand-saturation));
 }
 
 a {
   color: var(--link);
+  text-decoration: none;
 }
 
-/* a:hover {
+a:hover {
   text-decoration: underline;
-} */
+}
 
 html, body {
-  color-scheme: light dark; 
-  width: 100vw;
+  color-scheme: dark light; 
+  width: 99vw;
   height: 100vh;
   background: var(--surface1);
   color: var(--text1);
@@ -34,8 +35,8 @@ header, footer {
 }
 
 p {
-  max-inline-size: var(--size-content-3);
-  line-height: var(--font-lineheight-2);  
+  max-inline-size: 80%;
+  line-height: var(--font-lineheight-2);
 }
 
 h1 {
@@ -50,14 +51,47 @@ h3 {
   font-size: var(--font-size-fluid-1);
 }
 
-button {
+button,input,select,option {
   font-size: var(--font-size-fluid-1);
 }
-button[aria-pressed="true"]::before {
-  content: "[";
-  color: var(--accent);
+
+.symbol {
+  font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 40;
 }
-button[aria-pressed="true"]::after {
-  content: "]";
+
+button.symbol {
+  --size: 2rem;
+
+  background: none;
+  border: none;
+  padding: 0;
   color: var(--accent);
+
+  inline-size: var(--size);
+  block-size: var(--size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  outline-offset: 5px;
+
+}
+
+:root:not([color-scheme]) {
+  /* Use blue theme-replica when theme is not set 
+    => makes site look nice without JavaScript :) */
+  --text1: hsl(var(--brand-hue) 15% 75%);
+  --text2: hsl(var(--brand-hue) 10% 61%);
+  --surface1: hsl(var(--brand-hue) var(--brand-saturation) var(--brand-lightness));
+  --surface2: hsl(200, 40%, 26%);
+  --surface3: hsl(200, 40%, 33%);
+  --surface4: hsl(200, 40%, 40%);
+  --surface-shadow: var(--brand-hue) 30% 13%;
+  --shadow-strength: .2;
+  --link: hsl(182, 49%, 56%);
+  --logo-wave-1: #005392;
+  --logo-wave-0: #00A2B2;
+  --error: red;
 }

@@ -1,21 +1,21 @@
-import { Head } from "$fresh/runtime.ts";
-import { Page } from "../components/page.tsx";
-export default function Home() {
+import { Page } from "akvaplan_fresh/components/page.tsx";
+import { lang as langSignal } from "akvaplan_fresh/text/mod.ts";
+import HomeSections, {
+  buildSections,
+} from "akvaplan_fresh/islands/home_sections.tsx";
+
+import { Handlers, PageProps } from "$fresh/server.ts";
+export const handler: Handlers = {
+  GET(req, ctx) {
+    const { state } = ctx;
+    const { lang } = state; // Server side lang from request (accept-language)
+    return ctx.render({ lang });
+  },
+};
+export default function Home({ data: { lang } }: PageProps) {
   return (
-    <Page>
-      <Head>
-        <title>Akvaplan-niva</title>
-      </Head>
-      <nav>
-        <ul>
-          <li>
-            <a href="/pubs">Publikasjoner</a>
-          </li>
-          <li>
-            <a href="/pref">Innstillinger</a>
-          </li>
-        </ul>
-      </nav>
+    <Page lang="no">
+      <HomeSections />
     </Page>
   );
 }

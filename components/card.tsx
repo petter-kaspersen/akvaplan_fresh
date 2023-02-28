@@ -1,50 +1,31 @@
-import { PropsWithChildren } from "preact";
-
+import { JSX, PropsWithChildren } from "preact";
+type CardProps = JSX.HTMLAttributes<HTMLDivElement>;
 interface Props {
-  backgroundImage?: string;
+  img?: string;
 }
 
-const styles = (props: PropsWithChildren & Props) => {
-  return (
-    <style jsx>
-      {`
-
-      .card {
-        background: var(--section-bg);
-        border-radius: var(--radius-2);
-        padding: var(--size-fluid-3);
-        box-shadow: var(--shadow-2);
-      
-        &:hover {
-          box-shadow: var(--shadow-3);
-        }
-      
-        @media (--motionOK) {
-          animation: var(--animation-fade-in);
-        }
-      }
-      .card-background {
-        background-image: url(${props.backgroundImage});
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
-
-    `}
-    </style>
-  );
-};
-
-export function Card(props: PropsWithChildren & Props) {
+export function Card({ img, children }: PropsWithChildren & Props) {
   return (
     <div
-      class={`card ${props.backgroundImage ? "card-background" : ""}`}
+      class="card"
       style={{
         background: "var(--surface1)",
-        padding: "var(--size-fluid-1)",
+        border: `1px solid var(--surface2)`,
+        padding: "var(--size-1)",
+        paddingBlockEnd: "var(--size-4)",
         borderRadius: "var(--radius-2)",
+        boxShadow: "var(--shadow-4)",
       }}
     >
-      {props.children}
+      {img
+        ? (
+          <img
+            src={img}
+            alt="Card image cap"
+          />
+        )
+        : null}
+      {children}
     </div>
   );
 }

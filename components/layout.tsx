@@ -1,4 +1,4 @@
-import { Head, asset } from "$fresh/runtime.ts";
+import { asset, Head } from "$fresh/runtime.ts";
 import { type ComponentChildren } from "preact";
 
 export default function Layout(props: { children?: ComponentChildren }) {

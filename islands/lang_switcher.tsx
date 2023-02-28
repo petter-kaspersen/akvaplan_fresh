@@ -1,54 +1,33 @@
+import { lang as langSignal, setLang } from "akvaplan_fresh/text/mod.ts";
 import { JSX } from "preact";
-export type LangSwitcherProps = JSX.HTMLAttributes<HTMLBaseElement>;
+import { IS_BROWSER } from "$fresh/runtime.ts";
 
-const defaultTheme = "blue";
-
-export const getLang = (
-  el = globalThis?.document?.documentElement,
-): string => {
-  if (el?.hasAttribute("lang")) {
-    return el.getAttribute("lang") ?? defaultTheme;
-  }
-  return localStorage.getItem("theme") ?? defaultTheme;
-};
-
-// export const setTheme = (
-//   theme: string,
-//   el = globalThis?.document?.documentElement,
-// ) => {
-//   el.setAttribute("color-scheme", theme);
-//   if (theme === defaultTheme) {
-//     localStorage.removeItem("theme");
-//   } else {
-//     localStorage.setItem("theme", theme);
-//   }
-// };
-
-const handleLangClick = (e: Event & { target: Element }) => {
-  e.preventDefault();
-};
-
-export default function LangSwitcher({ lang }: LangSwitcherProps) {
-  if (undefined === lang) {
-    lang = getLang();
-  }
-
+export default function LangSwitcher(
+  props: JSX.HTMLAttributes<HTMLDivElement>,
+) {
+  const handleLangClick = (e: Event) => {
+    const { ownerDocument: { documentElement }, dataset: { lang } } = e.target;
+    setLang(lang, documentElement);
+  };
+  const lang = langSignal.value;
   return (
-    <>
-      <label>
-        Velg menyspråk
-      </label>
-      <form
-        onClick={handleLangClick}
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
+    <div
+      onClick={handleLangClick}
+      style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
+    >
+      <button
+        data-lang="en"
+        aria-pressed={lang === "en"}
       >
-        <button aria-pressed={lang === "en"}>
-          English
-        </button>
-        <button aria-pressed={lang === "nb"}>
-          Norsk bokmål
-        </button>
-      </form>
-    </>
+        {"EN"}
+      </button>
+      <button
+        data-lang="no"
+        aria-pressed={["no", "nb", "nn", ""].includes(lang)}
+        disabled={!IS_BROWSER || props.disabled}
+      >
+        {"NO"}
+      </button>
+    </div>
   );
 }
