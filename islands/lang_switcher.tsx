@@ -1,4 +1,8 @@
-import { lang as langSignal, setLang } from "akvaplan_fresh/text/mod.ts";
+import {
+  lang as langSignal,
+  removeLang,
+  setLang,
+} from "akvaplan_fresh/text/mod.ts";
 import { JSX } from "preact";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
@@ -7,7 +11,11 @@ export default function LangSwitcher(
 ) {
   const handleLangClick = (e: Event) => {
     const { ownerDocument: { documentElement }, dataset: { lang } } = e.target;
-    setLang(lang, documentElement);
+    if (lang) {
+      setLang(lang, documentElement);
+    } else {
+      removeLang(lang, documentElement);
+    }
   };
   const lang = langSignal.value;
   return (
@@ -19,14 +27,14 @@ export default function LangSwitcher(
         data-lang="en"
         aria-pressed={lang === "en"}
       >
-        {"EN"}
+        EN
       </button>
       <button
         data-lang="no"
         aria-pressed={["no", "nb", "nn", ""].includes(lang)}
         disabled={!IS_BROWSER || props.disabled}
       >
-        {"NO"}
+        NO
       </button>
     </div>
   );

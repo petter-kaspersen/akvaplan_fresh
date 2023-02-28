@@ -9,5 +9,9 @@
   "pubs": "Publikasjoner",
   "services": "Tjenester",
   "settings": "Innstillinger",
-  "settings.privacy": "Nettsidene våre bruker ikke informasjonskapsler (cookies) og inkluderer null kjørebare skript fra tredjepart"
+  "settings.privacy": "Nettsidene til Akvaplan-niva bruker ikke informasjonskapsler (cookies) og inkluderer ingen kjørbare skript fra tredjepart",
+  "theme.dark": "mørk",
+  "theme.blue": "blå",
+  "theme.dim": "grå",
+  "theme.light": "lys"
 }

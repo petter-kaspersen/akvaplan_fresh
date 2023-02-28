@@ -9,5 +9,9 @@
   "pubs": "Publications",
   "services": "Services",
   "settings": "Settings",
-  "settings.privacy": "Akvaplan-niva's main website is cookie free and loads 0 third-party scripts"
+  "settings.privacy": "Akvaplan-niva's main website is cookie free and loads zero third-party scripts",
+  "theme.dark": "dark",
+  "theme.blue": "blue",
+  "theme.dim": "gray",
+  "theme.light": "light"
 }
