@@ -1,4 +1,4 @@
-import { SlimPublication } from "@interfaces/slim_publication.ts";
+import { SlimPublication } from "../@interfaces/slim_publication.ts";
 import { Page } from "../components/page.tsx";
 import { Card } from "../components/card.tsx";
 import {
@@ -80,7 +80,16 @@ export default function DoiPublication(
               style="display:grid; grid-gap: 0.25rem; grid-template-columns: auto 1fr; align-items: center;"
               href="https://doi.org/10.1016/j.jembe.2022.151855"
             >
-              <button>exit_to_app</button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="48"
+                viewBox="0 96 960 960"
+                width="48"
+                fill="var(--text1)"
+              >
+                <path d="M180 936q-24 0-42-18t-18-42V666h60v210h600V274H180v212h-60V274q0-24 18-42t42-18h600q24 0 42 18t18 42v602q0 24-18 42t-42 18H180Zm233-167-45-45 118-118H120v-60h366L368 428l45-45 193 193-193 193Z" />
+              </svg>
+
               <span>https://doi.org/{doi}</span>
             </a>
           </div>
