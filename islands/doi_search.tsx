@@ -69,7 +69,6 @@ export default function DoiSearch(
           style={{ display: "grid", gridTemplateColumns: "3fr 1fr" }}
         >
           <input
-            
             type="search"
             name="q"
             value={query}

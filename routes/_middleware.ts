@@ -1,8 +1,9 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
 import { parse } from "accept-language-parser";
-import { hasNordicOrSami } from "akvaplan_fresh/text/mod.ts";
+import { hasNordicOrSami, lang } from "akvaplan_fresh/text/mod.ts";
+
 interface State {
-  lang: string;
+  lang: string | Signal<string>;
 }
 
 const acceptLanguages = (req: Request) =>
@@ -16,7 +17,8 @@ export function handler(
   req: Request,
   ctx: MiddlewareHandlerContext<State>,
 ) {
-  const lang = acceptsNordic(req) ? "no" : "en";
-  ctx.state.lang = lang;
+  const code = acceptsNordic(req) ? "no" : "en";
+  //lang.value = code;
+  ctx.state.lang = code;
   return ctx.next();
 }
