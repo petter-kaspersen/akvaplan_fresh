@@ -6,7 +6,7 @@ export const buildSections = () => [
   { href: "/pubs", text: t("pubs") },
   {
     href:
-      "/article/news/2023-02-08/autonomous-vehicles-mapping-zooplankton-and-fish/458091",
+      "/article/news/2023-02-28/kunnskapssammenstilling-som-grunnlag-for-kystsoneplanlegging-i-agder/462465",
     text: t("article"),
   },
   { "href": "/components", text: t("components") },

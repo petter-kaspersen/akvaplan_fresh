@@ -18,6 +18,7 @@ export default function LangSwitcher(
     }
   };
   const lang = langSignal.value;
+  console.warn(lang.value);
   return (
     <div
       onClick={handleLangClick}
@@ -26,6 +27,7 @@ export default function LangSwitcher(
       <button
         data-lang="en"
         aria-pressed={lang === "en"}
+        disabled={!IS_BROWSER || props.disabled}
       >
         EN
       </button>

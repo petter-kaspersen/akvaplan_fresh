@@ -19,11 +19,7 @@ export default function ThemeSwitcher() {
   const handleThemeClick = (e: MouseEvent) => {
     const theme = getColorScheme(e.target);
     const root = e?.target?.ownerDocument?.documentElement;
-    if (!theme) {
-      removeColorScheme();
-    } else {
-      setColorScheme(theme, root);
-    }
+    setColorScheme(theme, root);
     e.preventDefault();
   };
 
@@ -47,7 +43,7 @@ export default function ThemeSwitcher() {
         </button>
         <button
           color-scheme="blue"
-          aria-pressed={theme === "blue"}
+          aria-pressed={theme === undefined || theme === "blue"}
         >
           {t("theme.blue")}
         </button>
@@ -56,11 +52,6 @@ export default function ThemeSwitcher() {
           aria-pressed={theme === "light"}
         >
           {t("theme.light")}
-        </button>
-        <button
-          aria-pressed={theme === undefined}
-        >
-          auto
         </button>
       </div>
     </form>
