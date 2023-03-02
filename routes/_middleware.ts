@@ -18,7 +18,7 @@ export function handler(
   ctx: MiddlewareHandlerContext<State>,
 ) {
   const code = acceptsNordic(req) ? "no" : "en";
-  //lang.value = code;
+  lang.value = code;
   ctx.state.lang = code;
   return ctx.next();
 }

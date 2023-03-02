@@ -1,12 +1,22 @@
 :root {
-  --font-sans: "Roboto Flex",Roboto,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  --font-sans: "Roboto Flex", Roboto, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
   --brand-hue: 200;
   --brand-saturation: 66%;
   --brand-lightness: 17%;
   --logo-blue: #fff;
   --logo-green: #fff;
   --accent: hsl(182, 49%, 56%);
-  --brand: hsl(var(--brand-hue),var(--brand-saturation),var(--brand-saturation));
+  --brand: hsl(
+    var(--brand-hue),
+    var(--brand-saturation),
+    var(--brand-saturation)
+  );
+  --blue: hsl(200, 66%, 17%);
+  --gray: hsl(200, calc(66%/1.25), 14%);
+
 }
 
 a {
@@ -18,9 +28,10 @@ a:hover {
   text-decoration: underline;
 }
 
-html, body {
-  color-scheme: dark light; 
-  width: 99vw;
+html,
+body {
+  color-scheme: dark light;
+  width: 100vw;
   height: 100vh;
   background: var(--surface1);
   color: var(--text1);
@@ -30,7 +41,8 @@ html, body {
   padding: 0;
 }
 
-header, footer {
+header,
+footer {
   color: var(--text1);
 }
 
@@ -51,12 +63,15 @@ h3 {
   font-size: var(--font-size-fluid-1);
 }
 
-button,input,select,option {
+button,
+input,
+select,
+option {
   font-size: var(--font-size-fluid-1);
 }
 
 .symbol {
-  font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 40;
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 40;
 }
 
 button.symbol {
@@ -76,7 +91,6 @@ button.symbol {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   outline-offset: 5px;
-
 }
 
 :root:not([color-scheme]) {
@@ -84,14 +98,70 @@ button.symbol {
     => makes site look nice without JavaScript :) */
   --text1: hsl(var(--brand-hue) 15% 75%);
   --text2: hsl(var(--brand-hue) 10% 61%);
-  --surface1: hsl(var(--brand-hue) var(--brand-saturation) var(--brand-lightness));
+  --surface1: hsl(
+    var(--brand-hue) var(--brand-saturation) var(--brand-lightness)
+  );
   --surface2: hsl(200, 40%, 26%);
   --surface3: hsl(200, 40%, 33%);
   --surface4: hsl(200, 40%, 40%);
   --surface-shadow: var(--brand-hue) 30% 13%;
-  --shadow-strength: .2;
+  --shadow-strength: 0.2;
   --link: hsl(182, 49%, 56%);
   --logo-wave-1: #005392;
-  --logo-wave-0: #00A2B2;
+  --logo-wave-0: #00a2b2;
   --error: red;
 }
+
+
+/** START ARTICLE **/
+
+.article {
+  padding: var(--size-4);
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.article-header {
+  position: relative;
+  border-radius: var(--radius-2);
+}
+
+.article-header h1 {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  color: var(--text1);
+  font-size: var(--font-size-fluid-3);
+  
+}
+
+.article-header-backdrop {
+  background-color: var(--surface1);
+}
+
+.article-header img {
+  width: 100%;
+}
+
+.article-content {
+  font-size: var(--font-size-1);
+  padding: var(--size-4);
+  background: var(--surface2);
+  border-radius: var(--radius-2);
+  margin-top: 1rem;
+}
+
+.article-content p {
+  margin: 1rem 0;
+}
+
+.article-content p:first-child {
+  margin-top: 0;
+}
+
+.article-content p:last-child {
+  margin-bottom: 0;
+}
+
+/** END ARTICLE **/

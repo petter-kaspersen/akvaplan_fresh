@@ -5,8 +5,7 @@ import { useSignal } from "@preact/signals";
 export const buildSections = () => [
   { href: "/pubs", text: t("pubs") },
   {
-    href:
-      "/article/news/2023-02-28/kunnskapssammenstilling-som-grunnlag-for-kystsoneplanlegging-i-agder/462465",
+    href: "/article/search",
     text: t("article"),
   },
   { "href": "/components", text: t("components") },
