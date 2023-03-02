@@ -1,8 +1,9 @@
+// https://www.mynewsdesk.com/docs/webservice_pressroom#services_view
 const base = "https://www.mynewsdesk.com";
 
 const mynewsdesk_key: string = Deno.env.get("mynewsdesk_key") ?? "";
 
-const pathname = (action: string, unique_key = mynewsdesk_key) =>
+const path = (action: string, unique_key = mynewsdesk_key) =>
   `/services/pressroom/${action}/${unique_key}`;
 
 // GET https://www.mynewsdesk.com/services/pressroom/search/unique_key?
@@ -16,12 +17,11 @@ const pathname = (action: string, unique_key = mynewsdesk_key) =>
 //   tags=category1,category2,category3
 export const searchURL = (query, type_of_media, { limit = 10 } = {}) =>
   new URL(
-    pathname("search") +
+    path("search") +
       `?format=json&type_of_media=${type_of_media}&strict=true&limit=${limit}&query=${query}`,
     base,
   );
 
-// https://www.mynewsdesk.com/docs/webservice_pressroom#services_view
 // GET https://www.mynewsdesk.com/services/pressroom/view/unique_key?
 //     format=xml|rss|json&
 //     item_id=id&
@@ -40,7 +40,7 @@ export const fetchItemBySlug = async (
   type_of_media = "news",
 ) => {
   const url = searchURL(slug, type_of_media);
-  console.warn(url.href);
+
   const r = await fetch(url.href);
   if (r.ok) {
     const { search_result } = await r.json();
@@ -64,3 +64,7 @@ export const fetchItem = async (id: string, type_of_media: string) => {
     return item;
   }
 };
+
+export const href = ({ url }) =>
+  "/mynewsdesk-articles/" +
+  url.split("/")?.at(-1).split("-")?.slice(0, -1).join("-");

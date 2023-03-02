@@ -7,13 +7,14 @@ import * as $0 from "./routes/_404.tsx";
 import * as $1 from "./routes/_500.tsx";
 import * as $2 from "./routes/_middleware.ts";
 import * as $3 from "./routes/article/[slug].tsx";
-import * as $4 from "./routes/components/card.tsx";
-import * as $5 from "./routes/doi.tsx";
-import * as $6 from "./routes/index.tsx";
-import * as $7 from "./routes/mynewsdesk-articles/[slug].tsx";
-import * as $8 from "./routes/news.tsx";
-import * as $9 from "./routes/pref.tsx";
-import * as $10 from "./routes/pubs.tsx";
+import * as $4 from "./routes/article/search.tsx";
+import * as $5 from "./routes/components/card.tsx";
+import * as $6 from "./routes/doi.tsx";
+import * as $7 from "./routes/index.tsx";
+import * as $8 from "./routes/mynewsdesk-articles/[slug].tsx";
+import * as $9 from "./routes/news.tsx";
+import * as $10 from "./routes/pref.tsx";
+import * as $11 from "./routes/pubs.tsx";
 import * as $$0 from "./islands/doi_search.tsx";
 import * as $$1 from "./islands/home_sections.tsx";
 import * as $$2 from "./islands/lang_switcher.tsx";
@@ -27,13 +28,14 @@ const manifest = {
     "./routes/_500.tsx": $1,
     "./routes/_middleware.ts": $2,
     "./routes/article/[slug].tsx": $3,
-    "./routes/components/card.tsx": $4,
-    "./routes/doi.tsx": $5,
-    "./routes/index.tsx": $6,
-    "./routes/mynewsdesk-articles/[slug].tsx": $7,
-    "./routes/news.tsx": $8,
-    "./routes/pref.tsx": $9,
-    "./routes/pubs.tsx": $10,
+    "./routes/article/search.tsx": $4,
+    "./routes/components/card.tsx": $5,
+    "./routes/doi.tsx": $6,
+    "./routes/index.tsx": $7,
+    "./routes/mynewsdesk-articles/[slug].tsx": $8,
+    "./routes/news.tsx": $9,
+    "./routes/pref.tsx": $10,
+    "./routes/pubs.tsx": $11,
   },
   islands: {
     "./islands/doi_search.tsx": $$0,

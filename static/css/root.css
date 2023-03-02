@@ -14,6 +14,9 @@
     var(--brand-saturation),
     var(--brand-saturation)
   );
+  --blue: hsl(200, 66%, 17%);
+  --gray: hsl(200, calc(66%/1.25), 14%);
+
 }
 
 a {
@@ -128,7 +131,13 @@ button.symbol {
   position: absolute;
   bottom: 2rem;
   left: 2rem;
-  font-size: var(--font-size-5);
+  color: var(--text1);
+  font-size: var(--font-size-fluid-3);
+  
+}
+
+.article-header-backdrop {
+  background-color: var(--surface1);
 }
 
 .article-header img {

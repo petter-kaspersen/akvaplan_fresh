@@ -49,14 +49,18 @@ export default function NewsArticle({ data }: PageProps) {
     <Page title={header}>
       <article class="article" lang={language}>
         <header class="article-header">
-          <h1>{header}</h1>
+          <h1>
+            <span class="article-header-backdrop">{header}</span>
+          </h1>
           <img src={img} alt={image_caption} />
         </header>
         <section
           class="article-content"
           dangerouslySetInnerHTML={{ __html }}
-        ></section>
+        >
+        </section>
       </article>
+      <aside></aside>
     </Page>
   );
 }
