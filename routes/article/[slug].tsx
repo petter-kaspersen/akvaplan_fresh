@@ -43,23 +43,19 @@ export default function NewsArticle({ data }: PageProps) {
   } = data;
 
   const __html = body;
-  const img = image.replace(",w_1782", ",w_1400");
+  const img = image.replace(",w_1782", ",w_1280");
 
   return (
     <Page title={header}>
-      <article
-        lang={language}
-        style={{ display: "grid", placeItems: "center" }}
-      >
-        <h1>{header}</h1>
-        <img src={img} alt={image_caption} width="1400" />
-        <small>{image_caption}</small>
-
-        <main>
-          <div
-            dangerouslySetInnerHTML={{ __html }}
-          />
-        </main>
+      <article class="article" lang={language}>
+        <header class="article-header">
+          <h1>{header}</h1>
+          <img src={img} alt={image_caption} />
+        </header>
+        <section
+          class="article-content"
+          dangerouslySetInnerHTML={{ __html }}
+        ></section>
       </article>
     </Page>
   );
