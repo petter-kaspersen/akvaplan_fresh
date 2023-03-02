@@ -1,3 +1,5 @@
+import { slug } from "https://deno.land/x/slug/mod.ts";
+
 // https://www.mynewsdesk.com/docs/webservice_pressroom#services_view
 const base = "https://www.mynewsdesk.com";
 
@@ -65,6 +67,9 @@ export const fetchItem = async (id: string, type_of_media: string) => {
   }
 };
 
-export const href = ({ url }) =>
+const preprocess = (s) => s.replace(/["]/g, "");
+const postprocess = (s) => s.replaceAll("-aa-", "-a-");
+
+export const href = ({ header }) =>
   "/mynewsdesk-articles/" +
-  url.split("/")?.at(-1).split("-")?.slice(0, -1).join("-");
+  postprocess(slug(preprocess(header)));

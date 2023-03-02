@@ -4,7 +4,8 @@ import { Page } from "akvaplan_fresh/components/page.tsx";
 import { HandlerContext, Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 
-export const handler: Handlers<DoiSearchResultsProps> = {
+type Props = {};
+export const handler: Handlers<Props> = {
   async GET(request: Request, context: HandlerContext) {
     const { searchParams } = new URL(request.url);
     const _q = searchParams.get("q") ?? ""; //String(new Date().getFullYear());
@@ -19,16 +20,8 @@ export const handler: Handlers<DoiSearchResultsProps> = {
   },
 };
 
-// const author_etal = (authors) => {
-//   if (authors?.length < 1) {
-//     return "_";
-//   }
-//   const first = authors.find(({first})=>first);
-//   return first ? first.family : JSON.stringify(authors);
-// }
-
 export default function ApnPubs(
-  { data: { items } }: PageProps<DoiSearchResultsProps>,
+  { data: { items } }: PageProps,
 ) {
   return (
     <Page title="Artikler">
@@ -39,8 +32,8 @@ export default function ApnPubs(
   );
 }
 
-const resultItem = ({ url, type_of_media, header }) => (
+const resultItem = (item) => (
   <li>
-    <a href={href({ url, type_of_media })}>{header}</a>
+    <a href={href(item)}>{item.header}</a>
   </li>
 );

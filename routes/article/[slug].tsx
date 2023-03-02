@@ -1,5 +1,7 @@
-import { fetchItem } from "../../services/mynewsdesk.ts";
-import { Page } from "../../components/page.tsx";
+import { fetchItem } from "akvaplan_fresh/services/mynewsdesk.ts";
+
+import { Page } from "akvaplan_fresh/components/page.tsx";
+
 import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
 
 export const config: RouteConfig = {
@@ -60,7 +62,6 @@ export default function NewsArticle({ data }: PageProps) {
         >
         </section>
       </article>
-      <aside></aside>
     </Page>
   );
 }

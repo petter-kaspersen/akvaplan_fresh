@@ -47,7 +47,6 @@ footer {
 }
 
 p {
-  max-inline-size: 80%;
   line-height: var(--font-lineheight-2);
 }
 
