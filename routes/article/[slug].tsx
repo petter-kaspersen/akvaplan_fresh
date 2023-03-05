@@ -3,6 +3,7 @@ import { fetchItem } from "akvaplan_fresh/services/mynewsdesk.ts";
 import { Page } from "akvaplan_fresh/components/page.tsx";
 
 import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
+import { asset, Head } from "$fresh/runtime.ts";
 
 export const config: RouteConfig = {
   routeOverride: "/article/:type_of_media/:isodate/:slug/:id",
@@ -57,6 +58,9 @@ export default function NewsArticle({ data }: PageProps) {
 
   return (
     <Page title={header}>
+      <Head>
+        <link rel="stylesheet" href="/css/article.css" />
+      </Head>
       <article class="article" lang={language}>
         <header class="article-header">
           <h1>{header}</h1>
