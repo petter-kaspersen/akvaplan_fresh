@@ -1,9 +1,11 @@
 import { fetchItem } from "akvaplan_fresh/services/mynewsdesk.ts";
+import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
+
+import Article from "../../components/article/Article.tsx";
+import ArticleContact from "../../components/article/ArticleContact.tsx";
+import ArticleHeader from "../../components/article/ArticleHeader.tsx";
 
 import { Page } from "akvaplan_fresh/components/page.tsx";
-
-import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
-import { asset, Head } from "$fresh/runtime.ts";
 
 export const config: RouteConfig = {
   routeOverride: "/article/:type_of_media/:isodate/:slug/:id",
@@ -58,43 +60,19 @@ export default function NewsArticle({ data }: PageProps) {
 
   return (
     <Page title={header}>
-      <Head>
-        <link rel="stylesheet" href="/css/article.css" />
-      </Head>
-      <article class="article" lang={language}>
-        <header class="article-header">
-          <h1>{header}</h1>
-          <img src={img} alt={image_caption} />
-        </header>
-        <section class="article-title-mobile">
-          <h1>{header}</h1>
-        </section>
+      <Article language={language}>
+        <ArticleHeader
+          header={header}
+          image={img}
+          imageCaption={image_caption}
+        />
+
         <section
           class="article-content"
           dangerouslySetInnerHTML={{ __html }}
         ></section>
-        <section class="article-contact">
-          <div class="left-section">
-            <span>Kontaktperson</span>
-
-            <div class="name-and-title">
-              <h3>{contactPerson.name}</h3>
-              <span>{contactPerson.title}</span>
-            </div>
-            <div class="contact-info">
-              <a href={`mailto:${contactPerson.email}`}>
-                {contactPerson.email}
-              </a>
-              <a href={`tel:${contactPerson.phone}`}>{contactPerson.phone}</a>
-              <span>{contactPerson.location}</span>
-            </div>
-          </div>
-          <img
-            class="right-section"
-            src="https://preview.sdl.no/v2/dam/ssGDst9O7xlTb0J6I2g_Lw/I583h3dwed8?v=1673953218959"
-          ></img>
-        </section>
-      </article>
+        <ArticleContact contactPerson={contactPerson} />
+      </Article>
     </Page>
   );
 }
