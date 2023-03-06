@@ -1,8 +1,11 @@
 import { fetchItem } from "akvaplan_fresh/services/mynewsdesk.ts";
+import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
+
+import Article from "../../components/article/Article.tsx";
+import ArticleContact from "../../components/article/ArticleContact.tsx";
+import ArticleHeader from "../../components/article/ArticleHeader.tsx";
 
 import { Page } from "akvaplan_fresh/components/page.tsx";
-
-import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
 
 export const config: RouteConfig = {
   routeOverride: "/article/:type_of_media/:isodate/:slug/:id",
@@ -47,21 +50,29 @@ export default function NewsArticle({ data }: PageProps) {
   const __html = body;
   const img = image.replace(",w_1782", ",w_1280");
 
+  const contactPerson = {
+    name: "Lars-Henrik Larsen",
+    title: "Seksjonsleder",
+    email: "lhk@akvaplan.niva.no",
+    phone: "+47 481 14 233",
+    location: "Tromsø",
+  };
+
   return (
     <Page title={header}>
-      <article class="article" lang={language}>
-        <header class="article-header">
-          <h1>
-            <span class="article-header-backdrop">{header}</span>
-          </h1>
-          <img src={img} alt={image_caption} />
-        </header>
+      <Article language={language}>
+        <ArticleHeader
+          header={header}
+          image={img}
+          imageCaption={image_caption}
+        />
+
         <section
           class="article-content"
           dangerouslySetInnerHTML={{ __html }}
-        >
-        </section>
-      </article>
+        ></section>
+        <ArticleContact contactPerson={contactPerson} />
+      </Article>
     </Page>
   );
 }

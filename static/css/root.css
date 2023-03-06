@@ -21,7 +21,6 @@
     calc(var(--brand-saturation) / 2)
     calc(var(--brand-lightness) / 1.5)
   );
-
 }
 
 a {
@@ -37,7 +36,7 @@ html,
 body {
   color-scheme: dark light;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background: var(--surface1);
   color: var(--text1);
   font-family: var(--font-sans);
