@@ -1,9 +1,9 @@
 import {
-  getColorScheme,
-  removeColorScheme,
-  setColorScheme,
+  getAttrColorScheme,
+  removeTheming,
+  setTheme,
   theme as themeSignal,
-} from "akvaplan_fresh/theming/mod.js";
+} from "akvaplan_fresh/theming/mod.ts";
 
 import { t } from "akvaplan_fresh/text/mod.ts";
 
@@ -17,10 +17,14 @@ export default function ThemeSwitcher() {
   const theme = themeSignal.value;
 
   const handleThemeClick = (e: MouseEvent) => {
-    const theme = getColorScheme(e.target);
-    const root = e?.target?.ownerDocument?.documentElement;
-    setColorScheme(theme, root);
     e.preventDefault();
+    const auto = e?.target?.dataset?.theme === "auto";
+    if (auto) {
+      removeTheming();
+    } else {
+      const theme = getAttrColorScheme(e.target);
+      setTheme(theme);
+    }
   };
 
   return (
@@ -36,14 +40,15 @@ export default function ThemeSwitcher() {
         </button>
 
         <button
-          color-scheme="dim"
-          aria-pressed={theme === "dim"}
+          data-theme="auto"
+          color-scheme="blue"
+          aria-pressed={theme === null}
         >
-          {t("theme.dim")}
+          {t("theme.auto")}
         </button>
         <button
           color-scheme="blue"
-          aria-pressed={theme === undefined || theme === "blue"}
+          aria-pressed={theme === "blue"}
         >
           {t("theme.blue")}
         </button>

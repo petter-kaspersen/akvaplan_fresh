@@ -4,7 +4,7 @@ import { Styles } from "./styles.tsx";
 
 import Text from "akvaplan_fresh/islands/text.tsx";
 import { buildInitLang, t } from "akvaplan_fresh/text/mod.ts";
-import { buildInitTheming } from "akvaplan_fresh/theming/mod.js";
+import { buildInitTheming } from "akvaplan_fresh/theming/mod.ts";
 
 import { JSX } from "preact";
 import { asset, Head } from "$fresh/runtime.ts";

@@ -15,7 +15,12 @@
     var(--brand-saturation)
   );
   --blue: hsl(200, 66%, 17%);
-  --gray: hsl(200, calc(66% / 1.25), 14%);
+  --gray: hsl(200, calc(66%/1.25), 14%);
+  --dark: hsl(
+    var(--brand-hue)
+    calc(var(--brand-saturation) / 2)
+    calc(var(--brand-lightness) / 1.5)
+  );
 }
 
 a {
@@ -89,23 +94,4 @@ button.symbol {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   outline-offset: 5px;
-}
-
-:root:not([color-scheme]) {
-  /* Use blue theme-replica when theme is not set 
-    => makes site look nice without JavaScript :) */
-  --text1: hsl(var(--brand-hue) 15% 75%);
-  --text2: hsl(var(--brand-hue) 10% 61%);
-  --surface1: hsl(
-    var(--brand-hue) var(--brand-saturation) var(--brand-lightness)
-  );
-  --surface2: hsl(200, 40%, 26%);
-  --surface3: hsl(200, 40%, 33%);
-  --surface4: hsl(200, 40%, 40%);
-  --surface-shadow: var(--brand-hue) 30% 13%;
-  --shadow-strength: 0.2;
-  --link: hsl(182, 49%, 56%);
-  --logo-wave-1: #005392;
-  --logo-wave-0: #00a2b2;
-  --error: red;
 }
