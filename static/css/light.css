@@ -19,14 +19,16 @@
 
 }
 
-[color-scheme="blue"] {
+[color-scheme="blue"],:root:not([color-scheme]) {
   color-scheme: light;
   --text1: hsl(var(--brand-hue) 15% 75%);
   --text2: hsl(var(--brand-hue) 10% 61%);
-  --surface1: hsl(var(--brand-hue) var(--brand-saturation) var(--brand-lightness));
-  --surface2: hsl(200, 40%, 26%);
-  --surface3: hsl(200, 40%, 33%);
-  --surface4: hsl(200, 40%, 40%);
+  --surface0: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/3.5));  
+  --surface1: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/1.2));  
+  --surface2: var(--blue);
+  --surface3: hsl(200, 40%, 26%);
+  --surface4: hsl(200, 40%, 33%);
+
   --surface-shadow: var(--brand-hue) 30% 13%;
   --shadow-strength: .2;
   --link: hsl(182, 49%, 56%);

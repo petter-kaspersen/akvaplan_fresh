@@ -1,12 +1,3 @@
-* {
-  /* dark */
-  --dark: hsl(
-    var(--brand-hue)
-    calc(var(--brand-saturation) / 2)
-    calc(var(--brand-lightness) / 1.5)
-  );
-}
-
 [color-scheme="dark"] {
   color-scheme: dark;
 
