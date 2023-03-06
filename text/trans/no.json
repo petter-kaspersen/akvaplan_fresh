@@ -12,6 +12,6 @@
   "settings.privacy": "Nettsidene til Akvaplan-niva bruker ikke informasjonskapsler (cookies) og inkluderer ingen kjørbare skript fra tredjepart",
   "theme.dark": "mørk",
   "theme.blue": "blå",
-  "theme.dim": "grå",
+  "theme.auto": "automatisk",
   "theme.light": "lys"
 }

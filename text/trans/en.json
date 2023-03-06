@@ -12,6 +12,6 @@
   "settings.privacy": "Akvaplan-niva's main website is cookie free and loads zero third-party scripts",
   "theme.dark": "dark",
   "theme.blue": "blue",
-  "theme.dim": "gray",
+  "theme.auto": "automatic",
   "theme.light": "light"
 }
