@@ -6,6 +6,7 @@ import ArticleContact from "../../components/article/ArticleContact.tsx";
 import ArticleHeader from "../../components/article/ArticleHeader.tsx";
 
 import { Page } from "akvaplan_fresh/components/page.tsx";
+import HScroll from "../../components/hscroll/HScroll.tsx";
 
 export const config: RouteConfig = {
   routeOverride: "/article/:type_of_media/:isodate/:slug/:id",
@@ -66,6 +67,21 @@ export default function NewsArticle({ data }: PageProps) {
           image={img}
           imageCaption={image_caption}
         />
+
+        <HScroll scrollerId="article-scroll">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+        </HScroll>
 
         <section
           class="article-content"
