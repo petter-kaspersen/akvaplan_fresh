@@ -1,0 +1,35 @@
+.scroll-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.hscroll {
+  display: flex;
+  padding: var(--size-3) 0;
+}
+
+:root .scroller-button {
+  background: hsla(182, 49%, 56%, 1);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  padding: 0;
+  border-radius: 0;
+  height: 2rem;
+  font-size: 1rem;
+  min-width: 2rem;
+}
+
+:root .scroller-button:disabled {
+  opacity: 0.5;
+}
+
+.scroller-button--left {
+  left: 0;
+  top: 50%;
+}
+
+.scroller-button--right {
+  right: 0;
+}
