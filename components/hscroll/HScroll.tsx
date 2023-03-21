@@ -8,31 +8,30 @@ type HScrollProps = PropsWithChildren & {
 
 export default function HScroll({ children, scrollerId }: HScrollProps) {
   return (
-    <>
-      <div class="scroll-container">
-        <button
-          class="scroller-button scroller-button--left"
-          data-for={scrollerId}
-          value="left"
-          aria-label="Rull til venstre"
-        >
-          &larr;
-        </button>
-        <button
-          class="scroller-button scroller-button--right"
-          data-for={scrollerId}
-          value="right"
-          aria-label="Rull til høyre"
-        >
-          &rarr;
-        </button>
-        <Head>
-          <link rel="stylesheet" href="/css/hscroll.css" />
-        </Head>
-        <core-scroll id={scrollerId} class="hscroll">
-          {children}
-        </core-scroll>
-      </div>
-    </>
+    <div class="scroll-container">
+      <Head>
+        <link rel="stylesheet" href="/css/hscroll.css" />
+        <script src="https://static.nrk.no/core-components/major/10/core-scroll/core-scroll.min.js" />
+      </Head>
+      <button
+        class="scroller-button scroller-button--left"
+        data-for={scrollerId}
+        value="left"
+        aria-label="Rull til venstre"
+      >
+        &larr;
+      </button>
+      <button
+        class="scroller-button scroller-button--right"
+        data-for={scrollerId}
+        value="right"
+        aria-label="Rull til høyre"
+      >
+        &rarr;
+      </button>
+      <core-scroll id={scrollerId} class="hscroll">
+        {children}
+      </core-scroll>
+    </div>
   );
 }
