@@ -19,13 +19,16 @@ export type PageProps = JSX.HTMLAttributes<HTMLBodyElement> & {
 //           <link rel="icon" href={asset("/icon.svg")} type="image/svg+xml" />
 //           <link rel="apple-touch-icon" href={asset("/apple-touch-icon.png")} />
 //           <link rel="manifest" href={asset("/manifest.webmanifest")} />
-const symbolURI = `data:image/svg+xml,${
-  encodeURIComponent(await Deno.readTextFile("./static/akvaplan_symbol.svg"))
-}`;
+const symbolURI = `data:image/svg+xml,${encodeURIComponent(
+  await Deno.readTextFile("./static/akvaplan_symbol.svg")
+)}`;
 
-export function Page(
-  { class: extraClass = "", title, base, ...props }: PageProps,
-) {
+export function Page({
+  class: extraClass = "",
+  title,
+  base,
+  ...props
+}: PageProps) {
   const commonClassNames: string[] = [""];
   const classNames = [...commonClassNames, extraClass];
 
@@ -34,29 +37,22 @@ export function Page(
       {/* <meta charset="utf-8" /> */}
       {base ? <base href={base} /> : null}
 
-      {title
-        ? <title>{t(title)} – Akvaplan-niva</title>
-        : <title>Akvaplan-niva</title>}
+      {title ? (
+        <title>{t(title)} – Akvaplan-niva</title>
+      ) : (
+        <title>Akvaplan-niva</title>
+      )}
 
-      <script
-        dangerouslySetInnerHTML={{ __html: buildInitTheming() }}
-      />
-      <script
-        dangerouslySetInnerHTML={{ __html: buildInitLang() }}
-      />
+      <script dangerouslySetInnerHTML={{ __html: buildInitTheming() }} />
+      <script dangerouslySetInnerHTML={{ __html: buildInitLang() }} />
+
+      <script src="https://static.nrk.no/core-components/major/10/core-scroll/core-scroll.min.js"></script>
 
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       {/* <meta name="color-scheme" content="dark" /> */}
-      <meta
-        name="description"
-        content={t("meta.description")}
-      />
+      <meta name="description" content={t("meta.description")} />
 
-      <link
-        rel="icon"
-        href={symbolURI}
-        type="image/svg+xml"
-      />
+      <link rel="icon" href={symbolURI} type="image/svg+xml" />
 
       <Styles />
     </Head>
