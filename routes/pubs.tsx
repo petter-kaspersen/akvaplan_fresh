@@ -3,8 +3,17 @@ import PubsHistogram from "../islands/pubs_histogram.tsx";
 import { SlimPublication } from "../@interfaces/slim_publication.ts";
 import { Page } from "../components/page.tsx";
 
-import { HandlerContext, Handlers, PageProps } from "$fresh/server.ts";
+import {
+  HandlerContext,
+  Handlers,
+  PageProps,
+  RouteConfig,
+} from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
+
+export const config: RouteConfig = {
+  routeOverride: "/(en|no)/pubs",
+};
 
 export const handler: Handlers<DoiSearchResultsProps> = {
   async GET(request: Request, context: HandlerContext) {

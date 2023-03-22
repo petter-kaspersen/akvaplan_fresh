@@ -32,8 +32,11 @@ export default function ApnPubs(
   );
 }
 
-const resultItem = (item) => (
-  <li>
-    <a href={href(item)}>{item.header}</a>
-  </li>
-);
+const resultItem = (item) => {
+  const isodate = item.published_at.datetime.substring(0, 10);
+  return (
+    <li>
+      <a href={href(item)}>{item.header}</a> ({isodate})
+    </li>
+  );
+};
