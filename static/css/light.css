@@ -2,30 +2,30 @@
   color-scheme: light;
   --text1: hsl(var(--brand-hue) var(--brand-saturation) 10%);
   --text2: hsl(var(--brand-hue) 30% 30%);
+  --surface0: hsl(var(--brand-hue) 20% 99%);
   --surface1: hsl(var(--brand-hue) 20% 99%);
   --surface2: hsl(var(--brand-hue) 25% 94%);
   --surface3: hsl(var(--brand-hue) 20% 92%);
   --surface4: hsl(var(--brand-hue) 20% 90%);
   --surface-shadow: var(--brand-hue) 10% 20%;
   --shadow-strength: .02;
-  --link: #36647d;
+  --link: hsl(201, 40%, 35%);
 
-  --logo-blue: #005392;
-  --logo-green: #00A2B2;
-  --logo-wave-1: #005392;
+  --logo-blue: hsl(206, 100%, 29%);
+  --logo-green: hsl(185, 100%, 35%);
+  --logo-wave-1: hsl(206, 100%, 29%);
   --logo-wave-0: #00A2B2;
   --accent: #3a9c9e;
   --error: red;
-
 }
 
 [color-scheme="blue"],:root:not([color-scheme]) {
   color-scheme: light;
-  --text1: hsl(var(--brand-hue) 15% 75%);
+  --text1: hsl(var(--brand-hue) calc(var(--brand-saturation)/2) 85%);
   --text2: hsl(var(--brand-hue) 10% 61%);
-  --surface0: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/3.5));  
-  --surface1: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/1.2));  
-  --surface2: var(--blue);
+  --surface0: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/1.5));  
+  --surface1: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/1.0));  
+  --surface2: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/0.9));
   --surface3: hsl(200, 40%, 26%);
   --surface4: hsl(200, 40%, 33%);
 
