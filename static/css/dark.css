@@ -5,16 +5,16 @@
 
   --text1: hsl(var(--brand-hue) 15% 85%);
   --text2: hsl(var(--brand-hue) 5% 65%);
-  --surface0: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/3.5));
-  --surface1: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/2.3));
-  --surface2: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/2.0));
+  --surface0: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/2.4));
+  --surface1: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/2.0));
+  --surface2: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/1.9));
   --surface3: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/1.7));
   --surface4: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/1.4));
   
   --surface-shadow: var(--brand-hue) 50% 3%;
   --shadow-strength: .8;
   --link: hsl(182, 49%, 56%);
-  --logo-wave-1: #005392;
-  --logo-wave-0: #00A2B2;
+  --logo-wave-1: hsl(206, 100%, 29%);
+  --logo-wave-0: hsl(185, 100%, 35%);
   --error: red;
 }
