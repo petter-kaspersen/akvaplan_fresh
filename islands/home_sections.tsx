@@ -2,14 +2,24 @@ import { lang, t } from "akvaplan_fresh/text/mod.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { useSignal } from "@preact/signals";
 
+const En = new Map([
+  ["/settings", "/en/settings"],
+  ["/pubs", "/en/pubs"],
+]);
+const No = new Map([
+  ["/settings", "/no/innstillinger"],
+  ["/pubs", "/no/pubs"],
+]);
+
+const path = (lang: string) => lang === "en" || lang?.value === "en" ? En : No;
+
 export const buildSections = () => [
-  { href: "/pubs", text: t("pubs") },
+  { href: path(lang).get("/pubs"), text: t("Publications") },
   {
     href: "/article/search",
-    text: t("article"),
+    text: t("News"),
   },
-  { "href": "/components", text: t("components") },
-  { "href": "/pref", text: t("settings") },
+  { "href": path(lang).get("/settings"), text: t("Settings") },
 ];
 
 export default function HomeSections() {
@@ -21,7 +31,7 @@ export default function HomeSections() {
         {sections.map(({ href, text }) => (
           <li>
             <a href={href}>
-              {text}
+              {text} [{lang}]
             </a>
           </li>
         ))}

@@ -1,4 +1,4 @@
-import { fetchItem } from "akvaplan_fresh/services/mynewsdesk.ts";
+import { fetchItemBySlug } from "akvaplan_fresh/services/mynewsdesk.ts";
 import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
 
 import Article from "../../components/article/Article.tsx";
@@ -8,13 +8,15 @@ import ArticleHeader from "../../components/article/ArticleHeader.tsx";
 import { Page } from "akvaplan_fresh/components/page.tsx";
 
 export const config: RouteConfig = {
-  routeOverride: "/article/:type_of_media/:isodate/:slug/:id",
+  routeOverride:
+    "{/:lang}?/:type(news|nyhet|pressrelease|pressemelding|press){/:isodate}?/:slug",
 };
 
 export const handler: Handlers = {
   async GET(req, ctx) {
-    const { id, type_of_media } = ctx.params;
-    const item = await fetchItem(id, type_of_media);
+    const { slug, lang, type } = ctx.params;
+    const type_of_media = type.startsWith("press") ? "pressrelease" : "news";
+    const item = await fetchItemBySlug(slug, type_of_media);
     if (!item) {
       return ctx.renderNotFound();
     }
@@ -48,14 +50,29 @@ export default function NewsArticle({ data }: PageProps) {
   } = data;
 
   const __html = body;
-  const img = image.replace(",w_1782", ",w_1280");
+  //https://cloudinary.com/documentation/transformation_reference#ar_aspect_ratio
+  const img = image.replace(",w_1782", ",w_1782,ar_16:9");
+
+  const contact = contact_people.at(0);
+
+  const { name, title, phone, email } = contact;
+
+  const dotdotdot = {
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+    "whiteSpace": "nowrap",
+  };
+
+  const _caption = {
+    fontSize: "0.75rem",
+  };
 
   const contactPerson = {
-    name: "Lars-Henrik Larsen",
-    title: "Seksjonsleder",
-    email: "lhk@akvaplan.niva.no",
-    phone: "+47 481 14 233",
-    location: "Tromsø",
+    name,
+    title,
+    email,
+    phone,
+    img: image_thumbnail_large,
   };
 
   return (
@@ -66,12 +83,15 @@ export default function NewsArticle({ data }: PageProps) {
           image={img}
           imageCaption={image_caption}
         />
+        <figure style={_caption}>
+          <figcaption>{image_caption}</figcaption>
+        </figure>
 
         <section
           class="article-content"
           dangerouslySetInnerHTML={{ __html }}
-        ></section>
-        <ArticleContact contactPerson={contactPerson} />
+        >
+        </section>
       </Article>
     </Page>
   );

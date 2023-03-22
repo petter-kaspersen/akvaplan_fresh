@@ -1,24 +1,29 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
-import { parse } from "accept-language-parser";
-import { hasNordicOrSami, lang } from "akvaplan_fresh/text/mod.ts";
 
-interface State {
-  lang: string | Signal<string>;
-}
-
-const acceptLanguages = (req: Request) =>
-  parse(req.headers.get("accept-language") ?? undefined)?.map(({ code }) =>
-    code
-  );
-
-const acceptsNordic = (req: Request) => hasNordicOrSami(acceptLanguages(req));
+import {
+  //acceptsNordic,
+  getLangFromURL,
+  setSiteLang,
+} from "akvaplan_fresh/text/mod.ts";
 
 export function handler(
   req: Request,
-  ctx: MiddlewareHandlerContext<State>,
+  ctx: MiddlewareHandlerContext<Record<string, unknown>>,
 ) {
-  const code = acceptsNordic(req) ? "no" : "en";
-  lang.value = code;
-  ctx.state.lang = code;
+  const url = new URL(req.url);
+  const lang = getLangFromURL(url);
+  if (lang) {
+    setSiteLang(lang);
+  }
+
+  // Special treatment of / was used for redirecting using <meta> when JavaScript was disabled
+  // This feature is now disabled, non-JavaScript users must select language version on /
+  // Special case for root path ("/")
+  // Set lang from accept-language header, if present
+  // if ("/" === pathname && req.headers.has("accept-language")) {
+  //   const acceptLanguages = parse(req.headers.get("accept-language"));
+  //   const lang = acceptsNordic(acceptLanguages) ? "no" : "en";
+  //   setSiteLang(lang);
+  // }
   return ctx.next();
 }

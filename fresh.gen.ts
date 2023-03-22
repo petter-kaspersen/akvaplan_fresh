@@ -8,8 +8,8 @@ import * as $1 from "./routes/_500.tsx";
 import * as $2 from "./routes/_middleware.ts";
 import * as $3 from "./routes/article/[slug].tsx";
 import * as $4 from "./routes/article/search.tsx";
-import * as $5 from "./routes/components/card.tsx";
-import * as $6 from "./routes/doi.tsx";
+import * as $5 from "./routes/doi.tsx";
+import * as $6 from "./routes/home.tsx";
 import * as $7 from "./routes/index.tsx";
 import * as $8 from "./routes/mynewsdesk-articles/[slug].tsx";
 import * as $9 from "./routes/news.tsx";
@@ -29,8 +29,8 @@ const manifest = {
     "./routes/_middleware.ts": $2,
     "./routes/article/[slug].tsx": $3,
     "./routes/article/search.tsx": $4,
-    "./routes/components/card.tsx": $5,
-    "./routes/doi.tsx": $6,
+    "./routes/doi.tsx": $5,
+    "./routes/home.tsx": $6,
     "./routes/index.tsx": $7,
     "./routes/mynewsdesk-articles/[slug].tsx": $8,
     "./routes/news.tsx": $9,

@@ -4,6 +4,12 @@ type ArticleHeaderProps = {
   imageCaption: string;
 };
 
+const dotdotdot = {
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  "whiteSpace": "nowrap",
+};
+
 export default function ArticleHeader({
   header,
   image,
@@ -11,13 +17,13 @@ export default function ArticleHeader({
 }: ArticleHeaderProps) {
   return (
     <>
-      <header class="article-header">
-        <h1>{header}</h1>
-        <img src={image} alt={imageCaption} />
-      </header>
-      <section class="article-title-mobile">
+      <section class="article-title-mobile" aria-role="none">
         <h1>{header}</h1>
       </section>
+      <header class="article-header" style={{ minHeight: "800" }}>
+        <img title={imageCaption} alt={imageCaption} src={image} width="1000" />
+        <h1>{header}</h1>
+      </header>
     </>
   );
 }

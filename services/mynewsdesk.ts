@@ -67,8 +67,9 @@ export const fetchItem = async (id: string, type_of_media: string) => {
   }
 };
 
-const preprocess = (s) => s.replace(/["]/g, "");
-const postprocess = (s) => s.replaceAll("-aa-", "-a-");
+const preprocess = (s) =>
+  s.replaceAll('"', "").replaceAll("å", "a").replaceAll("/", "-");
+const postprocess = (s) => s.replaceAll("-aa-", "-a-").replace(/[-]{2,}/g, "-");
 
 export const href = ({ header }) =>
   "/mynewsdesk-articles/" +

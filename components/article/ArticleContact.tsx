@@ -3,7 +3,7 @@ type ContactPerson = {
   title: string;
   email: string;
   phone: string;
-  location: string;
+  img: string;
 };
 
 type ArticleContactProps = {
@@ -11,25 +11,27 @@ type ArticleContactProps = {
 };
 
 export default function ArticleContact({ contactPerson }: ArticleContactProps) {
+  const { name, email, phone, title, img } = contactPerson;
   return (
     <section class="article-contact">
       <div class="left-section">
         <span>Kontaktperson</span>
 
         <div class="name-and-title">
-          <h3>{contactPerson.name}</h3>
-          <span>{contactPerson.title}</span>
+          <h3>{name}</h3>
+          <span>{title}</span>
         </div>
         <div class="contact-info">
-          <a href={`mailto:${contactPerson.email}`}>{contactPerson.email}</a>
-          <a href={`tel:${contactPerson.phone}`}>{contactPerson.phone}</a>
-          <span>{contactPerson.location}</span>
+          <a href={`mailto:${email}`}>{email}</a>
+          <a href={`tel:${phone}`}>{phone}</a>
+          <span></span>
         </div>
       </div>
       <img
+        alt=""
         class="right-section"
-        src="https://preview.sdl.no/v2/dam/ssGDst9O7xlTb0J6I2g_Lw/I583h3dwed8?v=1673953218959"
-      ></img>
+        src={img}
+      />
     </section>
   );
 }
