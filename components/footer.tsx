@@ -1,7 +1,8 @@
+import SiteNav from "akvaplan_fresh/components/site_nav.tsx";
 export function Footer() {
   return (
     <footer>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}></div>
+      <SiteNav />
     </footer>
   );
 }

@@ -1,7 +1,5 @@
 import { homeAlbums } from "akvaplan_fresh/services/mediebank.ts";
 
-import SiteNav from "akvaplan_fresh/islands/home_sections.tsx";
-
 import { getLangFromURL, lang, t } from "akvaplan_fresh/text/mod.ts";
 
 import { Page } from "akvaplan_fresh/components/page.tsx";
@@ -32,7 +30,6 @@ export default function Home({ data: { albums, lang } }) {
           <HAlbum album={album} />
         </>
       ))}
-      <SiteNav />
     </Page>
   );
 }
