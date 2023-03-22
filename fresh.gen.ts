@@ -6,44 +6,42 @@ import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_404.tsx";
 import * as $1 from "./routes/_500.tsx";
 import * as $2 from "./routes/_middleware.ts";
-import * as $3 from "./routes/article/[slug].tsx";
-import * as $4 from "./routes/article/search.tsx";
-import * as $5 from "./routes/doi.tsx";
-import * as $6 from "./routes/home.tsx";
-import * as $7 from "./routes/index.tsx";
-import * as $8 from "./routes/mynewsdesk-articles/[slug].tsx";
-import * as $9 from "./routes/news.tsx";
+import * as $3 from "./routes/akvaplanist.tsx";
+import * as $4 from "./routes/article/[slug].tsx";
+import * as $5 from "./routes/article/search.tsx";
+import * as $6 from "./routes/doi.tsx";
+import * as $7 from "./routes/home.tsx";
+import * as $8 from "./routes/index.tsx";
+import * as $9 from "./routes/mynewsdesk-articles/[slug].tsx";
 import * as $10 from "./routes/pref.tsx";
 import * as $11 from "./routes/pubs.tsx";
 import * as $$0 from "./islands/doi_search.tsx";
-import * as $$1 from "./islands/home_sections.tsx";
-import * as $$2 from "./islands/lang_switcher.tsx";
-import * as $$3 from "./islands/pubs_histogram.tsx";
-import * as $$4 from "./islands/text.tsx";
-import * as $$5 from "./islands/theme_switcher.tsx";
+import * as $$1 from "./islands/lang_switcher.tsx";
+import * as $$2 from "./islands/pubs_histogram.tsx";
+import * as $$3 from "./islands/text.tsx";
+import * as $$4 from "./islands/theme_switcher.tsx";
 
 const manifest = {
   routes: {
     "./routes/_404.tsx": $0,
     "./routes/_500.tsx": $1,
     "./routes/_middleware.ts": $2,
-    "./routes/article/[slug].tsx": $3,
-    "./routes/article/search.tsx": $4,
-    "./routes/doi.tsx": $5,
-    "./routes/home.tsx": $6,
-    "./routes/index.tsx": $7,
-    "./routes/mynewsdesk-articles/[slug].tsx": $8,
-    "./routes/news.tsx": $9,
+    "./routes/akvaplanist.tsx": $3,
+    "./routes/article/[slug].tsx": $4,
+    "./routes/article/search.tsx": $5,
+    "./routes/doi.tsx": $6,
+    "./routes/home.tsx": $7,
+    "./routes/index.tsx": $8,
+    "./routes/mynewsdesk-articles/[slug].tsx": $9,
     "./routes/pref.tsx": $10,
     "./routes/pubs.tsx": $11,
   },
   islands: {
     "./islands/doi_search.tsx": $$0,
-    "./islands/home_sections.tsx": $$1,
-    "./islands/lang_switcher.tsx": $$2,
-    "./islands/pubs_histogram.tsx": $$3,
-    "./islands/text.tsx": $$4,
-    "./islands/theme_switcher.tsx": $$5,
+    "./islands/lang_switcher.tsx": $$1,
+    "./islands/pubs_histogram.tsx": $$2,
+    "./islands/text.tsx": $$3,
+    "./islands/theme_switcher.tsx": $$4,
   },
   baseUrl: import.meta.url,
   config,

@@ -1,11 +1,12 @@
 {
-  "auto": "automatisk",
   "Articles": "Artikler",
+  "Employees": "Ansatte",
   "Home": "Hjem",
   "News": "Nyheter",
   "Publications": "Publikasjoner",
   "Services": "Tjenester",
   "Settings": "Innstillinger",
+  "auto": "automatisk",
   "color-scheme": "fargetema",
   "en": "engelsk",
   "home.Album.0": "Album null",
