@@ -5,7 +5,15 @@
 
 .hscroll {
   display: flex;
-  padding: var(--size-3) 0;
+  padding: var(--size-3);
+}
+
+.hscroll > *:not(:last-child) {
+  margin-right: var(--size-2);
+}
+
+.hscroll > *:not(:first-child) {
+  margin-left: var(--size-2);
 }
 
 :root .scroller-button {
