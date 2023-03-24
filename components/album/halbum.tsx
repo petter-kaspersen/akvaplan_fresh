@@ -4,62 +4,55 @@
 //   PreviewElement,
 // } from "akvaplan_fresh/services/mediebank_interfaces.ts";
 
+import HScroll from "../hscroll/HScroll.tsx";
+
 type Image = {};
 type PreviewElement = {};
-export function HAlbum({ album }: { album: Image[] }) {
+export function HAlbum({
+  album,
+  customClass,
+}: {
+  album: Image[];
+  customClass: string;
+}) {
   return (
-    <ul class="horizontal-media-scroller">
+    <HScroll scrollerId={customClass}>
       {album.map((image, position) => (
         <PreviewFigure image={image} width={512} position={position} />
       ))}
-    </ul>
+    </HScroll>
   );
 }
 
 const thumbnail = (id) => `https://mediebank.deno.dev/thumbnail_big/${id}`;
 
-const PreviewFigure = (
-  { image: { id, previews, headline, description }, width, position },
-) => {
+const PreviewFigure = ({
+  image: { id, previews, headline, description },
+  width,
+  position,
+}) => {
   const preview =
     previews.find((p: PreviewElement) => p.width === Number(width)) ??
-      previews?.at(0) ?? {};
+    previews?.at(0) ??
+    {};
 
   const { url, height } = preview;
   width = preview.width;
 
   return (
-    <li>
+    <div class="halbum-image">
       <a href={thumbnail(id)} aria-label="…">
-        <figure>
-          <picture>
-            <img
-              width={width}
-              height={height}
-              alt={headline ?? "?"}
-              loading="lazy"
-              src={thumbnail(id)}
-            />
-          </picture>
-          <figcaption></figcaption>
-        </figure>
+        <div class="image-container">
+          <img
+            width={width}
+            height={height}
+            alt={headline ?? "?"}
+            loading="lazy"
+            src={thumbnail(id)}
+          />
+        </div>
+        <p>Link here</p>
       </a>
-    </li>
+    </div>
   );
 };
-
-// return (
-//   <figure class="img-hover" style={{ display: "inline" }}>
-//     <a href="#">
-//       <img
-//         src={url}
-//         alt={headline}
-//         title={description}
-//         loading="lazy"
-//       />
-//       <figcaption>
-//         {headline}
-//       </figcaption>
-//     </a>
-//   </figure>
-// );
