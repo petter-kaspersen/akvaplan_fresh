@@ -3,6 +3,8 @@ import {
   akvaplanists,
 } from "akvaplan_fresh/services/akvaplanist.ts";
 
+import { PeopleScroll } from "../components/people/PeopleScroll.tsx";
+
 import { Page } from "akvaplan_fresh/components/page.tsx";
 
 import {
@@ -27,20 +29,7 @@ export const handler: Handlers = {
 export default function Akvaplanists({ data }: PageProps<Akvaplanist[]>) {
   return (
     <Page title="Artikler">
-      <ul>
-        {[...data].map(resultItem)}
-      </ul>
+      <PeopleScroll people={data} />
     </Page>
   );
 }
-
-const resultItem = ({ id, family, given, ...rest }: Akvaplanist) => (
-  <li>
-    <details>
-      <summary>
-        <a href={href(id)}>{given} {family}</a>
-      </summary>
-      {JSON.stringify(rest)}
-    </details>
-  </li>
-);

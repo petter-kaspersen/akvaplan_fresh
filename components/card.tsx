@@ -1,30 +1,28 @@
 import { JSX, PropsWithChildren } from "preact";
 type CardProps = JSX.HTMLAttributes<HTMLDivElement>;
+
 interface Props {
   img?: string;
+  customClass?: string;
 }
 
-export function Card({ img, children }: PropsWithChildren & Props) {
+export function Card({
+  img,
+  customClass,
+  children,
+}: PropsWithChildren & Props) {
+  const fullClass = `card ${customClass ?? ""}`;
   return (
     <div
-      class="card"
+      class={fullClass}
       style={{
-        background: "var(--surface1)",
-        border: `1px solid var(--surface2)`,
-        padding: "var(--size-1)",
-        paddingBlockEnd: "var(--size-4)",
+        background: "var(--surface3)",
+        padding: "var(--size-2)",
         borderRadius: "var(--radius-2)",
         boxShadow: "var(--shadow-4)",
       }}
     >
-      {img
-        ? (
-          <img
-            src={img}
-            alt="Card image cap"
-          />
-        )
-        : null}
+      {img ? <img src={img} alt="Card image cap" /> : null}
       {children}
     </div>
   );
