@@ -37,6 +37,7 @@
 
 .article-header img {
   width: 100%;
+  max-width: 1782px;
 }
 
 .article-content,

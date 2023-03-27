@@ -1,7 +1,13 @@
 import AkvaplanLogo from "akvaplan_fresh/components/akvaplan_logo.tsx";
+import { buildMobileNav } from "akvaplan_fresh/services/nav.ts";
+import { lang, t } from "akvaplan_fresh/text/mod.ts";
+
 import borders from "open-props/props.borders.js";
 
-import { lang, t } from "akvaplan_fresh/text/mod.ts";
+import { computed } from "@preact/signals-core";
+
+const nav = computed(() => buildMobileNav(lang));
+
 export function CleanHeader(
   { href = "/", HeaderLogo = AkvaplanLogo, nav = [] },
 ) {
@@ -20,7 +26,7 @@ export function CleanHeader(
         <HeaderLogo />
       </a>
       <ul>
-        {nav.map(({ href, text }) => (
+        {[].map(({ href, text }) => (
           <li>
             <a href={href}>
               {text}

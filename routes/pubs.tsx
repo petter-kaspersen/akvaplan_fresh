@@ -12,7 +12,7 @@ import {
 import { Head } from "$fresh/runtime.ts";
 
 export const config: RouteConfig = {
-  routeOverride: "/(en|no)/pubs",
+  routeOverride: "/:lang(en|no)/(pubs|publikasjoner)",
 };
 
 export const handler: Handlers<DoiSearchResultsProps> = {

@@ -52,16 +52,8 @@ export default function DoiPublication(
       <article>
         <Card>
           <h2>{title}</h2>
-          <a href={href}>{doi}</a>
-
-          <div>
-            <a href="/pubs/?q=journal-article">
-              {type}
-            </a>
-          </div>
 
           <div class="mdc-typography--headline4">
-            {title}
           </div>
 
           <div class="mdc-typography--headline6">
@@ -69,9 +61,11 @@ export default function DoiPublication(
 
           <div class="mdc-typography--headline6">
             <p>
-              <em>{container}</em>
-              ({published})
+              <em>{container}</em>&nbsp;<span>({published})</span>
             </p>
+          </div>
+          <div>
+            {type}
           </div>
 
           <div class="headline6">

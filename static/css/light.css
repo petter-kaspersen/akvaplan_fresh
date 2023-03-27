@@ -1,7 +1,7 @@
 [color-scheme="light"] {
   color-scheme: light;
   --text1: hsl(var(--brand-hue) var(--brand-saturation) 10%);
-  --text2: hsl(var(--brand-hue) 30% 30%);
+  --text2: hsl(var(--brand-hue) var(--brand-saturation) 30%);
   --surface0: hsl(var(--brand-hue) 20% 99%);
   --surface1: hsl(var(--brand-hue) 20% 99%);
   --surface2: hsl(var(--brand-hue) 25% 94%);
@@ -21,8 +21,8 @@
 
 [color-scheme="blue"],:root:not([color-scheme]) {
   color-scheme: light;
-  --text1: hsl(var(--brand-hue) calc(var(--brand-saturation)/2) 85%);
-  --text2: hsl(var(--brand-hue) 10% 61%);
+  --text1: hsl(var(--brand-hue) calc(var(--brand-saturation)/1.5) 85%);
+  --text2: hsl(var(--brand-hue) calc(var(--brand-saturation)/1.6) 99%);
   --surface0: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/1.5));  
   --surface1: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/1.0));  
   --surface2: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness)/0.9));

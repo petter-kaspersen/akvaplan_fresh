@@ -15,9 +15,8 @@ export function handler(
   if (lang) {
     setSiteLang(lang);
   }
-
+  // Disabled /:lang redirect for non-JavaScript users, they must now select language version on /
   // Special treatment of / was used for redirecting using <meta> when JavaScript was disabled
-  // This feature is now disabled, non-JavaScript users must select language version on /
   // Special case for root path ("/")
   // Set lang from accept-language header, if present
   // if ("/" === pathname && req.headers.has("accept-language")) {

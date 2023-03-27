@@ -27,5 +27,5 @@ const simplify512 = ({ previews, ...image }) => {
 // https://mediebank.deno.dev/api/v1/apps/assets?query=${query}&limit=
 export const homeAlbums = async () =>
   await [_home0, _home1, _home2, _home3].map(({ data }) =>
-    data.map(simplify512).filter((_, i) => i < 6)
+    data.map(simplify512).filter((_, i) => i < 24)
   );

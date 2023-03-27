@@ -74,3 +74,12 @@ const postprocess = (s) => s.replaceAll("-aa-", "-a-").replace(/[-]{2,}/g, "-");
 export const href = ({ header }) =>
   "/mynewsdesk-articles/" +
   postprocess(slug(preprocess(header)));
+
+export const searchNews = async ({ q, limit = 100 } = {}) => {
+  const url = searchURL(q, "news", { limit });
+  const response = await fetch(url);
+  if (response.ok) {
+    const { search_result: { items } } = await response.json();
+    return { items };
+  }
+};
