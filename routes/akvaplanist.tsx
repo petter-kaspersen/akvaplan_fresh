@@ -5,7 +5,6 @@ import {
   groupByGivenInitial0,
 } from "akvaplan_fresh/services/akvaplanist.ts";
 
-//import PeopleSearch from "akvaplan_fresh/islands/people_search.tsx";
 import { PeopleScroll } from "akvaplan_fresh/components/people/PeopleScroll.tsx";
 import { PeopleCard } from "akvaplan_fresh/components/people/PeopleCard.tsx";
 import { Page } from "akvaplan_fresh/components/page.tsx";
@@ -22,7 +21,7 @@ import {
 interface AkvaplanistsProps {
   people: Akvaplanist[];
 
-  filtered: Akvaplanist[];
+  results: Akvaplanist[];
 
   group: string;
 
@@ -59,11 +58,21 @@ export const handler: Handlers = {
 
     const people = await akvaplanists();
 
+    const { searchParams } = new URL(req.url);
+    const q = searchParams.get("q");
+
     const filtered = (filter?.length > 0)
       ? [...people].filter((p: Akvaplanist) => _(p?.[group]) === _(filter))
       : people;
 
-    const grouped = (filtered).reduce(
+    // @todo akvaplanist.tsx: implement proper search (and indexing)
+    // Need to expand codes prior to indexing
+
+    const results = filtered.filter((p) =>
+      q?.length > 0 ? _(JSON.stringify(p)).includes(_(q)) : true
+    );
+
+    const grouped = (results).reduce(
       buildPeopleGrouper(fx),
       new Map(),
     );
@@ -78,15 +87,29 @@ export const handler: Handlers = {
       grouped,
       group,
       filter,
-      filtered,
+      results,
+      q,
     });
   },
 };
 
 const Grouped = (
-  { grouped, group },
+  { grouped, group, q },
 ) => (
   <div>
+    <form
+      autocomplete="off"
+      style={{ display: "grid", gridTemplateColumns: "3fr 1fr" }}
+    >
+      <input
+        type="search"
+        name="q"
+        value={q}
+      />
+
+      <button type="submit">{t("Search")}</button>
+    </form>
+
     {
       /* <a class="button" href="gn0">
       {t("filter.given")}
@@ -120,7 +143,7 @@ const OneGroup = (
 );
 
 export default function Akvaplanists(
-  { data: { lang, base, title, people, grouped, group, filter, filtered } }:
+  { data: { lang, base, title, people, grouped, group, filter, results, q } }:
     PageProps<
       AkvaplanistsProps
     >,
@@ -145,8 +168,8 @@ export default function Akvaplanists(
     <Page title={pagetitle} base={base}>
       <H1Title />
       {filter?.length > 0
-        ? <OneGroup members={filtered} />
-        : <Grouped group={group} grouped={grouped} />}
+        ? <OneGroup members={results} />
+        : <Grouped group={group} grouped={grouped} q={q} />}
     </Page>
   );
 }
