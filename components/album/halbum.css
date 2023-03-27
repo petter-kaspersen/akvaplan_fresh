@@ -1,16 +1,13 @@
 :root {
   --sm-space: 1rem;
   --md-space: 2rem;
-  --halbum-child-size: 200px;
+  --min-halbum-size: 150px;
+  --max-halbum-size: 400px;
 }
 
 .halbum-image {
-  width: 200px;
-}
-
-.halbum-image .image-container {
-  width: var(--halbum-child-size);
-  height: var(--halbum-child-size);
+  width: clamp(var(--min-halbum-size), 20vw, var(--max-halbum-size));
+  min-width: var(--min-halbum-size);
 }
 
 .halbum-image img {
