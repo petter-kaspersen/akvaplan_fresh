@@ -33,8 +33,8 @@ const PreviewFigure = ({
 }) => {
   const preview =
     previews.find((p: PreviewElement) => p.width === Number(width)) ??
-    previews?.at(0) ??
-    {};
+      previews?.at(0) ??
+      {};
 
   const { url, height } = preview;
   width = preview.width;

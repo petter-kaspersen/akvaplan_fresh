@@ -1,36 +1,44 @@
 import { Head } from "$fresh/runtime.ts";
-
-import { Akvaplanist } from "../../services/akvaplanist.ts";
-import { Card } from "../card.tsx";
-
+import { Akvaplanist } from "akvaplan_fresh/services/akvaplanist.ts";
+import { Card } from "akvaplan_fresh/components/card.tsx";
+import { t } from "akvaplan_fresh/text/mod.ts";
 interface Props {
   person: Akvaplanist;
+  lang: string;
 }
 
-// TODO: Implement this
-const unitToReadable = (unit: string) => unit;
-
-// TODO: Get lang, for now just use 'no'
-export function PeopleCard({ person }: Props) {
+// TODO: Handle lang variants (for position, unit, etc.)
+export function PeopleCard({ person, lang }: Props) {
   return (
     <Card customClass="people-card">
       <Head>
         <link rel="stylesheet" href="/css/people-card.css" />
       </Head>
       <h3 class="people-name">
-        {person.given} {person.family}
+        <span style={{ color: "var(--text2)" }}>{person.given}</span>
+        &nbsp;
+        <span style={{ color: "var(--text1)" }}>{person.family}</span>
       </h3>
       <span class="people-position">{person.position.no}</span>
-      <span class="people-unit">{unitToReadable(person.unit)}</span>
+      <span class="people-unit">{t(`unit.${person.unit}`)}</span>
       <span class="people-workplace">{person.workplace}</span>
       <div class="people-card__contact">
         <a
           class="people-button people-phone-button"
           href={`tel:${person.tel}`}
-        ></a>
+        >
+        </a>
 
-        <a class="people-link people-phone-link" href={`tel:${person.tel}`}>
-          {person.tel}
+        <a
+          class="people-button people-email-button"
+          href={`mailto:${person.email}`}
+        >
+        </a>
+        <a
+          class="people-link people-email-link"
+          href={`mailto:${person.email}`}
+        >
+          {person.email}
         </a>
       </div>
     </Card>

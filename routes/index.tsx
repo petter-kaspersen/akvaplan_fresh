@@ -1,4 +1,4 @@
-import { buildIndexLangRedirect } from "akvaplan_fresh/text/mod.ts";
+import { buildIndexLangRedirect, t } from "akvaplan_fresh/text/mod.ts";
 import { Page } from "akvaplan_fresh/components/page.tsx";
 
 import { Handlers } from "$fresh/server.ts";
@@ -9,6 +9,7 @@ export const handler: Handlers = {
     // Get server side render lang (set in _middleware.ts)
     // Used for browser (meta) redirect when JavaScript is disabled
     const { lang } = ctx.state;
+    console.log("/", "GET", lang);
     return ctx.render({ lang });
   },
 };
@@ -28,7 +29,8 @@ export default function SiteRoot({ data: { lang } }) {
           dangerouslySetInnerHTML={{ __html: buildIndexLangRedirect() }}
         />
       </Head>
-      <h1>Akvaplan-niva</h1>
+      <h1 style={{ color: "var(--accent)" }}>Akvaplan-niva</h1>
+
       <p lang="en">Select site language</p>
       <p lang="no">Velg språkversjon</p>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>

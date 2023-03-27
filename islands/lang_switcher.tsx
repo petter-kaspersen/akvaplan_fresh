@@ -7,6 +7,20 @@ import {
 import { JSX } from "preact";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
+export function LangLinks() {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+      <a class="button" href="/en">
+        EN
+      </a>
+
+      <a class="button" href="/no">
+        NO
+      </a>
+    </div>
+  );
+}
+
 export default function LangSwitcherBtns(
   props: JSX.HTMLAttributes<HTMLDivElement>,
 ) {

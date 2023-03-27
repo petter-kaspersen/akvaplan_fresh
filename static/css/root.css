@@ -35,7 +35,7 @@ a:hover {
 html,
 body {
   color-scheme: dark light;
-  width: 99vw;
+  /* width: 99vw; */
   min-height: 100vh;
   background: var(--surface1);
   color: var(--text1);

@@ -2,6 +2,7 @@ import { computed, signal } from "@preact/signals";
 
 import _en from "./trans/en.json" assert { type: "json" };
 import _no from "./trans/no.json" assert { type: "json" };
+//import _unit_no from "./trans/unit/no.json" assert { type: "json" };
 
 const getRoot = () => globalThis?.document?.documentElement;
 const getStorage = () => globalThis?.localStorage;
@@ -36,7 +37,7 @@ export const acceptsNordic = (
   acceptLanguages: readonly string[] | Set<string>,
 ) => new Set([...acceptLanguages].map((lang) => nordic.has(lang))).has(true);
 
-export const getLangFromURL = (url: URL): string | null => {
+export const getLangFromURL = (url: URL | string): string | null => {
   const segm = new URL(url).pathname.split("/")?.slice(1, 2)?.at(0);
   switch (segm) {
     case "nb":
@@ -53,7 +54,9 @@ export const getLangFromURL = (url: URL): string | null => {
 export const getLangAttr = (el = getRoot()): string | null =>
   el?.getAttribute("lang");
 
-export const lang = signal<string>(getSiteLang());
+export const lang = signal<string | null>(getSiteLang());
+
+export const base = computed(() => "/" + lang + "/");
 
 const storeLang = (
   name: string,
@@ -84,6 +87,7 @@ export const setLang = (
     // update signal
     if (lang?.value) {
       lang.value = name;
+      console.warn(lang);
     }
 
     // persist (if el===root)
