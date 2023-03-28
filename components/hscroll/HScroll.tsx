@@ -5,7 +5,7 @@ type HScrollProps = PropsWithChildren & {
   scrollerid: string;
 };
 
-export default function HScroll({ children, scrollerId }: HScrollProps) {
+export function HScroll({ children, scrollerId }: HScrollProps) {
   return (
     <div class="scroll-container">
       <button
@@ -30,3 +30,5 @@ export default function HScroll({ children, scrollerId }: HScrollProps) {
     </div>
   );
 }
+
+export default HScroll;

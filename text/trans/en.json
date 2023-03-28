@@ -4,6 +4,7 @@
   "Home": "Home",
   "More": "More",
   "News": "News",
+  "Only.no": "This text is only available in Norwegian",
   "People": "People",
   "Personvern": "Privacy",
   "Publications": "Publications",
@@ -18,11 +19,15 @@
   "home.Album.2": "Album two",
   "home.Album.3": "Album three",
   "lang": "language",
+  "lang.no": "Norwegian",
+  "lang.en": "English",
   "meta.description": "Akvaplan-niva is a not-for profit research institute focusing on water, ocean, and arctic issues",
   "no": "Norwegian",
   "settings.privacy": "Akvaplan-niva's main website is cookie free and loads zero third-party scripts",
+  "topic.aquaculture": "aquaculture",
   "theme.dark": "dark",
   "theme.blue": "blue",
   "theme.auto": "automatic",
-  "theme.light": "light"
+  "theme.light": "light",
+  "unit.ledels": "Leadership"
 }
