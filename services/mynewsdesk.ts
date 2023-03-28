@@ -1,4 +1,4 @@
-import { slug } from "https://deno.land/x/slug/mod.ts";
+import { slug as _slug } from "https://deno.land/x/slug/mod.ts";
 
 // https://www.mynewsdesk.com/docs/webservice_pressroom#services_view
 const base = "https://www.mynewsdesk.com";
@@ -71,15 +71,40 @@ const preprocess = (s) =>
   s.replaceAll('"', "").replaceAll("å", "a").replaceAll("/", "-");
 const postprocess = (s) => s.replaceAll("-aa-", "-a-").replace(/[-]{2,}/g, "-");
 
-export const href = ({ header }) =>
-  "/mynewsdesk-articles/" +
-  postprocess(slug(preprocess(header)));
+// export const href = ({ header }) =>
+//   "/mynewsdesk-articles/" +
+//   postprocess(_slug(preprocess(header)));
 
 export const searchNews = async ({ q, limit = 100 } = {}) => {
   const url = searchURL(q, "news", { limit });
   const response = await fetch(url);
   if (response.ok) {
-    const { search_result: { items } } = await response.json();
-    return { items };
+    const { search_result: { items, ...x }, ...rest } = await response.json();
+    return { ...rest, x, items };
   }
 };
+
+export const slug = ({ header }) => postprocess(_slug(preprocess(header)));
+
+export const href = (
+  // lang -> *site* language
+  // language -> article language
+  { header, lang, language, published_at: { datetime } },
+) => {
+  const isodate = new Date(datetime).toJSON().split("T").at(0);
+  const page = lang === "en" ? "news" : "nyhet";
+  return `/${lang ?? language}/${page}/${isodate}/${slug({ header })}`;
+};
+
+//export const slug = () => `/${language}/${type}/${isodate}/${slug}`;
+
+export const mynewsdeskToNews = ({ lang } = {}) =>
+(
+  { language, header, heading, published_at, image, image_thumbnail_small },
+) => ({
+  title: header,
+  href: href({ header, lang, language, published_at }),
+  hreflang: language,
+  img: image,
+  thumb: image_thumbnail_small,
+});
