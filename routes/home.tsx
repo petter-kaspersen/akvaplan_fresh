@@ -1,6 +1,11 @@
-import { buildMobileNav } from "akvaplan_fresh/services/nav.ts";
 import { HAlbum } from "akvaplan_fresh/components/album/halbum.tsx";
+import { NewsFilmStrip } from "akvaplan_fresh/components/news/film_strip.tsx";
+
+import { buildMobileNav } from "akvaplan_fresh/services/nav.ts";
 import { homeAlbums } from "akvaplan_fresh/services/mediebank.ts";
+
+import { latestNews } from "akvaplan_fresh/services/news.ts";
+
 import { getLangFromURL, lang, t } from "akvaplan_fresh/text/mod.ts";
 
 import { Handlers, RouteConfig } from "$fresh/server.ts";
@@ -12,27 +17,34 @@ export const config: RouteConfig = {
 
 export const handler: Handlers = {
   async GET(req, ctx) {
+    const sitelang = getLangFromURL(req.url);
+    lang.value = sitelang;
     const albums = await homeAlbums();
-    lang.value = getLangFromURL(req.url);
+    const news = await latestNews({ lang: sitelang });
+
     const title = t("Home");
     const nav = buildMobileNav(lang);
-    return ctx.render({ albums, lang, title, nav });
+    return ctx.render({ news, albums, lang, title, nav });
   },
 };
-export default function Home({ data: { albums, lang, title, nav } }) {
+export default function Home({ data: { news, albums, lang, title, nav } }) {
   return (
     <Page>
       <nav style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        {nav.map(({ text, href }) => (
+        {
+          /* {nav.map(({ text, href }) => (
           <a class="target" href={href}>
             {text}
           </a>
-        ))}
+        ))} */
+        }
       </nav>
+      {/* <img src="https://user-images.githubusercontent.com/35185/228166169-e2c9520d-9042-47ab-a132-7b39edb4a80e.png" /> */}
+      <NewsFilmStrip news={news} />
       {albums.map((album, i) => (
         <>
           <h3>{t(`home.Album.${i}`)}</h3>
-          <HAlbum album={album} customClass={`album_${i}`} />
+          <HAlbum album={album} customClass={`album_${i}`} lang={lang} />
         </>
       ))}
     </Page>
