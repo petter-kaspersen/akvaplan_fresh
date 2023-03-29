@@ -1,4 +1,5 @@
 import { SiteNav } from "akvaplan_fresh/components/site_nav.tsx";
+import { Settings } from "akvaplan_fresh/components/settings.tsx";
 import ApnLogo from "akvaplan_fresh/components/akvaplan_logo.tsx";
 
 const footerStyle = {
@@ -15,6 +16,7 @@ export function Footer() {
     <footer style={footerStyle}>
       <ApnLogo width="400" />
       <SiteNav />
+      <Settings style={footerStyle} />
     </footer>
   );
 }

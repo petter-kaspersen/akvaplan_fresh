@@ -1,8 +1,12 @@
 import { href } from "./mynewsdesk.ts";
 
-import { MynewsdeskItem, News } from "akvaplan_fresh/@interfaces/mod.ts";
+import {
+  MynewsdeskItem,
+  News,
+  NewsMapper,
+} from "akvaplan_fresh/@interfaces/mod.ts";
 
-export const newsFromMynewsdesk = (lang: string) =>
+export const newsFromMynewsdesk = ({ lang }: NewsMapper) =>
 (
   {
     language,

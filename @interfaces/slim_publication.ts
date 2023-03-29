@@ -1,6 +1,6 @@
 export interface SlimPublication {
   doi?: string;
-  published: string;
+  published: Date;
   printed?: string;
   type?: string;
   container?: string;

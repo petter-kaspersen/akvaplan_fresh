@@ -31,7 +31,7 @@ export default function ThemeSwitcher() {
     <form
       onClick={handleThemeClick}
     >
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+      <div>
         <button
           color-scheme="dark"
           aria-pressed={theme === "dark"}
@@ -39,13 +39,6 @@ export default function ThemeSwitcher() {
           {t("theme.dark")}
         </button>
 
-        <button
-          data-theme="auto"
-          color-scheme="blue"
-          aria-pressed={theme === null}
-        >
-          {t("theme.auto")}
-        </button>
         <button
           color-scheme="blue"
           aria-pressed={theme === "blue"}
@@ -57,6 +50,13 @@ export default function ThemeSwitcher() {
           aria-pressed={theme === "light"}
         >
           {t("theme.light")}
+        </button>
+        <button
+          data-theme="auto"
+          color-scheme="blue"
+          aria-pressed={theme === null}
+        >
+          {t("theme.auto")}
         </button>
       </div>
     </form>
