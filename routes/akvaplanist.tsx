@@ -82,7 +82,7 @@ export const handler: Handlers = {
       lang,
       base,
       title,
-      people,
+      total: people.length,
       grouped,
       group,
       filter,
@@ -104,6 +104,7 @@ const Grouped = (
         type="search"
         name="q"
         value={q}
+        placeholder={t("people.search.placeholder")}
       />
 
       <button type="submit">{t("Search")}</button>
@@ -145,7 +146,7 @@ const banner =
   "https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_1782,ar_4:1/bb7x8e4rmevc5kboua8e";
 
 export default function Akvaplanists(
-  { data: { lang, base, title, people, grouped, group, filter, results, q } }:
+  { data: { lang, base, title, total, grouped, group, filter, results, q } }:
     PageProps<
       AkvaplanistsProps
     >,
@@ -169,7 +170,13 @@ export default function Akvaplanists(
 
   const caption = "";
 
-  const subtitle = "";
+  const subtitle = filter?.length === 0
+    ? String(t("people.subtitle")).replace(
+      "%i",
+      total,
+    )
+    : "";
+
   return (
     <Page title={pagetitle} base={base}>
       <section class="page-header">
