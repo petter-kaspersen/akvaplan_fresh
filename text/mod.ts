@@ -102,7 +102,8 @@ export const setLang = (
   }
 };
 
-export const t = (key: string) => signal<string>(dict?.value?.get(key) ?? key);
+export const t = (key: string) =>
+  signal<string>(dict?.value?.get(key?.value ?? key) ?? key);
 
 export const buildIndexLangRedirect = () =>
   `(() => {

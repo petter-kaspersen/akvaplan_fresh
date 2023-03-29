@@ -8,6 +8,12 @@ import {
   type RouteConfig,
 } from "$fresh/server.ts";
 
+interface NullProps {
+  lang: string;
+  base: string;
+  title: string;
+}
+
 export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)/:page(null|0)",
 };
@@ -22,13 +28,13 @@ export const handler: Handlers = {
   },
 };
 
-export default function Research(
-  { data: { title, lang, base } }: PageProps<unknown>,
+export default function Null(
+  { data: { title, lang, base } }: PageProps<NullProps>,
 ) {
   return (
     <Page title={title} base={base}>
       <h1>
-        <a href=".">{title}</a> [{lang}]
+        <a href=".">{title}</a> [{t(`lang.${lang}`)}]
       </h1>
     </Page>
   );

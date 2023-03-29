@@ -7,6 +7,7 @@ const footerStyle = {
   display: "grid",
   placeItems: "center",
   color: "var(--text1)",
+  padding: "2rem",
 };
 
 export function Footer() {

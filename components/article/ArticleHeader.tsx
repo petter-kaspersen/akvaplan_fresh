@@ -1,7 +1,7 @@
 type ArticleHeaderProps = {
   header: string;
-  image: string;
-  imageCaption: string;
+  image?: string;
+  imageCaption?: string;
 };
 
 const dotdotdot = {

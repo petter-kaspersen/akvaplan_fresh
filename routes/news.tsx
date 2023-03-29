@@ -13,6 +13,7 @@ export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)/:page(news|nyheter)",
 };
 import { Head } from "$fresh/runtime.ts";
+import { MynewsdeskItem } from "../@interfaces/mynewsdesk.ts";
 
 type Props = {};
 
@@ -48,7 +49,7 @@ export default function ApnPubs(
   );
 }
 
-const resultItem = (item) => {
+const resultItem = (item: MynewsdeskItem) => {
   const isodate = item.published_at.datetime.substring(0, 10);
   return (
     <li>

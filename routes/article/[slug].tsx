@@ -1,11 +1,14 @@
 import { fetchItemBySlug } from "akvaplan_fresh/services/mynewsdesk.ts";
-import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
+import { t } from "akvaplan_fresh/text/mod.ts";
 
 import Article from "../../components/article/Article.tsx";
 import ArticleContact from "../../components/article/ArticleContact.tsx";
 import ArticleHeader from "../../components/article/ArticleHeader.tsx";
 
+import { MynewsdeskItem } from "akvaplan_fresh/@interfaces/mynewsdesk.ts";
+
 import { Page } from "akvaplan_fresh/components/page.tsx";
+import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
 
 export const config: RouteConfig = {
   routeOverride:
@@ -20,11 +23,21 @@ export const handler: Handlers = {
     if (!item) {
       return ctx.renderNotFound();
     }
-    return ctx.render(item);
+    return ctx.render({ item, lang });
   },
 };
 
-export default function NewsArticle({ data }: PageProps) {
+const OnlyIn = ({ language, lang }) => {
+  return <div lang={lang}>{t(`Only.${String(language)}`)}</div>;
+};
+export interface ArticleProps {
+  item: MynewsdeskItem;
+  lang: string;
+}
+
+export default function NewsArticle(
+  { data: { item, lang } }: PageProps<ArticleProps>,
+) {
   const {
     header,
     image,
@@ -46,8 +59,8 @@ export default function NewsArticle({ data }: PageProps) {
     url,
     language,
     body,
-    ...item
-  } = data;
+    ...mynewsdeskItem
+  } = item;
 
   const __html = body;
   //https://cloudinary.com/documentation/transformation_reference#ar_aspect_ratio
@@ -56,12 +69,6 @@ export default function NewsArticle({ data }: PageProps) {
   const contact = contact_people.at(0);
 
   const { name, title, phone, email } = contact;
-
-  const dotdotdot = {
-    textOverflow: "ellipsis",
-    overflow: "hidden",
-    "whiteSpace": "nowrap",
-  };
 
   const _caption = {
     fontSize: "0.75rem",
@@ -78,11 +85,17 @@ export default function NewsArticle({ data }: PageProps) {
   return (
     <Page title={header}>
       <Article language={language}>
+        <section style={_caption}>
+          <em style={{ color: "var(--text2)" }}>
+            {lang !== language ? OnlyIn({ lang, language }) : null}
+          </em>
+        </section>
         <ArticleHeader
           header={header}
           image={img}
           imageCaption={image_caption}
         />
+
         <figure style={_caption}>
           <figcaption>{image_caption}</figcaption>
         </figure>
