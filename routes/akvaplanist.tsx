@@ -8,7 +8,6 @@ import {
 import { PeopleScroll } from "akvaplan_fresh/components/people/PeopleScroll.tsx";
 import { PeopleCard } from "akvaplan_fresh/components/people/PeopleCard.tsx";
 import { Page } from "akvaplan_fresh/components/page.tsx";
-import { Card } from "akvaplan_fresh/components/card.tsx";
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
 
 import {
@@ -17,6 +16,7 @@ import {
   type PageProps,
   type RouteConfig,
 } from "$fresh/server.ts";
+import AkvaplanistHeader from "../components/akvaplanist/AkvaplanistHeader.tsx";
 
 interface AkvaplanistsProps {
   people: Akvaplanist[];
@@ -166,10 +166,12 @@ export default function Akvaplanists(
     : t("People");
   return (
     <Page title={pagetitle} base={base}>
-      <H1Title />
-      {filter?.length > 0
-        ? <OneGroup members={results} />
-        : <Grouped group={group} grouped={grouped} q={q} />}
+      <AkvaplanistHeader
+        source={`https://preview.sdl.no/v2/dam/DOiHX8lbQY9ROzHB5tb3xg/aPpeSOfAWDA?v=1673954066472`}
+        alt={`Alt text here`}
+        title="People"
+        subtitle="Mus mauris vitae ultricies leo integer malesuada nunc vel risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est velit"
+      />
     </Page>
   );
 }
