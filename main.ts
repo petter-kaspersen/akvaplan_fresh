@@ -16,8 +16,11 @@ const render: RenderFunction = (
   ctx: RenderContext,
   freshRender: InnerRenderFunction,
 ) => {
-  // Set `lang` in render contexct -> reflected into html[lang]
-  //ctx.lang = getLangFromURL(ctx.url);
+  // Set `lang` in render context -> reflects into html[lang]
+  const lang = getLangFromURL(ctx.url);
+  if (lang) {
+    ctx.lang = lang;
+  }
   freshRender();
 };
 
