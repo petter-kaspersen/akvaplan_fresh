@@ -11,7 +11,7 @@ import {
 import { Head } from "$fresh/runtime.ts";
 
 export const config: RouteConfig = {
-  routeOverride: "/doi/:prefix/:suffix0/:extra*",
+  routeOverride: "{/:lang}?/doi/:prefix/:suffix0/:extra*",
 };
 
 const doiFromParams = (params: Record<string, string>) => {
@@ -72,7 +72,7 @@ export default function DoiPublication(
             <a
               target="_blank"
               style="display:grid; grid-gap: 0.25rem; grid-template-columns: auto 1fr; align-items: center;"
-              href="https://doi.org/10.1016/j.jembe.2022.151855"
+              href={`https://doi.org/${doi}`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

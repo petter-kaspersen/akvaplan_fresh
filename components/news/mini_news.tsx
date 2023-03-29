@@ -14,8 +14,12 @@ export const MiniNews = (
 ) => (
   <Card customClass="mini-news">
     <a href={href}>
-      <img src={img} alt={caption} title={caption} />
-      <span style={{ color: "var(--text2)" }}>
+      {img ? <img src={img} alt={caption} title={caption} /> : null}
+      <span
+        style={{
+          color: "var(--text2)",
+        }}
+      >
         {isodate(published)}: {title}
       </span>
     </a>

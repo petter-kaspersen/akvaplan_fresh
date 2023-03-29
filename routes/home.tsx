@@ -18,7 +18,7 @@ export const handler: Handlers = {
     const sitelang = getLangFromURL(req.url);
     lang.value = sitelang;
     const albums = await homeAlbums();
-    const news = await latestNews({ q: "", lang: sitelang, limit: 64 });
+    const news = await latestNews({ q: "", lang: sitelang, limit: 32 });
 
     const title = t("Home");
     const nav = buildMobileNav(lang);
