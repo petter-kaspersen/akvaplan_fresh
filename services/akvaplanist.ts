@@ -1,6 +1,4 @@
-import { Reducer } from "https://esm.sh/v111/preact@10.13.0/hooks/src/index.js";
-
-const base = "https://akvaplanists.deno.dev";
+export const base = "https://akvaplanists.deno.dev";
 
 export interface Akvaplanist {
   given: string;
@@ -12,6 +10,7 @@ export interface Akvaplanist {
   country?: string;
   id?: string;
   email?: string;
+  employed?: boolean;
 }
 
 export interface Position {
@@ -47,16 +46,16 @@ export const akvaplanists = async (): Promise<Akvaplanist[]> => {
 
 export const reducePeopleByKey = (key: string) =>
 (
-  previous: Map<string, Akvaplanist[]>,
-  current: Akvaplanist,
+  map: Map<string, Akvaplanist[]>,
+  person: Akvaplanist,
 ) => {
-  const grp = current?.[key] ?? "_";
-  if (!previous.has(grp)) {
-    previous.set(grp, [current]);
+  const grp = person?.hasOwnProperty(key) ? person[key] : "_";
+  if (!map.has(grp)) {
+    map.set(grp, [person]);
   } else {
-    previous.set(grp, [...previous.get(grp) ?? [], current]);
+    map.set(grp, [...map.get(grp) ?? [], person]);
   }
-  return previous;
+  return map;
 };
 
 export const buildPeopleGrouper = (fx) =>

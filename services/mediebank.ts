@@ -1,3 +1,4 @@
+// Albums for / are statically imported for performance
 import _home0 from "https://mediebank.deno.dev/albums/505?limit=9" assert {
   type: "json",
 };

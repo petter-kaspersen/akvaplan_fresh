@@ -1,3 +1,4 @@
+import { MynewsdeskItem } from "akvaplan_fresh/@interfaces/mynewsdesk.ts";
 import { slug as _slug } from "https://deno.land/x/slug/mod.ts";
 
 // https://www.mynewsdesk.com/docs/webservice_pressroom#services_view
@@ -59,7 +60,10 @@ export const fetchItemBySlug = async (
   }
 };
 
-export const fetchItem = async (id: string, type_of_media: string) => {
+export const fetchItem = async (
+  id: string,
+  type_of_media: string,
+): Promise<MynewsdeskItem | undefined> => {
   const r = await fetch(itemURL(id, type_of_media));
   if (r.ok) {
     const { item: [item] } = await r.json();
@@ -86,25 +90,13 @@ export const searchNews = async ({ q, limit = 100 } = {}) => {
 
 export const slug = ({ header }) => postprocess(_slug(preprocess(header)));
 
+// Get localized application URL for a news article
+
 export const href = (
-  // lang -> *site* language
-  // language -> article language
-  { header, lang, language, published_at: { datetime } },
+  { header, language, published_at: { datetime } }: MynewsdeskItem, // language -> article language
+  lang = language, // lang -> *site* language
 ) => {
   const isodate = new Date(datetime).toJSON().split("T").at(0);
   const page = lang === "en" ? "news" : "nyhet";
-  return `/${lang ?? language}/${page}/${isodate}/${slug({ header })}`;
+  return `/${lang}/${page}/${isodate}/${slug({ header })}`;
 };
-
-//export const slug = () => `/${language}/${type}/${isodate}/${slug}`;
-
-export const mynewsdeskToNews = ({ lang } = {}) =>
-(
-  { language, header, heading, published_at, image, image_thumbnail_small },
-) => ({
-  title: header,
-  href: href({ header, lang, language, published_at }),
-  hreflang: language,
-  img: image,
-  thumb: image_thumbnail_small,
-});
