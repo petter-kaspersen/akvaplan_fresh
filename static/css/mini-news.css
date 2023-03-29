@@ -1,6 +1,7 @@
 .mini-news {
   padding: 0 !important;
   position: relative;
+  margin-top: 0;
 }
 
 .mini-news::before {
@@ -26,6 +27,6 @@
 }
 
 .mini-news a span {
-  width: 20rem;
+  width: 16rem;
   padding: var(--size-2);
 }
