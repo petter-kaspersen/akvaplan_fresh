@@ -5,7 +5,7 @@
 
 .hscroll {
   display: flex;
-  padding: var(--size-3) 0;
+  padding: var(--size-1) 0 var(--size-3) 0;
 }
 
 .hscroll > *:not(:last-child) {
