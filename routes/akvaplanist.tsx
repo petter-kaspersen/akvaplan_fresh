@@ -16,7 +16,6 @@ import {
   type PageProps,
   type RouteConfig,
 } from "$fresh/server.ts";
-import AkvaplanistHeader from "../components/akvaplanist/AkvaplanistHeader.tsx";
 
 interface AkvaplanistsProps {
   people: Akvaplanist[];
@@ -142,6 +141,9 @@ const OneGroup = (
   </ul>
 );
 
+const banner =
+  "https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_1782,ar_4:1/bb7x8e4rmevc5kboua8e";
+
 export default function Akvaplanists(
   { data: { lang, base, title, people, grouped, group, filter, results, q } }:
     PageProps<
@@ -164,14 +166,23 @@ export default function Akvaplanists(
   const pagetitle = filter?.length > 0
     ? `${group}.${t(filter)} / ${t("People")}`
     : t("People");
+
+  const caption = "";
+
+  const subtitle = "";
   return (
     <Page title={pagetitle} base={base}>
-      <AkvaplanistHeader
-        source={`https://preview.sdl.no/v2/dam/DOiHX8lbQY9ROzHB5tb3xg/aPpeSOfAWDA?v=1673954066472`}
-        alt={`Alt text here`}
-        title="People"
-        subtitle="Mus mauris vitae ultricies leo integer malesuada nunc vel risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est velit"
-      />
+      <section class="page-header">
+        <div class="page-header__content">
+          <H1Title />
+          <p>{subtitle}</p>
+        </div>
+        <img src={banner} alt={caption} title={caption} />
+      </section>
+
+      {filter?.length > 0
+        ? <OneGroup members={results} />
+        : <Grouped group={group} grouped={grouped} q={q} />}
     </Page>
   );
 }
