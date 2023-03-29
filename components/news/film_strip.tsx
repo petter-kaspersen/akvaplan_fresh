@@ -9,8 +9,14 @@ type NewsFilmStripProps = {
 export function NewsFilmStrip({ news }: NewsFilmStripProps) {
   return (
     <HScroll>
-      {news.map(({ title, href, thumb }) => (
-        <MiniNews img={thumb} href={href} title={title} />
+      {news.map(({ title, href, caption, published, thumb }) => (
+        <MiniNews
+          img={thumb}
+          href={href}
+          title={title}
+          caption={caption}
+          published={published}
+        />
       ))}
     </HScroll>
   );
