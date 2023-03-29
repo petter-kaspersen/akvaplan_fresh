@@ -1,23 +1,13 @@
-import { mynewsdeskToNews, searchNews } from "./mynewsdesk.ts";
+import { searchNews } from "./mynewsdesk.ts";
+import { newsFromMynewsdesk } from "./news_mynewsdesk.ts";
 import { search as searchPubs } from "./dois.ts";
+import { News, Search } from "akvaplan_fresh/@interfaces/mod.ts";
 
-export interface News {
-  title: string;
-  lang?: string;
-  href: string;
-  img: string;
-  thumb: string;
-}
+export const latestNews = async ({ q = "", lang, limit }: Search) => {
+  const { items } = await searchNews({ q, limit });
 
-// @todo Create a Deno service to return latest news (of any kind)
-export const latestNews = async ({ lang }) => {
-  const { items } = await searchNews({ q: "", limit: 8 });
+  //const latestPubs = await searchPubs();
+  //console.warn(latestPubs);
 
-  // import _home0 from "https://dois.deno.dev/doi?limit=10&format=json
-  // " assert {
-  //   type: "json",
-  // };
-  const latestPubs = await searchPubs();
-
-  return [...items.map(mynewsdeskToNews({ lang }))];
+  return [...items.map(newsFromMynewsdesk(lang))];
 };
