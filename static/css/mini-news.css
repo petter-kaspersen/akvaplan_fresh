@@ -1,0 +1,31 @@
+.mini-news {
+  padding: 0 !important;
+  position: relative;
+}
+
+.mini-news::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 100%;
+  left: -5px;
+  background: var(--accent);
+}
+
+.mini-news a {
+  display: flex;
+  color: var(--text2);
+  line-clamp: 2;
+  font-size: var(--font-size-0);
+}
+
+.mini-news a img {
+  width: 100px;
+  height: 100px;
+}
+
+.mini-news a span {
+  width: 20rem;
+  padding: var(--size-2);
+}

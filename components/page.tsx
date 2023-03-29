@@ -57,6 +57,8 @@ export function Page(
         type="image/svg+xml"
       />
       <link rel="stylesheet" href="/css/hscroll.css" />
+      <link rel="stylesheet" href="/css/akvaplanist.css" />
+      <link rel="stylesheet" href="/css/mini-news.css" />
       <script src="https://static.nrk.no/core-components/major/10/core-scroll/core-scroll.min.js" />
 
       <Styles />
@@ -72,7 +74,7 @@ export function Page(
 
       <body {...propsExceptChildren}>
         <CleanHeader href={href} />
-        <main style={{ minHeight: "100vh" }}>{children}</main>
+        <main style={{ minHeight: "100vh", padding: "0 var(--size-4)" }}>{children}</main>
         <Footer />
       </body>
     </>
