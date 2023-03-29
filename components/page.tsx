@@ -58,6 +58,7 @@ export function Page(
       />
       <link rel="stylesheet" href="/css/hscroll.css" />
       <link rel="stylesheet" href="/css/akvaplanist.css" />
+      <link rel="stylesheet" href="/css/mini-news.css" />
       <script src="https://static.nrk.no/core-components/major/10/core-scroll/core-scroll.min.js" />
 
       <Styles />
