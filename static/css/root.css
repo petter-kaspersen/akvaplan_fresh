@@ -114,3 +114,12 @@ button.symbol {
   align-items: center;
   /* transition: border-color .5s var(--ease-2) 1s; */
 }
+
+.limit-lines {
+  display: block;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 3.5rem;
+  line-height: 1rem;
+}

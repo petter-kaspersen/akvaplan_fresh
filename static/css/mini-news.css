@@ -4,6 +4,10 @@
   margin-top: 0;
 }
 
+.mini-news:first-of-type {
+  border-top-left-radius: 0;
+}
+
 .mini-news::before {
   content: " ";
   display: block;
@@ -14,10 +18,13 @@
   background: var(--accent);
 }
 
+.mini-news:first-of-type::before {
+  display: none;
+}
+
 .mini-news a {
   display: flex;
   color: var(--text2);
-  line-clamp: 2;
   font-size: var(--font-size-0);
 }
 
@@ -29,4 +36,12 @@
 .mini-news a span {
   width: 18rem;
   padding: var(--size-2);
+}
+
+.mini-news-link {
+  width: 100px;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  background: var(--accent);
+  flex-shrink: 0;
 }
