@@ -7,8 +7,17 @@ type NewsFilmStripProps = {
 };
 
 export function NewsFilmStrip({ news }: NewsFilmStripProps) {
+  // TODO: Correct link
   return (
-    <HScroll>
+    <HScroll
+      scrollerId="news-film-strip"
+      staticFirstElement={
+        <div className="mini-news-link">
+          <a href="/">
+          </a>
+        </div>
+      }
+    >
       {news.map(({ title, href, caption, published, thumb }) => (
         <MiniNews
           img={thumb}

@@ -1,11 +1,15 @@
-import { PropsWithChildren } from "preact";
-import { useRef } from "preact/hooks";
+import { PropsWithChildren, JSX } from "preact";
 
 type HScrollProps = PropsWithChildren & {
   scrollerid: string;
+  staticFirstElement?: JSX.Element;
 };
 
-export function HScroll({ children, scrollerId }: HScrollProps) {
+export function HScroll({
+  children,
+  scrollerId,
+  staticFirstElement,
+}: HScrollProps) {
   return (
     <div class="scroll-container">
       <button
@@ -24,6 +28,7 @@ export function HScroll({ children, scrollerId }: HScrollProps) {
       >
         ˃
       </button>
+      {staticFirstElement && staticFirstElement}
       <core-scroll id={scrollerId} class="hscroll">
         {children}
       </core-scroll>

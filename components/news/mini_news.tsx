@@ -16,6 +16,7 @@ export const MiniNews = (
     <a href={href}>
       {img ? <img src={img} alt={caption} title={caption} /> : null}
       <span
+        className="limit-lines"
         style={{
           color: "var(--text2)",
         }}
