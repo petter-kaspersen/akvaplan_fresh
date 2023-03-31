@@ -1,4 +1,4 @@
-import { Page } from "../components/page.tsx";
+import { Page } from "akvaplan_fresh/components/page.tsx";
 import { Head } from "$fresh/runtime.ts";
 import { UnknownPageProps } from "$fresh/server.ts";
 
@@ -6,7 +6,7 @@ export default function NotFoundPage({ url }: UnknownPageProps) {
   const title = "Unknown URL";
 
   return (
-    <html lang="en">
+    <html>
       <Head>
         <title>{title}</title>
       </Head>
@@ -25,11 +25,15 @@ export default function NotFoundPage({ url }: UnknownPageProps) {
               {url.pathname}
               {" "}
             </code>
+          </p>
+          <p>
             does not exist on
           </p>
-          <a href="/">
-            {url.host}
-          </a>
+          <p>
+            <a href="/">
+              {url.host}
+            </a>
+          </p>
         </main>
       </Page>
     </html>
