@@ -9,7 +9,6 @@ export const handler: Handlers = {
     // Get server side render lang (set in _middleware.ts)
     // Used for browser (meta) redirect when JavaScript is disabled
     const { lang } = ctx.state;
-    console.log("/", "GET", lang);
     return ctx.render({ lang });
   },
 };
