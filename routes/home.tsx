@@ -1,11 +1,9 @@
-import { buildMobileNav } from "akvaplan_fresh/services/nav.ts";
+//import { buildMobileNav } from "akvaplan_fresh/services/nav.ts";
 import { homeAlbums } from "akvaplan_fresh/services/mediebank.ts";
 import { latestNews } from "akvaplan_fresh/services/news.ts";
 import { getLangFromURL, lang, t } from "akvaplan_fresh/text/mod.ts";
 
-import { HAlbum } from "akvaplan_fresh/components/album/halbum.tsx";
-import { NewsFilmStrip } from "akvaplan_fresh/components/news/film_strip.tsx";
-import { Page } from "akvaplan_fresh/components/page.tsx";
+import { HAlbum, NewsFilmStrip, Page } from "akvaplan_fresh/components/mod.ts";
 
 import { Handlers, RouteConfig } from "$fresh/server.ts";
 
@@ -18,31 +16,26 @@ export const handler: Handlers = {
     const sitelang = getLangFromURL(req.url);
     lang.value = sitelang;
     const albums = await homeAlbums();
-    const news = await latestNews({ q: "", lang: sitelang, limit: 32 });
+    const news = await latestNews({ q: "", lang: sitelang, limit: 128 });
 
     const title = t("Home");
-    const nav = buildMobileNav(lang);
-    return ctx.render({ news, albums, lang, title, nav });
+    //const nav = buildMobileNav(lang);
+    return ctx.render({ news, albums, lang, title });
   },
 };
-export default function Home({ data: { news, albums, lang, title, nav } }) {
+
+export default function Home({ data: { news, albums, lang, title } }) {
   return (
     <Page>
-      <nav style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        {
-          /* {nav.map(({ text, href }) => (
-          <a class="target" href={href}>
-            {text}
-          </a>
-        ))} */
-        }
-      </nav>
-      {/* <img src="https://user-images.githubusercontent.com/35185/228166169-e2c9520d-9042-47ab-a132-7b39edb4a80e.png" /> */}
-      <NewsFilmStrip news={news} />
+      <link rel="stylesheet" href="/css/hscroll.css" />
+      <link rel="stylesheet" href="/css/mini-news.css" />
+      <script src="https://static.nrk.no/core-components/major/10/core-scroll/core-scroll.min.js" />
+      <NewsFilmStrip news={news} lang={lang.value} />
+
       {albums.map((album, i) => (
         <>
           <h3>{t(`home.Album.${i}`)}</h3>
-          <HAlbum album={album} customClass={`album_${i}`} lang={lang} />
+          <HAlbum album={album} customClass={`album_${i}`} lang={lang.value} />
         </>
       ))}
     </Page>
