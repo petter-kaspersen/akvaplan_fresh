@@ -4,12 +4,6 @@ type ArticleHeaderProps = {
   imageCaption?: string;
 };
 
-const dotdotdot = {
-  textOverflow: "ellipsis",
-  overflow: "hidden",
-  "whiteSpace": "nowrap",
-};
-
 export default function ArticleHeader({
   header,
   image,

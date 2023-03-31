@@ -1,28 +1,56 @@
 import { isodate } from "akvaplan_fresh/time/mod.ts";
-import { Card } from "akvaplan_fresh/components/card.tsx";
+import { ApnSym, Icon, MiniCard } from "akvaplan_fresh/components/mod.ts";
+import { t } from "akvaplan_fresh/text/mod.ts";
+import { type News } from "akvaplan_fresh/@interfaces/mod.ts";
 
-type MiniNewsProps = {
-  img: string;
-  title: string;
-  href: string;
-  caption: string;
-  published: Date;
+const newsItemStyle = {
+  display: "grid",
+  padding: "var(--size-1)",
+  fontSize: "var(--font-size-0)",
+  gap: "var(--size-2)",
+  placeItems: "center",
+  gridTemplateColumns: "128px 16rem",
 };
 
-export const MiniNews = (
-  { img, title, caption, href, published }: MiniNewsProps,
+export const MiniNewsCard = (
+  { img, title, caption, href, published, type, hreflang, lang }:
+    & HTMLElement
+    & News,
 ) => (
-  <Card customClass="mini-news">
-    <a href={href}>
-      {img ? <img src={img} alt={caption} title={caption} /> : null}
-      <span
-        className="limit-lines"
-        style={{
-          color: "var(--text2)",
-        }}
-      >
-        {isodate(published)}: {title}
+  <MiniCard>
+    <li
+      style={newsItemStyle}
+    >
+      {type === "person" ? <ApnSym width="96" /> : (
+        <a href={href}>
+          <img
+            src={img}
+            width="128"
+            alt={caption ?? title}
+            title={caption ?? title}
+            loading="lazy"
+          />
+        </a>
+      )}
+
+      <span>
+        <a
+          href={href}
+          class="line-clamp3"
+          style={{ paddingBlockEnd: "var(--size-1)" }}
+        >
+          {title}
+        </a>
+        <time>{isodate(published)}</time>{" "}
+        <span>{t(`news.${type}`).value.toUpperCase()}</span>
+        {hreflang !== lang
+          ? (
+            <span style={{ color: "var(--text2)" }}>
+              &nbsp;({t(`lang.${hreflang}`)})
+            </span>
+          )
+          : null}
       </span>
-    </a>
-  </Card>
+    </li>
+  </MiniCard>
 );

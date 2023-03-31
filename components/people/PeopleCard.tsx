@@ -1,7 +1,10 @@
-import { Head } from "$fresh/runtime.ts";
-import { Akvaplanist } from "akvaplan_fresh/services/akvaplanist.ts";
-import { Card } from "akvaplan_fresh/components/card.tsx";
+import { ApnSym, Card, Icon } from "akvaplan_fresh/components/mod.ts";
 import { t } from "akvaplan_fresh/text/mod.ts";
+
+import { type Akvaplanist } from "akvaplan_fresh/@interfaces/mod.ts";
+
+import { Head } from "$fresh/runtime.ts";
+
 interface Props {
   person: Akvaplanist;
   lang: string;
@@ -15,30 +18,40 @@ export function PeopleCard({ person, lang }: Props) {
         <link rel="stylesheet" href="/css/people-card.css" />
       </Head>
       <h3 class="people-name">
-        <span style={{ color: "var(--text2)" }}>{person.given}</span>
+        <span style={{ color: "var(--text1)" }}>{person.given}</span>
         &nbsp;
-        <span style={{ color: "var(--text1)" }}>{person.family}</span>
+        <span style={{ color: "var(--text2)" }}>{person.family}</span>
       </h3>
-      <span class="people-position">{person.position.no}</span>
-      <span class="people-unit">{t(`unit.${person.unit}`)}</span>
-      <span class="people-workplace">{person.workplace}</span>
-      <div class="people-card__contact">
+      <ApnSym width="2rem" />
+      <span class="people-position">
+        {person.position?.[lang ?? "no"] ?? ""}
+      </span>
+
+      <span class="people-workplace">
         <a
-          class="people-button people-phone-button"
+          style={{ color: "var(--text2)" }}
+          href={`/no/folk/unit/${person.unit}`}
+        >
+          {t(`${person.unit}`)}
+        </a>,{" "}
+        <a
+          href={`/no/folk/workplace/${person.workplace}`}
+          style={{ color: "var(--text2)" }}
+        >
+          {person.workplace}
+        </a>
+      </span>
+
+      <div class="">
+        <a
           href={`tel:${person.tel}`}
         >
-        </a>
-
-        <a
-          class="people-button people-email-button"
-          href={`mailto:${person.email}`}
-        >
+          <Icon name="phone_in_talk"></Icon>
         </a>
         <a
-          class="people-link people-email-link"
           href={`mailto:${person.email}`}
         >
-          {person.email}
+          <Icon name="contact_mail"></Icon>
         </a>
       </div>
     </Card>

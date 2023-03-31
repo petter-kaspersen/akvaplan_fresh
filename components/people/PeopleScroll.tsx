@@ -9,9 +9,7 @@ type Props = {
 export function PeopleScroll({ people }: Props) {
   return (
     <HScroll scrollerId="people-scroll">
-      {people.map((person) => (
-        <PeopleCard person={person} key={person.id} />
-      ))}
+      {people.map((person) => <PeopleCard person={person} key={person.id} />)}
     </HScroll>
   );
 }

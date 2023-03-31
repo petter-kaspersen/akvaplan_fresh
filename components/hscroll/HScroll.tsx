@@ -1,9 +1,12 @@
-import { PropsWithChildren, JSX } from "preact";
+import { t } from "akvaplan_fresh/text/mod.ts";
 
-type HScrollProps = PropsWithChildren & {
-  scrollerid: string;
-  staticFirstElement?: JSX.Element;
+import { Icon, MiniCard } from "../mod.ts";
+type HScrollProps = HTMLElement & {
+  scrollerId: string;
+  staticFirstElement?: HTMLElement;
 };
+
+//unicode: ˂˃
 
 export function HScroll({
   children,
@@ -16,18 +19,21 @@ export function HScroll({
         class="scroller-button scroller-button--left"
         data-for={scrollerId}
         value="left"
-        aria-label="Rull til venstre"
+        aria-label={t("scroll.right")}
       >
-        ˂
+        <Icon name="arrow_back_ios_new" />
       </button>
       <button
         class="scroller-button scroller-button--right"
         data-for={scrollerId}
         value="right"
-        aria-label="Rull til høyre"
+        aria-label={t("scroll.right")}
       >
-        ˃
+        <span class="target">
+          <Icon name="arrow_forward_ios" />
+        </span>
       </button>
+
       {staticFirstElement && staticFirstElement}
       <core-scroll id={scrollerId} class="hscroll">
         {children}
