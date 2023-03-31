@@ -23,6 +23,13 @@ const No = new Map([
 ]);
 const _tr = (lang: string | StringSignal) =>
   lang === "en" || lang?.value === "en" ? En : No;
+
+export const routes = (lang: string) => _tr(lang);
+
+export const personURL = ({ id, given, family, email, lang }) =>
+  id
+    ? `${routes(lang).get("akvaplanists")}/id/${id}`
+    : `${routes(lang).get("akvaplanists")}/name/${family}/${given}`;
 export const buildNav = (lang: string | StringSignal) => [
   { href: _tr(lang).get("news"), text: t("News") },
   { href: _tr(lang).get("services"), text: t("Services") },
