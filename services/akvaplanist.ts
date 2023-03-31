@@ -1,21 +1,5 @@
+import { Akvaplanist } from "akvaplan_fresh/@interfaces/mod.ts";
 export const base = "https://akvaplanists.deno.dev";
-
-export interface Akvaplanist {
-  given: string;
-  family: string;
-  position: Position;
-  tel?: string;
-  unit?: string;
-  workplace?: string;
-  country?: string;
-  id?: string;
-  email?: string;
-  employed?: boolean;
-}
-
-export interface Position {
-  [lang: string]: string;
-}
 
 const _all: Akvaplanist[] = [];
 

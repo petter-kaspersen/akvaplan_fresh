@@ -8,7 +8,7 @@ const defaults = {
 
 const { entries } = Object;
 
-export const search = async (params: URLSearchParams = {}) => {
+export const search = async (params: Record<string, string> = {}) => {
   const url = new URL("/doi", base);
   const { searchParams } = url;
 

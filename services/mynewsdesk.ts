@@ -1,3 +1,5 @@
+import { detectDOIs } from "akvaplan_fresh/text/doi.ts";
+
 import { MynewsdeskItem } from "akvaplan_fresh/@interfaces/mynewsdesk.ts";
 import { slug as _slug } from "https://deno.land/x/slug/mod.ts";
 
@@ -79,12 +81,22 @@ const postprocess = (s) => s.replaceAll("-aa-", "-a-").replace(/[-]{2,}/g, "-");
 //   "/mynewsdesk-articles/" +
 //   postprocess(_slug(preprocess(header)));
 
-export const searchNews = async ({ q, limit = 100 } = {}) => {
-  const url = searchURL(q, "news", { limit });
+export const searchMynewsdesk = async (
+  { q = "", type_of_media = "news", limit = 100 } = {},
+) => {
+  const url = searchURL(q, type_of_media, { limit });
   const response = await fetch(url);
   if (response.ok) {
-    const { search_result: { items, ...x }, ...rest } = await response.json();
-    return { ...rest, x, items };
+    const { search_result: { items }, ...rest } = await response.json();
+    const withDOIs = items.map((item) => {
+      const dois = detectDOIs(item);
+      if (dois) {
+        const doi = dois.map((d) => "10." + d.split("10.").at(1));
+        item.rels = { doi };
+      }
+      return item;
+    });
+    return { ...rest, items: withDOIs };
   }
 };
 
@@ -100,3 +112,6 @@ export const href = (
   const page = lang === "en" ? "news" : "nyhet";
   return `/${lang}/${page}/${isodate}/${slug({ header })}`;
 };
+
+export const defaultThumbnail =
+  "https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,h_96,q_auto:good,w_128/lkxumpqth4dstepfhple";

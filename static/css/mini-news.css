@@ -8,7 +8,7 @@
   border-top-left-radius: 0;
 }
 
-.mini-news::before {
+/* .mini-news::before {
   content: " ";
   display: block;
   position: absolute;
@@ -16,7 +16,7 @@
   height: 100%;
   left: -5px;
   background: var(--accent);
-}
+} */
 
 .mini-news:first-of-type::before {
   display: none;
@@ -45,3 +45,7 @@
   background: var(--accent);
   flex-shrink: 0;
 }
+.line-clamp3 {
+  line-clamp: 3;
+  overflow: hidden;
+ }

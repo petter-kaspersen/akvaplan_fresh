@@ -3,7 +3,15 @@ import { Head } from "$fresh/runtime.ts";
 const button = Deno.readTextFile(`./components/button/button.css`);
 const hscroll = Deno.readTextFile(`./components/album/halbum.css`);
 
-const cssfiles = ["reset", "fonts", "openprops", "root", "dark", "light"]
+const cssfiles = [
+  "reset",
+  "fonts",
+  "openprops",
+  "root",
+  "dark",
+  "light",
+  "icons",
+]
   .map((
     f,
   ) => Deno.readTextFile(`./static/css/${f}.css`));

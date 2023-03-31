@@ -1,6 +1,7 @@
 import { SlimPublication } from "../@interfaces/slim_publication.ts";
-import { Page } from "../components/page.tsx";
-import { Card } from "../components/card.tsx";
+
+import { Card, Icon, Page } from "akvaplan_fresh/components/mod.ts";
+
 import {
   HandlerContext,
   Handlers,
@@ -20,7 +21,9 @@ const doiFromParams = (params: Record<string, string>) => {
   return `${prefix}/${suffix}`;
 };
 
-const getSlimPublication = async (doi: string): Promise<SlimPublication> => {
+const getSlimPublication = async (
+  doi: string,
+): Promise<SlimPublication | undefined> => {
   const base = Deno.env.get("dois_base") ?? "https://dois.deno.dev";
   const url = new URL(`/doi/${doi}`, base);
   const response = await fetch(url);
@@ -28,16 +31,18 @@ const getSlimPublication = async (doi: string): Promise<SlimPublication> => {
     const slim: SlimPublication = await response.json();
     return slim;
   }
-  const empty: SlimPublication = {};
-  return empty;
 };
 
 export const handler: Handlers<SlimPublication> = {
-  async GET(request: Request, context: HandlerContext) {
-    const { params } = context;
+  async GET(request: Request, ctx: HandlerContext) {
+    const { params } = ctx;
     const doi = doiFromParams(params);
     const slim = await getSlimPublication(doi);
-    return context.render(slim);
+    if (slim) {
+      return ctx.render(slim);
+    } else {
+      return ctx.renderNotFound();
+    }
   },
 };
 
@@ -74,15 +79,7 @@ export default function DoiPublication(
               style="display:grid; grid-gap: 0.25rem; grid-template-columns: auto 1fr; align-items: center;"
               href={`https://doi.org/${doi}`}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="48"
-                viewBox="0 96 960 960"
-                width="48"
-                fill="var(--text1)"
-              >
-                <path d="M180 936q-24 0-42-18t-18-42V666h60v210h600V274H180v212h-60V274q0-24 18-42t42-18h600q24 0 42 18t18 42v602q0 24-18 42t-42 18H180Zm233-167-45-45 118-118H120v-60h366L368 428l45-45 193 193-193 193Z" />
-              </svg>
+              <Icon name="exit_to_app" />
 
               <span>https://doi.org/{doi}</span>
             </a>

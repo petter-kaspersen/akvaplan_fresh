@@ -27,3 +27,15 @@ export function Card({
     </div>
   );
 }
+
+export const MiniCard = (props: HTMLElement) => (
+  <div
+    style={{
+      background: "var(--surface2)",
+      borderRadius: "var(--radius-2)",
+      boxShadow: "var(--shadow-4)",
+    }}
+  >
+    {props.children}
+  </div>
+);

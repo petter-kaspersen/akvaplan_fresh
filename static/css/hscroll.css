@@ -18,7 +18,7 @@
 }
 
 :root .scroller-button {
-  background: hsla(182, 49%, 56%, 1);
+  background: var(--surface4);
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -28,11 +28,11 @@
   height: 2rem;
   font-size: 1rem;
   min-width: 2rem;
-  opacity: 0.1;
+  opacity: 0.8;
 }
 
 :root .scroller-button:disabled {
-  opacity: 0;
+  opacity: 0.05;
 }
 
 .scroller-button--left {

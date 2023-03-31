@@ -6,4 +6,5 @@ export interface News {
   img?: string;
   caption?: string;
   thumb?: string;
+  type?: string;
 }

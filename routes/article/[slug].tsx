@@ -1,4 +1,5 @@
 import { fetchItemBySlug } from "akvaplan_fresh/services/mynewsdesk.ts";
+import { isodate } from "akvaplan_fresh/time/mod.ts";
 import { t } from "akvaplan_fresh/text/mod.ts";
 
 import Article from "../../components/article/Article.tsx";
@@ -30,7 +31,8 @@ export const handler: Handlers = {
 const OnlyIn = ({ language, lang }) => {
   return <div lang={lang}>{t(`Only.${String(language)}`)}</div>;
 };
-export interface ArticleProps {
+
+interface ArticleProps {
   item: MynewsdeskItem;
   lang: string;
 }
@@ -41,11 +43,11 @@ export default function NewsArticle(
   const {
     header,
     image,
-    image_small,
-    image_medium,
+    // image_small,
+    // image_medium,
     image_thumbnail_large,
-    image_thumbnail_medium,
-    image_thumbnail_small,
+    // image_thumbnail_medium,
+    // image_thumbnail_small,
     contact_people,
     image_caption,
     related_items,
@@ -69,6 +71,8 @@ export default function NewsArticle(
   const contact = contact_people.at(0);
 
   const { name, title, phone, email } = contact;
+
+  const published = isodate(published_at.datetime);
 
   const _caption = {
     fontSize: "0.75rem",
