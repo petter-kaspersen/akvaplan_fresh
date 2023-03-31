@@ -28,7 +28,7 @@ export const routes = (lang: string) => _tr(lang);
 
 export const personURL = ({ id, given, family, email, lang }) =>
   id
-    ? `${routes(lang).get("akvaplanists")}/id/${id}`
+    ? `${routes(lang).get("akvaplanists")}/id/${id}/${family}/${given}`
     : `${routes(lang).get("akvaplanists")}/name/${family}/${given}`;
 export const buildNav = (lang: string | StringSignal) => [
   { href: _tr(lang).get("news"), text: t("News") },
