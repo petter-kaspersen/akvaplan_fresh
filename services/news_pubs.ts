@@ -1,4 +1,4 @@
-import { href } from "./mynewsdesk.ts";
+import { defaultThumbnail, href } from "./mynewsdesk.ts";
 
 import {
   News,
@@ -6,14 +6,16 @@ import {
   SlimPublication,
 } from "akvaplan_fresh/@interfaces/mod.ts";
 
-export const newsFromPubs = ({ lang }: NewsMapper): News =>
+export const newsFromPubs = ({ lang }: NewsMapper) =>
 ({
   title,
   doi,
   published,
 }: SlimPublication): News => ({
-  title,
+  title: `${title}`,
   published,
   href: `/${lang}/doi/${doi}`,
   hreflang: "en",
+  thumb: defaultThumbnail,
+  type: "doi",
 });
