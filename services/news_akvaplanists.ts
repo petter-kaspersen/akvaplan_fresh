@@ -1,3 +1,4 @@
+import { personURL } from "akvaplan_fresh/services/nav.ts";
 import { t } from "akvaplan_fresh/text/mod.ts";
 
 import {
@@ -26,10 +27,10 @@ const units = {
 
 export const newsFromAkvaplanists =
   ({ lang }) =>
-  ({ given, family, created, unit, workplace }: Akvaplanist): News => ({
+  ({ id, given, family, created, unit, workplace }: Akvaplanist): News => ({
     title: `${given} ${family} ${t("people.employed_in")} ${units
       ?.[unit]}, ${workplace}`,
-    //href:
+    href: personURL({ id, given, family }),
     hreflang: lang,
     published: created ?? new Date(),
     type: "person",
