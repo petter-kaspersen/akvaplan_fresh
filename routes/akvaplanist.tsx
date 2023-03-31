@@ -35,7 +35,7 @@ interface AkvaplanistsProps {
 
 export const config: RouteConfig = {
   routeOverride:
-    "{/:lang}?/:page(people|folk|ansatte|employees|akvaplanist){/:groupname}?{/:filter}?",
+    "{/:lang}?/:page(people|folk|ansatte|employees|akvaplanist){/:groupname}?{/:filter}?{/:fn}?{/:gn}?",
 };
 const _ = (s: string) => s?.toLowerCase();
 export const handler: Handlers = {
@@ -96,11 +96,6 @@ const Grouped = (
   { grouped, group, q },
 ) => (
   <div>
-    <link rel="stylesheet" href="/css/hscroll.css" />
-    <link rel="stylesheet" href="/css/akvaplanist.css" />
-
-    <script src="https://static.nrk.no/core-components/major/10/core-scroll/core-scroll.min.js" />
-
     <form
       autocomplete="off"
       style={{ display: "grid", gridTemplateColumns: "3fr 1fr" }}
@@ -202,17 +197,26 @@ export default function Akvaplanists(
 
   return (
     <Page title={pagetitle} base={base}>
-      <section class="page-header">
-        <div class="page-header__content">
-          <H1Title />
-          <p>{subtitle}</p>
-        </div>
-        <Picture />
-      </section>
+      {group !== "id"
+        ? (
+          <section class="page-header">
+            <div class="page-header__content">
+              <H1Title />
+              <p>{subtitle}</p>
+            </div>
+            <Picture />
+          </section>
+        )
+        : null}
 
       {filter?.length > 0
         ? <OneGroup members={results} />
         : <Grouped group={group} grouped={grouped} q={q} />}
+
+      <link rel="stylesheet" href="/css/hscroll.css" />
+      <link rel="stylesheet" href="/css/akvaplanist.css" />
+
+      <script src="https://static.nrk.no/core-components/major/10/core-scroll/core-scroll.min.js" />
     </Page>
   );
 }

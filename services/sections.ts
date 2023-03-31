@@ -1,0 +1,16 @@
+export const no = [
+  ["INNOV", "Akvakultur innovasjon"],
+  ["INSPM", "Akvakultur i</>nspeksjoner og miljø"],
+  ["PRODB", "Akvakultur produksjon og bærekraft"],
+  ["BIOLT", "Biologiske analyser og taksonomi"],
+  ["DIGIS", "Digitale løsninger"],
+  ["FISLOG", "Feltinfrastruktur og logistikk"],
+  ["FISK", "Forsknings- og Innovasjonsenter Kraknes"],
+  ["KJEMI", "Kjemilab"],
+  ["MILPÅ", "Miljøpåvirkninger"],
+  ["SENSE", "Miljørisiko- og beredskapsanalyser"],
+  ["UTRED", "Miljøutredning og overvåking"],
+  ["OSEAN", "Oseanografi"],
+  ["STABS", "Stab og støtte"],
+  ["ØKOSY", "Økosystemforståelse"],
+];
