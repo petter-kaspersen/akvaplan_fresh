@@ -32,7 +32,7 @@ export function HAlbum({
   );
 }
 
-const thumbnail = (id) => `https://mediebank.deno.dev/thumbnail_big/${id}`;
+const thumbnail = (id) => `https://mediebank.deno.dev/preview_big/${id}`;
 
 const ellipsis = {
   maxLines: "1",
