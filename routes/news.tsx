@@ -1,6 +1,10 @@
-import { href, searchNews } from "akvaplan_fresh/services/mynewsdesk.ts";
+import { searchNews } from "akvaplan_fresh/services/news.ts";
+import { href } from "akvaplan_fresh/services/mynewsdesk.ts";
 import { Page } from "akvaplan_fresh/components/page.tsx";
+//import { MiniNews } from "akvaplan_fresh/components/news/mini_news.tsx";
+import { MiniNewsCard } from "akvaplan_fresh/components/news/mn2.tsx";
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
+import { isodate } from "akvaplan_fresh/time/mod.ts";
 
 import {
   type HandlerContext,
@@ -28,14 +32,15 @@ export const handler: Handlers<Props> = {
     const _q = searchParams.get("q") ?? "";
     const q = _q.toLocaleLowerCase();
 
-    const { items } = await searchNews({ q }) ?? { items: [] };
+    const news = await searchNews({ q, lang: lang.value, limit: 512 }) ??
+      { items: [] };
 
-    return ctx.render({ title, base, items, lang });
+    return ctx.render({ title, base, news, lang });
   },
 };
 
 export default function ApnPubs(
-  { data: { lang, base, title, items } }: PageProps,
+  { data: { lang, base, title, news } }: PageProps,
 ) {
   return (
     <Page title={title} base={base}>
@@ -43,17 +48,21 @@ export default function ApnPubs(
         <a href="." style={{ color: "var(--text2)" }}>{title} [{lang}]</a>
       </h1>
       <ul>
-        {items.map(resultItem)}
+        {news.map(resultItem)}
       </ul>
     </Page>
   );
 }
 
-const resultItem = (item: MynewsdeskItem) => {
-  const isodate = item.published_at.datetime.substring(0, 10);
+const resultItem = ({ title, href, published, type, thumb, caption }: News) => {
   return (
-    <li>
-      <a href={href(item)}>{item.header}</a> ({isodate})
-    </li>
+    <MiniNewsCard
+      img={thumb}
+      href={href}
+      caption={caption}
+      title={title}
+      published={published}
+      type={type}
+    />
   );
 };
