@@ -1,3 +1,4 @@
+export * from "./akvaplanist.ts";
 export * from "./mynewsdesk.ts";
 export * from "./news.ts";
 export * from "./news_mapper.ts";
