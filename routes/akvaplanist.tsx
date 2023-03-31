@@ -96,6 +96,11 @@ const Grouped = (
   { grouped, group, q },
 ) => (
   <div>
+    <link rel="stylesheet" href="/css/hscroll.css" />
+    <link rel="stylesheet" href="/css/akvaplanist.css" />
+
+    <script src="https://static.nrk.no/core-components/major/10/core-scroll/core-scroll.min.js" />
+
     <form
       autocomplete="off"
       style={{ display: "grid", gridTemplateColumns: "3fr 1fr" }}
@@ -128,7 +133,9 @@ const Grouped = (
   </div>
 );
 const inline = {
-  display: "inline-block",
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(440px, 1fr))",
+  gridGap: "1rem",
 };
 const OneGroup = (
   { members },
@@ -143,7 +150,22 @@ const OneGroup = (
 );
 
 const banner =
-  "https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_1782,ar_4:1/bb7x8e4rmevc5kboua8e";
+  "https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_1782,ar_5:1/bb7x8e4rmevc5kboua8e";
+
+const Picture = () => (
+  <picture>
+    <source media="(min-width: 1024px)" srcset={banner} />
+    <source
+      media="(max-width: 1023px)"
+      srcset="https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_512,ar_3:1/bb7x8e4rmevc5kboua8e"
+    />
+    <img
+      src={banner}
+      alt=""
+    />
+  </picture>
+);
+{/* <img src={banner} alt={caption} title={caption} /> */}
 
 export default function Akvaplanists(
   { data: { lang, base, title, total, grouped, group, filter, results, q } }:
@@ -170,12 +192,13 @@ export default function Akvaplanists(
 
   const caption = "";
 
-  const subtitle = filter?.length === 0
-    ? String(t("people.subtitle")).replace(
-      "%i",
-      total,
-    )
-    : "";
+  const subtitle = "";
+  // filter?.length === 0
+  //   ? String(t("people.subtitle")).replace(
+  //     "%i",
+  //     total,
+  //   )
+  //   : "";
 
   return (
     <Page title={pagetitle} base={base}>
@@ -184,7 +207,7 @@ export default function Akvaplanists(
           <H1Title />
           <p>{subtitle}</p>
         </div>
-        <img src={banner} alt={caption} title={caption} />
+        <Picture />
       </section>
 
       {filter?.length > 0
