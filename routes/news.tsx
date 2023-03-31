@@ -2,7 +2,7 @@ import { searchNews } from "akvaplan_fresh/services/news.ts";
 import { href } from "akvaplan_fresh/services/mynewsdesk.ts";
 import { Page } from "akvaplan_fresh/components/page.tsx";
 //import { MiniNews } from "akvaplan_fresh/components/news/mini_news.tsx";
-import { MiniNewsCard } from "akvaplan_fresh/components/news/mn2.tsx";
+import { MiniNewsCard } from "akvaplan_fresh/components/news/mini_news.tsx";
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
 import { isodate } from "akvaplan_fresh/time/mod.ts";
 
