@@ -13,20 +13,22 @@ const buttonsGrid = {
   alignItems: "stretch",
   placeItems: "center",
 };
-export default function ThemeSwitcher() {
+
+export const handleThemeClick = (e: MouseEvent) => {
+  console.warn(e);
+  e.preventDefault();
+  const auto = e?.target?.dataset?.theme === "auto";
+  if (auto) {
+    removeTheming();
+  } else {
+    const theme = getAttrColorScheme(e.target);
+    setTheme(theme);
+  }
+};
+
+export default function ThemeSwitcher({ mini = false, auto = !mini } = {}) {
   const theme = themeSignal.value;
-
-  const handleThemeClick = (e: MouseEvent) => {
-    e.preventDefault();
-    const auto = e?.target?.dataset?.theme === "auto";
-    if (auto) {
-      removeTheming();
-    } else {
-      const theme = getAttrColorScheme(e.target);
-      setTheme(theme);
-    }
-  };
-
+  console.warn({ mini, auto });
   return (
     <form
       onClick={handleThemeClick}
@@ -34,30 +36,37 @@ export default function ThemeSwitcher() {
       <div>
         <button
           color-scheme="dark"
+          aria-label={t("theme.set.dark")}
           aria-pressed={theme === "dark"}
         >
-          {t("theme.dark")}
+          {mini ? <span>&nbsp;</span> : t("theme.dark")}
         </button>
 
         <button
           color-scheme="blue"
+          aria-label={t("theme.set.blue")}
           aria-pressed={theme === "blue"}
         >
-          {t("theme.blue")}
+          {mini ? <span>&nbsp;</span> : t("theme.blue")}
         </button>
         <button
           color-scheme="light"
+          aria-label={t("theme.set.light")}
           aria-pressed={theme === "light"}
         >
-          {t("theme.light")}
+          {mini ? <span>&nbsp;</span> : t("theme.light")}
         </button>
-        <button
-          data-theme="auto"
-          color-scheme="blue"
-          aria-pressed={theme === null}
-        >
-          {t("theme.auto")}
-        </button>
+        {auto
+          ? (
+            <button
+              data-theme="auto"
+              color-scheme="blue"
+              aria-pressed={theme === null}
+            >
+              {mini ? <span>&nbsp;</span> : t("theme.auto")}
+            </button>
+          )
+          : null}
       </div>
     </form>
   );
