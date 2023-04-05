@@ -1,10 +1,10 @@
-import { SiteNav } from "akvaplan_fresh/components/site_nav.tsx";
-import { Settings } from "akvaplan_fresh/components/settings.tsx";
-import ApnLogo from "akvaplan_fresh/components/akvaplan_logo.tsx";
+import { ApnLogo, SiteNav } from "akvaplan_fresh/components/mod.ts";
+import ThemeSwitcher from "akvaplan_fresh/islands/theme_switcher.tsx";
+import { t } from "akvaplan_fresh/text/mod.ts";
 
 const footerStyle = {
   margin: 0,
-  background: "var(--surface4)",
+  background: "var(--surface1)",
   display: "grid",
   placeItems: "center",
   color: "var(--text1)",
@@ -14,9 +14,13 @@ const footerStyle = {
 export function Footer() {
   return (
     <footer style={footerStyle}>
-      <ApnLogo width="400" />
+      <a href="/" aria-label={t("nav.go_home")}>
+        <ApnLogo height="400px" />
+      </a>
+      <div style={{ marginTop: "3rem", marginBottom: "3rem" }}>
+        <ThemeSwitcher mini />
+      </div>
       <SiteNav />
-      <Settings style={footerStyle} />
     </footer>
   );
 }
