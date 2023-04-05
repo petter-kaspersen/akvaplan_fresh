@@ -15,20 +15,20 @@ const buttonsGrid = {
 };
 
 export const handleThemeClick = (e: MouseEvent) => {
-  console.warn(e);
   e.preventDefault();
   const auto = e?.target?.dataset?.theme === "auto";
   if (auto) {
     removeTheming();
   } else {
     const theme = getAttrColorScheme(e.target);
-    setTheme(theme);
+    if (theme) {
+      setTheme(theme);
+    }
   }
 };
 
 export default function ThemeSwitcher({ mini = false, auto = !mini } = {}) {
   const theme = themeSignal.value;
-  console.warn({ mini, auto });
   return (
     <form
       onClick={handleThemeClick}
