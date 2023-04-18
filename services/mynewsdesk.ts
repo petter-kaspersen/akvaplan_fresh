@@ -6,7 +6,7 @@ import { slug as _slug } from "https://deno.land/x/slug/mod.ts";
 // https://www.mynewsdesk.com/docs/webservice_pressroom#services_view
 const base = "https://www.mynewsdesk.com";
 
-const mynewsdesk_key: string = Deno.env.get("mynewsdesk_key") ?? "";
+const mynewsdesk_key: string = Deno?.env?.get("mynewsdesk_key") ?? "";
 
 const path = (action: string, unique_key = mynewsdesk_key) =>
   `/services/pressroom/${action}/${unique_key}`;
@@ -85,6 +85,7 @@ export const searchMynewsdesk = async (
   { q = "", type_of_media = "news", limit = 100 } = {},
 ) => {
   const url = searchURL(q, type_of_media, { limit });
+
   const response = await fetch(url);
   if (response.ok) {
     const { search_result: { items }, ...rest } = await response.json();
@@ -98,20 +99,31 @@ export const searchMynewsdesk = async (
     });
     return { ...rest, items: withDOIs };
   }
+  throw `Mynewsdesk search failed`;
 };
 
 export const slug = ({ header }) => postprocess(_slug(preprocess(header)));
 
 // Get localized application URL for a news article
-
+console.debug("@todo Decide news URL structure for news vs press releases");
 export const href = (
-  { header, language, published_at: { datetime } }: MynewsdeskItem, // language -> article language
-  lang = language, // lang -> *site* language
+  { header, type_of_media, language, published_at: { datetime } }:
+    MynewsdeskItem, // language -> article language
+  lang = language, // lang -> site language
 ) => {
   const isodate = new Date(datetime).toJSON().split("T").at(0);
-  const page = lang === "en" ? "news" : "nyhet";
+  let page = lang === "en" ? "news" : "nyhet";
+  if ("pressrelease" === type_of_media) {
+    page = lang === "en" ? "pressrelease" : "pressemelding";
+  }
   return `/${lang}/${page}/${isodate}/${slug({ header })}`;
 };
 
 export const defaultThumbnail =
   "https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,h_96,q_auto:good,w_128/lkxumpqth4dstepfhple";
+
+export const defaultImage =
+  "https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_1782,ar_16:9/lkxumpqth4dstepfhple";
+
+// Generic bubbles
+//https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_1782,ar_16:9/awdzhbjdkc1hz2dbfqaj

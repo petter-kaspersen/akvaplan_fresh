@@ -1,4 +1,5 @@
-import { SlimPublication } from "../@interfaces/slim_publication.ts";
+import { getSlimPublication } from "akvaplan_fresh/services/dois.ts";
+import { SlimPublication } from "akvaplan_fresh/@interfaces/slim_publication.ts";
 
 import { Card, Icon, Page } from "akvaplan_fresh/components/mod.ts";
 
@@ -9,7 +10,7 @@ import {
   RouteConfig,
 } from "$fresh/server.ts";
 
-import { Head } from "$fresh/runtime.ts";
+//import { Head } from "$fresh/runtime.ts";
 
 export const config: RouteConfig = {
   routeOverride: "{/:lang}?/doi/:prefix/:suffix0/:extra*",
@@ -19,18 +20,6 @@ const doiFromParams = (params: Record<string, string>) => {
   const { suffix0, extra, prefix } = params;
   const suffix = !extra ? suffix0 : `${suffix0}/${extra}`;
   return `${prefix}/${suffix}`;
-};
-
-const getSlimPublication = async (
-  doi: string,
-): Promise<SlimPublication | undefined> => {
-  const base = Deno.env.get("dois_base") ?? "https://dois.deno.dev";
-  const url = new URL(`/doi/${doi}`, base);
-  const response = await fetch(url);
-  if (response.ok) {
-    const slim: SlimPublication = await response.json();
-    return slim;
-  }
 };
 
 export const handler: Handlers<SlimPublication> = {
@@ -85,6 +74,11 @@ export default function DoiPublication(
             </a>
           </div>
         </Card>
+        <Card>
+          <pre>{JSON.stringify(authors)}</pre>
+        </Card>
+
+        <pre>{JSON.stringify(rest)}</pre>
       </article>
     </Page>
   );

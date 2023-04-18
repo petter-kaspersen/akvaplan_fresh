@@ -16,7 +16,7 @@ export function Card({
     <div
       class={fullClass}
       style={{
-        background: "var(--surface3)",
+        background: "var(--surface2)",
         padding: "var(--size-2)",
         borderRadius: "var(--radius-2)",
         boxShadow: "var(--shadow-4)",

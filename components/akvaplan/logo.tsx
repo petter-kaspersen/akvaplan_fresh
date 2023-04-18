@@ -1,13 +1,20 @@
-export default () => (
+const style = `@media only screen and (min-width: 1440px) {
+  svg.Akvaplan-niva {
+    height: 96px;
+  }
+ };`;
+
+export const ApnLogo = ({ width = "100%", height = "48px" } = {}) => (
   <svg
-    class="akvaplan-logo"
-    width="100%"
-    height="48px"
-    xmlns="http://www.w3.org/2000/svg"
+    width={width}
+    height={height}
     viewBox="0 0 127.11 30.276"
     aria-label="Akvaplan-niva"
+    alt=""
     role="img"
+    class="Akvaplan-niva"
   >
+    <style>{style}</style>
     <g fill="var(--logo-blue)">
       <path d="M8.25 5.59l1.43 5.15h-3zM5.86 0L0 16.71h4.93l.71-2.39h5.06l.67 2.39h5.08L10.66 0z">
       </path>

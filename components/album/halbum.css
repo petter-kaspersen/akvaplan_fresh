@@ -19,11 +19,11 @@
 }
 
 .halbum-image img:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .halbum-image a {
-  font-size: var(--font-size-1);
+  /*font-size: var(--font-size-fluid-1  );*/
   text-align: center;
 }
 

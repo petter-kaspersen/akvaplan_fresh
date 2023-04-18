@@ -122,8 +122,6 @@ export const buildIndexLangRedirect = () =>
     ;    
     const url = new URL(document.URL);
 
-    console.warn({lang,stored})
-
     if ("/" === url.pathname && languages.has(lang)) {
       url.pathname = "/"+lang;
       window.location = url.href;

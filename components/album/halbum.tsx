@@ -1,14 +1,14 @@
-// https://codepen.io/argyleink/pen/bGgyOGP
 // import type {
 //   Image,
 //   PreviewElement,
 // } from "akvaplan_fresh/services/mediebank_interfaces.ts";
-
-import HScroll from "../hscroll/HScroll.tsx";
-import { t } from "akvaplan_fresh/text/mod.ts";
-
 type Image = {};
 type PreviewElement = {};
+
+import HScroll from "akvaplan_fresh/components/hscroll/HScroll.tsx";
+import { t } from "akvaplan_fresh/text/mod.ts";
+import { preview } from "akvaplan_fresh/services/mediebank.ts";
+
 export function HAlbum({
   album,
   customClass,
@@ -32,8 +32,6 @@ export function HAlbum({
   );
 }
 
-const thumbnail = (id) => `https://mediebank.deno.dev/preview_big/${id}`;
-
 const ellipsis = {
   maxLines: "1",
   overflow: "hidden",
@@ -41,26 +39,23 @@ const ellipsis = {
   textOverflow: "ellipsis",
 };
 
-const topics = new Map([
-  [384677, "aquaculture"],
-]);
-
 const PreviewFigure = ({
   image: { id, previews, headline, description },
   width,
   position,
   lang,
+  img = preview(id),
 }) => {
-  const preview =
+  const previewObject =
     previews.find((p: PreviewElement) => p.width === Number(width)) ??
       previews?.at(0) ??
       {};
 
-  const { url, height } = preview;
-  width = preview.width;
+  const { url, height } = previewObject;
+  width = previewObject.width;
 
   const topicpagename = lang?.value === "en" ? "topic" : "tema";
-  const topic = topics.get(id) ?? headline ?? id;
+  const topic = headline ?? id; //topics.get(id) ?? headline ?? id;
   //const href = `/${lang}/${topicpagename}/${t(`topic.${topic}`)}`;
   const href = `/${lang}/news/?q=${t(`${topic}`)}`;
 
@@ -73,7 +68,7 @@ const PreviewFigure = ({
             height={height}
             alt={headline ?? "?"}
             loading="lazy"
-            src={thumbnail(id)}
+            src={img}
           />
         </div>
         <p

@@ -27,7 +27,7 @@ export const newsFromMynewsdesk = ({ lang }: NewsMapper) =>
   id,
   title: header,
   published: published_at.datetime,
-  href: href({ header, language, published_at }, lang),
+  href: href({ header, language, published_at, type_of_media }, lang),
   hreflang: language,
   img: image,
   caption: image_caption ?? header,

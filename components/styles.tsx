@@ -1,22 +1,20 @@
 import { Head } from "$fresh/runtime.ts";
+import { IS_BROWSER } from "$fresh/runtime.ts";
 
-const button = Deno.readTextFile(`./components/button/button.css`);
-const hscroll = Deno.readTextFile(`./components/album/halbum.css`);
+let defaultStyles = [];
 
-const cssfiles = [
-  "reset",
-  "fonts",
-  "openprops",
-  "root",
-  "dark",
-  "light",
-  "icons",
-]
-  .map((
-    f,
-  ) => Deno.readTextFile(`./static/css/${f}.css`));
-export const defaultStyles = await Promise.all([...cssfiles, button, hscroll]);
+if (!IS_BROWSER) {
+  const button = Deno.readTextFile(`./components/button/button.css`);
+  const hscroll = Deno.readTextFile(`./components/album/halbum.css`);
 
-export const Styles = ({ styles = defaultStyles } = {}) => (
+  const cssfiles = ["reset", "fonts", "openprops", "root", "dark", "light"]
+    .map((
+      f,
+    ) => Deno.readTextFile(`./static/css/${f}.css`));
+  defaultStyles = await Promise.all([...cssfiles, button, hscroll]);
+}
+
+export const Styles = ({ styles = IS_BROWSER ? [] : defaultStyles } = {}) => (
   <style dangerouslySetInnerHTML={{ __html: styles.join("\n") }} />
 );
+console.log("@todo add deno task to compile styles, eg. page.css");

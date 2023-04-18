@@ -1,4 +1,8 @@
-import { fetchItemBySlug } from "akvaplan_fresh/services/mynewsdesk.ts";
+import {
+  defaultImage,
+  fetchItem,
+  fetchItemBySlug,
+} from "akvaplan_fresh/services/mynewsdesk.ts";
 import { isodate } from "akvaplan_fresh/time/mod.ts";
 import { t } from "akvaplan_fresh/text/mod.ts";
 
@@ -6,15 +10,20 @@ import Article from "../../components/article/Article.tsx";
 import ArticleContact from "../../components/article/ArticleContact.tsx";
 import ArticleHeader from "../../components/article/ArticleHeader.tsx";
 
+//import { YouTube } from "akvaplan_fresh/components/video/youtube.tsx";
+
 import { MynewsdeskItem } from "akvaplan_fresh/@interfaces/mynewsdesk.ts";
 
 import { Page } from "akvaplan_fresh/components/page.tsx";
 import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
+import { PeopleCard } from "../../components/mod.ts";
 
 export const config: RouteConfig = {
   routeOverride:
     "{/:lang}?/:type(news|nyhet|pressrelease|pressemelding|press){/:isodate}?/:slug",
 };
+
+console.log("@todo News article: auto-fetch related contacts");
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -24,7 +33,17 @@ export const handler: Handlers = {
     if (!item) {
       return ctx.renderNotFound();
     }
-    return ctx.render({ item, lang });
+    const relcontact = item.related_items.find(({ type_of_media }) =>
+      type_of_media === "contact_person"
+    );
+    if (relcontact) {
+      const { item_id } = relcontact;
+      const contact = await fetchItem(item_id, "contact_person");
+
+      return ctx.render({ item, lang, contact });
+    } else {
+      return ctx.render({ item, lang, contact: null });
+    }
   },
 };
 
@@ -37,8 +56,10 @@ interface ArticleProps {
   lang: string;
 }
 
+console.debug("@todo News article needs bullet points for <li> elements");
+
 export default function NewsArticle(
-  { data: { item, lang } }: PageProps<ArticleProps>,
+  { data: { item, lang, contact } }: PageProps<ArticleProps>,
 ) {
   const {
     header,
@@ -66,24 +87,12 @@ export default function NewsArticle(
 
   const __html = body;
   //https://cloudinary.com/documentation/transformation_reference#ar_aspect_ratio
-  const img = image.replace(",w_1782", ",w_1782,ar_16:9");
-
-  const contact = contact_people.at(0);
-
-  const { name, title, phone, email } = contact;
+  const img = image?.replace(",w_1782", ",w_1782,ar_16:9") ?? defaultImage;
 
   const published = isodate(published_at.datetime);
 
   const _caption = {
     fontSize: "0.75rem",
-  };
-
-  const contactPerson = {
-    name,
-    title,
-    email,
-    phone,
-    img: image_thumbnail_large,
   };
 
   return (
@@ -109,6 +118,15 @@ export default function NewsArticle(
           dangerouslySetInnerHTML={{ __html }}
         >
         </section>
+
+        {contact && (
+          <section>
+            Contact
+            <PeopleCard
+              person={contact}
+            />
+          </section>
+        )}
       </Article>
     </Page>
   );

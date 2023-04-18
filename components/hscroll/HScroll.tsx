@@ -15,7 +15,8 @@ export function HScroll({
 }: HScrollProps) {
   return (
     <div class="scroll-container">
-      <button
+      {
+        /* <button
         class="scroller-button scroller-button--left"
         data-for={scrollerId}
         value="left"
@@ -32,7 +33,8 @@ export function HScroll({
         <span class="target">
           <Icon name="arrow_forward_ios" />
         </span>
-      </button>
+      </button> */
+      }
 
       {staticFirstElement && staticFirstElement}
       <core-scroll id={scrollerId} class="hscroll">

@@ -26,21 +26,24 @@ type NewsFilmStripProps = {
 // );
 // staticFirstElement={cellTower({ lang })}
 
+export const MoreNews = ({ href, title, lang }) => (
+  <MiniCard>
+    <a class="target" href={href} title={title}>
+      <NewsIcon />
+    </a>
+  </MiniCard>
+);
+
 const NewsIcon = () => <Icon name="cell_tower" />;
-export function NewsFilmStrip({ news, lang }: NewsFilmStripProps) {
+export function NewsFilmStrip(
+  { news, lang, BeforeAfter }: NewsFilmStripProps = {},
+) {
   const more = t("news.more_news");
   const href = lang === "en" ? "news" : "nyheter";
-  const MoreNews = () => (
-    <MiniCard>
-      <a class="target" href={href} title={more}>
-        <NewsIcon />
-      </a>
-    </MiniCard>
-  );
 
   return (
     <HScroll scrollerId="news-film-strip">
-      <MoreNews />
+      <BeforeAfter href={href} title={more} />
       {news.map((
         { title, href, caption, published, thumb, type, hreflang },
       ) => (
@@ -55,7 +58,7 @@ export function NewsFilmStrip({ news, lang }: NewsFilmStripProps) {
           lang={lang}
         />
       ))}
-      <MoreNews />
+      <BeforeAfter href={href} title={more} />
     </HScroll>
   );
 }

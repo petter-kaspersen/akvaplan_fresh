@@ -55,5 +55,30 @@ export const buildPeopleGrouper = (fx) =>
   }
   return previous;
 };
-export const groupByGivenInitial0 = ({ given }: Akvaplanist) =>
-  [...given].at(0);
+export const groupByGiven0 = ({ given }: Akvaplanist) => [...given].at(0);
+export const groupByChar0 = (key: string) => (a: Akvaplanist) =>
+  [...a?.[key]].at(0);
+
+export const boardUpdated = "2023-01-23";
+export const boardKid = 20230000030372;
+
+export const boardURL = (
+  lang: string,
+  { kid = boardKid, spraak = lang === "en" ? "en" : "nb" } = {},
+) =>
+  `https://w2.brreg.no/kunngjoring/hent_en.jsp?kid=${kid}&sokeverdi=937375158&spraak=${spraak}`;
+
+//@todo Get director from service
+export const admDir = {
+  "given": "Merete",
+  "family": "Kristiansen",
+  "position": {
+    "no": "Administrerende direktør",
+    "en": "Managing Director",
+  },
+  "tel": "+4797518909",
+  "unit": "LEDELS",
+  "workplace": "Tromsø",
+  "country": "+4797518909",
+  "email": "mkr@akvaplan.niva.no",
+};
