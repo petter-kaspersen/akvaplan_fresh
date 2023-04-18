@@ -1,10 +1,11 @@
 import { searchNews } from "akvaplan_fresh/services/news.ts";
 import { href } from "akvaplan_fresh/services/mynewsdesk.ts";
-import { Page } from "akvaplan_fresh/components/page.tsx";
-//import { MiniNews } from "akvaplan_fresh/components/news/mini_news.tsx";
-import { MiniNewsCard } from "akvaplan_fresh/components/news/mini_news.tsx";
+
+import { ArticleSquare, HScroll, Page } from "akvaplan_fresh/components/mod.ts";
+
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
 import { isodate } from "akvaplan_fresh/time/mod.ts";
+import { groupIntoMap } from "akvaplan_fresh/grouping/mod.ts";
 
 import {
   type HandlerContext,
@@ -26,20 +27,30 @@ export const handler: Handlers<Props> = {
     const { params } = ctx;
     lang.value = params.lang;
     const base = `/${params.lang}/${params.page}/`;
-    const title = t("News");
+    const title = t("news.News");
 
     const { searchParams } = new URL(req.url);
     const _q = searchParams.get("q") ?? "";
     const q = _q.toLocaleLowerCase();
 
-    const news = await searchNews({ q, lang: lang.value, limit: 512 }) ??
+    const _news = await searchNews({ q, lang: lang.value, limit: 512 }) ??
       { items: [] };
 
+    const news = groupIntoMap(
+      _news,
+      ({ published }) => published.substring(0, 4),
+    );
+    // group by
+    // latest news articles (by month)?
+    // project (containing the word project)
+    // pressreleases
+    // pubs
+    // people?
     return ctx.render({ title, base, news, lang });
   },
 };
 
-export default function ApnPubs(
+export default function News(
   { data: { lang, base, title, news } }: PageProps,
 ) {
   return (
@@ -47,22 +58,24 @@ export default function ApnPubs(
       <h1>
         <a href="." style={{ color: "var(--text2)" }}>{title} [{lang}]</a>
       </h1>
-      <ul>
-        {news.map(resultItem)}
-      </ul>
+
+      {[...news].map(([grpkey, grpmembers]) => (
+        <section>
+          <h2>
+            <a href={`${"year"}/${grpkey.toLowerCase()}`}>
+              {grpkey}
+            </a>
+          </h2>
+
+          <HScroll scrollerId="news-scroll">
+            {grpmembers.slice(0, 7).map(ArticleSquare)}
+          </HScroll>
+        </section>
+      ))}
+
+      <link rel="stylesheet" href="/css/hscroll.css" />
+      <link rel="stylesheet" href="/css/akvaplanist.css" />
+      <script src="/@nrk/core-scroll.min.js" />
     </Page>
   );
 }
-
-const resultItem = ({ title, href, published, type, thumb, caption }: News) => {
-  return (
-    <MiniNewsCard
-      img={thumb}
-      href={href}
-      caption={caption}
-      title={title}
-      published={published}
-      type={type}
-    />
-  );
-};

@@ -1,11 +1,29 @@
 //import { buildMobileNav } from "akvaplan_fresh/services/nav.ts";
 import { homeAlbums } from "akvaplan_fresh/services/mediebank.ts";
+import { searchServices } from "akvaplan_fresh/services/svc.ts";
+import { searchResearch } from "akvaplan_fresh/services/research.ts";
 import { latestNews } from "akvaplan_fresh/services/news.ts";
+import {
+  pubURL,
+  researchTopicURL,
+  routes,
+} from "akvaplan_fresh/services/nav.ts";
 import { getLangFromURL, lang, t } from "akvaplan_fresh/text/mod.ts";
 
-import { HAlbum, NewsFilmStrip, Page } from "akvaplan_fresh/components/mod.ts";
+import {
+  AlbumHeader,
+  ArticleSquare,
+  HScroll,
+  MoreNews,
+  NewsFilmStrip,
+  Page,
+  ResearchTopic,
+  ServiceGroup,
+} from "akvaplan_fresh/components/mod.ts";
 
 import { Handlers, RouteConfig } from "$fresh/server.ts";
+import { Head } from "$fresh/runtime.ts";
+import NewsArticle from "./article/[slug].tsx";
 
 export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)",
@@ -15,29 +33,124 @@ export const handler: Handlers = {
   async GET(req, ctx) {
     const sitelang = getLangFromURL(req.url);
     lang.value = sitelang;
-    const albums = await homeAlbums();
-    const news = await latestNews({ q: "", lang: sitelang, limit: 128 });
 
-    const title = t("Home");
-    //const nav = buildMobileNav(lang);
-    return ctx.render({ news, albums, lang, title });
+    const limit = 64;
+    const q = "";
+
+    const services = await searchServices({ q, lang: sitelang, limit });
+    const news = await latestNews({ q, lang: sitelang, limit });
+    const topics = await searchResearch({ q, lang: sitelang, limit });
+
+    const numNews = 6;
+    const articles = news.filter(({ type, hreflang, title }) =>
+      ["news"].includes(type) && hreflang === sitelang &&
+      !/stillingsannonse/i.test(title)
+    )
+      .slice(
+        0,
+        numNews,
+      );
+    const articlesNotInSiteLang = news.filter(({ type, hreflang, title }) =>
+      ["news"].includes(type) &&
+      hreflang !== sitelang &&
+      !/stillingsannonse/i.test(title)
+    )
+      .slice(
+        0,
+        numNews,
+      );
+
+    const pr = news.filter(({ type }) => ["pressrelease"].includes(type))
+      .slice(
+        0,
+        numNews,
+      );
+    return ctx.render({
+      news,
+      services,
+      topics,
+      lang,
+      articles,
+      articlesNotInSiteLang,
+      pr,
+    });
   },
 };
 
-export default function Home({ data: { news, albums, lang, title } }) {
+const ellipsis = {
+  maxLines: "1",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+};
+
+export default function Home(
+  {
+    data: { news, topics, lang, services, articles, articlesNotInSiteLang, pr },
+  },
+) {
   return (
     <Page>
-      <link rel="stylesheet" href="/css/hscroll.css" />
-      <link rel="stylesheet" href="/css/mini-news.css" />
-      <script src="https://static.nrk.no/core-components/major/10/core-scroll/core-scroll.min.js" />
-      <NewsFilmStrip news={news} lang={lang.value} />
+      <Head>
+        <link rel="stylesheet" href="/css/hscroll.css" />
+        <link rel="stylesheet" href="/css/mini-news.css" />
+        <link rel="stylesheet" href="/css/article.css" />
+        <script src="/@nrk/core-scroll.min.js" />
+      </Head>
 
-      {albums.map((album, i) => (
-        <>
-          <h3>{t(`home.Album.${i}`)}</h3>
-          <HAlbum album={album} customClass={`album_${i}`} lang={lang.value} />
-        </>
-      ))}
+      <NewsFilmStrip news={news} lang={lang.value} BeforeAfter={MoreNews} />
+
+      <AlbumHeader
+        text={t("home.album.services")}
+        href={routes(lang).get("services")}
+      />
+      <HScroll>
+        {services.map(ServiceGroup)}
+      </HScroll>
+
+      <AlbumHeader
+        text={t("home.album.research")}
+        href={routes(lang).get("research")}
+      />
+      <HScroll>
+        {topics.map(ResearchTopic)}
+      </HScroll>
+
+      <AlbumHeader
+        text={t(`home.album.${lang}.articles`)}
+        href={routes(lang).get("news")}
+      />
+      <HScroll>
+        {articles.map(ArticleSquare)}
+      </HScroll>
+
+      <AlbumHeader
+        text={t("home.album.articles_not_in_site_lang")}
+        href={routes(lang).get("news")}
+      />
+      <HScroll>
+        {articlesNotInSiteLang.map(ArticleSquare)}
+      </HScroll>
+
+      <AlbumHeader
+        text={t("home.album.press_releases")}
+        href={routes(lang).get("news")}
+      />
+      <HScroll>
+        {pr.map(ArticleSquare)}
+      </HScroll>
+
+      {
+        /* <AlbumHeader
+        text={t("home.album.projects")}
+        href={routes(lang).get("projects")}
+      />
+      <HScroll>
+        @todo (v1.1?)
+      </HScroll> */
+      }
+
+      {/* Research facilities Sensor platforms */}
     </Page>
   );
 }

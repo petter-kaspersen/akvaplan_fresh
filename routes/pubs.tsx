@@ -20,7 +20,7 @@ export const handler: Handlers<DoiSearchResultsProps> = {
     const { searchParams } = new URL(request.url);
     const _q = searchParams.get("q") ?? "";
     const q = _q.toLocaleLowerCase();
-    const url = `https://dois.deno.dev/doi?limit=-1&sort=-published`;
+    const url = `https://dois.deno.dev/doi?limit=-1&sort=-published&q=${q}`;
 
     const response = await fetch(url);
 

@@ -13,14 +13,9 @@ export const handler: Handlers = {
   },
 };
 
-// Redirect from / to /no or /en
-// With JavaScript: redirect needs to happen browser side in order to read lang from localStorage
-// @todo Index route component: Add body links to /en and /no for robots
+// Site index: only shown when / is requested without accept-language header (see _middleware.ts)
+// In case language is set via (local)Storage, the inline script redirects
 export default function SiteRoot({ data: { lang } }) {
-  // If no JavaScript, redirect using <meta> refresh
-  // const content = `0;url=/${lang}`;
-  // <noscript><meta http-equiv="refresh" content={content} /></noscript>
-
   return (
     <Page>
       <Head>
@@ -30,14 +25,13 @@ export default function SiteRoot({ data: { lang } }) {
       </Head>
       <h1 style={{ color: "var(--accent)" }}>Akvaplan-niva</h1>
 
-      <p lang="en">Select site language</p>
-      <p lang="no">Velg språkversjon</p>
+      <label lang="en">Select site language</label>
+      <label lang="no">Velg språkversjon</label>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        <a class="button" href="/en" lang="en" hrefLang="en">
+        <a id="en" class="button" href="/en" lang="en" hrefLang="en">
           English
         </a>
-
-        <a class="button" href="/no" lang="no" hrefLang="no">
+        <a id="no" class="button" href="/no" lang="no" hrefLang="no">
           Norsk
         </a>
       </div>

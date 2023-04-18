@@ -7,7 +7,7 @@ import { LinkLang } from "akvaplan_fresh/islands/lang_switcher.tsx";
 import { routes } from "akvaplan_fresh/services/nav.ts";
 import { lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
 
-import borders from "open-props/props.borders.js";
+import borders from "open-props/src/props.borders.js";
 
 const threeColumnGrid = {
   margin: 0,
