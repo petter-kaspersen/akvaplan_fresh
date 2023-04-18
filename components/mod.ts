@@ -16,7 +16,7 @@ export * from "./people/PeopleScroll.tsx";
 export * from "./footer.tsx";
 export * from "./hscroll/HScroll.tsx";
 export * from "./icon.tsx";
-export * from "./list/autofit.tsx";
+//export * from "./list/autofit.tsx";
 export * from "./news/film_strip.tsx";
 export * from "./news/article_square.tsx";
 export * from "./page.tsx";
