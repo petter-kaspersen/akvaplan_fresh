@@ -16,11 +16,13 @@ const buttonsGrid = {
 
 export const handleThemeClick = (e: MouseEvent) => {
   e.preventDefault();
-  const auto = e?.target?.dataset?.theme === "auto";
+
+  const btn = e.target.closest("button[color-scheme]");
+  const auto = btn?.dataset?.theme === "auto";
   if (auto) {
     removeTheming();
   } else {
-    const theme = getAttrColorScheme(e.target);
+    const theme = getAttrColorScheme(btn);
     if (theme) {
       setTheme(theme);
     }
@@ -44,11 +46,13 @@ export default function ThemeSwitcher({ mini = false, auto = !mini } = {}) {
 
         <button
           color-scheme="blue"
+          data-theme="auto"
           aria-label={t("theme.set.blue")}
           aria-pressed={theme === "blue"}
         >
           {mini ? <span>&nbsp;</span> : t("theme.blue")}
         </button>
+
         <button
           color-scheme="light"
           aria-label={t("theme.set.light")}
@@ -56,6 +60,7 @@ export default function ThemeSwitcher({ mini = false, auto = !mini } = {}) {
         >
           {mini ? <span>&nbsp;</span> : t("theme.light")}
         </button>
+
         {auto
           ? (
             <button
