@@ -1,2 +1,2 @@
 export const isodate = (dt: string | Date): string =>
-  new Date(dt).toJSON().substring(0, 10);
+  new Date(dt)?.toJSON()?.substring(0, 10);
