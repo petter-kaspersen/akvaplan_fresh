@@ -1,4 +1,4 @@
-const base = "https://dois.deno.dev";
+const DOIS_BASE = "https://dois.deno.dev";
 
 const defaults = {
   q: "",
@@ -9,6 +9,7 @@ const defaults = {
 const { entries } = Object;
 
 export const search = async (params: Record<string, string> = {}) => {
+  const base = Deno?.env?.get("dois_base") ?? DOIS_BASE;
   const url = new URL("/doi", base);
   const { searchParams } = url;
 
@@ -19,5 +20,17 @@ export const search = async (params: Record<string, string> = {}) => {
 
   if (response.ok) {
     return await response.json();
+  }
+};
+
+export const getSlimPublication = async (
+  doi: string,
+): Promise<SlimPublication | undefined> => {
+  const base = Deno?.env?.get("dois_base") ?? DOIS_BASE;
+  const url = new URL(`/doi/${doi}`, base);
+  const response = await fetch(url);
+  if (response.ok) {
+    const slim: SlimPublication = await response.json();
+    return slim;
   }
 };
