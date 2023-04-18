@@ -14,11 +14,12 @@ import { StringSignal } from "akvaplan_fresh/@interfaces/signal.ts";
 
 const nav = computed(() => buildMobileNav(lang));
 
-export type PageProps =
+export type StdProps =
   & JSX.HTMLAttributes<HTMLElement>
   & {
     title?: string;
     base?: string | StringSignal;
+    lang?: string | StringSignal;
     Header?: FunctionComponent;
   };
 
@@ -28,7 +29,7 @@ export function Page(
     base = baseForLang,
     href,
     ...props
-  }: PageProps,
+  }: StdProps,
 ) {
   const head = (
     <Head>
@@ -67,7 +68,7 @@ export function Page(
       {head}
 
       <body {...propsExceptChildren}>
-        <CleanHeader href={href} />
+        <CleanHeader href={href} lang={lang.value} />
         <main style={{ minHeight: "100vh", padding: "0 var(--size-4)" }}>
           {children}
         </main>

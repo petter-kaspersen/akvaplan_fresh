@@ -1,7 +1,6 @@
 const _path = "./static/akvaplan_symbol.svg";
-export const symbolDataURI = `data:image/svg+xml,${
-  encodeURIComponent(await Deno.readTextFile(_path))
-}`;
+//await Deno.readTextFile(_path)
+export const symbolDataURI = `data:image/svg+xml,${encodeURIComponent("")}`;
 
 const style = `.akvaplan_symbol {
   --green: #00A2B2;

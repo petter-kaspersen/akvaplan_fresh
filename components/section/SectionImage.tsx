@@ -3,6 +3,6 @@ type Props = {
   alt: string;
 };
 
-export default function   SectionImage({ source, alt }: Props) {
+export default function SectionImage({ source, alt }: Props) {
   return <img class="section-image" src={source} alt={alt} />;
 }

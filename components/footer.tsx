@@ -14,7 +14,7 @@ const footerStyle = {
 export function Footer() {
   return (
     <footer style={footerStyle}>
-      <a href="/" aria-label={t("nav.go_home")}>
+      <a href="/" aria-label={t("nav.go_home")} style={{ marginTop: "3rem" }}>
         <ApnLogo height="400px" />
       </a>
       <div style={{ marginTop: "3rem", marginBottom: "3rem" }}>

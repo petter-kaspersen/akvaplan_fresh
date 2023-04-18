@@ -9,7 +9,7 @@ button[color-scheme] {
 .button, button {
   color: var(--text1);
   min-height: 1rem;
-  min-width: 3rem;
+  min-width: 1rem;
   margin: var(--size-1);
   display: inline-flex;
   white-space: nowrap;
@@ -38,9 +38,9 @@ button[aria-pressed="true"],button:focus {
   border: var(--border-size-2) solid var(--accent);
 }
 
-:where(button,input:is([type=button],[type=submit],[type=reset]))[disabled]{
+/* :where(button,input:is([type=button],[type=submit],[type=reset]))[disabled]{
   cursor:not-allowed
-}
+} */
 :where(button,input:is([type=button],[type=submit],[type=reset])):where(:not(:active):hover){
   transition-delay:0s;
   transition-duration:.25s;

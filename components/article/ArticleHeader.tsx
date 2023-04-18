@@ -11,7 +11,7 @@ export default function ArticleHeader({
 }: ArticleHeaderProps) {
   return (
     <>
-      <section class="article-title-mobile" aria-role="none">
+      <section class="article-title-mobile" aria-disabled="true">
         <h1>{header}</h1>
       </section>
       <header class="article-header" style={{ minHeight: "800" }}>
