@@ -7,15 +7,17 @@ import {
 import { JSX } from "preact";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
-export function LangLinks() {
+const _grid = { display: "grid", gridTemplateColumns: "1fr 1fr" };
+
+export function LangLinks({ style = _grid, linkClass = "button" } = {}) {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-      <a class="button" href="/en">
-        EN
+    <div style={style}>
+      <a class={linkClass} href="/en">
+        {t("lang.en")}
       </a>
 
-      <a class="button" href="/no">
-        NO
+      <a class={linkClass} href="/no">
+        {t("lang.no")}
       </a>
     </div>
   );
@@ -56,3 +58,12 @@ export default function LangSwitcherBtns(
     </div>
   );
 }
+
+export const LinkLang = ({ lang }) =>
+  langSignal.value !== lang
+    ? (
+      <a href={`/${lang}`} aria-label={t(`lang.switch_lang`)}>
+        {t(`lang.native.${lang}`)}
+      </a>
+    )
+    : <span aria-label={t(`lang.switch_lang`)}>{t(`lang.${lang}`)}</span>;
