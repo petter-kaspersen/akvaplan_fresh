@@ -1,7 +1,7 @@
 import { t } from "akvaplan_fresh/text/mod.ts";
 
 import { Icon, MiniCard } from "../mod.ts";
-type HScrollProps = HTMLElement & {
+export type HScrollProps = HTMLElement & {
   scrollerId: string;
   staticFirstElement?: HTMLElement;
 };

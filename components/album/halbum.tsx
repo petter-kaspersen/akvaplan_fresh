@@ -45,7 +45,7 @@ const topics = new Map([
   [384677, "aquaculture"],
 ]);
 
-const PreviewFigure = ({
+export const PreviewFigure = ({
   image: { id, previews, headline, description },
   width,
   position,

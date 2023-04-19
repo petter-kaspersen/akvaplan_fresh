@@ -6,6 +6,7 @@ import { getLangFromURL, lang, t } from "akvaplan_fresh/text/mod.ts";
 import { HAlbum, NewsFilmStrip, Page } from "akvaplan_fresh/components/mod.ts";
 
 import { Handlers, RouteConfig } from "$fresh/server.ts";
+import HScrollWithDynamicImage from "../islands/HScrollWithDynamicImage.tsx";
 
 export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)",
@@ -31,6 +32,8 @@ export default function Home({ data: { news, albums, lang, title } }) {
       <link rel="stylesheet" href="/css/mini-news.css" />
       <script src="https://static.nrk.no/core-components/major/10/core-scroll/core-scroll.min.js" />
       <NewsFilmStrip news={news} lang={lang.value} />
+
+      <HScrollWithDynamicImage scrollerId="" images={albums[0]} />
 
       {albums.map((album, i) => (
         <>
