@@ -23,7 +23,6 @@ import * as $16 from "./routes/research.tsx";
 import * as $17 from "./routes/search.tsx";
 import * as $18 from "./routes/services.tsx";
 import * as $19 from "./routes/topics.tsx";
-import * as $20 from "./routes/topics2.tsx";
 import * as $$0 from "./islands/button_open_dialog.tsx";
 import * as $$1 from "./islands/doi_search.tsx";
 import * as $$2 from "./islands/lang_switcher.tsx";
@@ -53,7 +52,6 @@ const manifest = {
     "./routes/search.tsx": $17,
     "./routes/services.tsx": $18,
     "./routes/topics.tsx": $19,
-    "./routes/topics2.tsx": $20,
   },
   islands: {
     "./islands/button_open_dialog.tsx": $$0,
