@@ -23,7 +23,6 @@ import {
 
 import { Handlers, RouteConfig } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-import HScrollWithDynamicImage from "../islands/HScrollWithDynamicImage.tsx";
 
 export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)",
@@ -96,13 +95,10 @@ export default function Home({
         <link rel="stylesheet" href="/css/hscroll.css" />
         <link rel="stylesheet" href="/css/mini-news.css" />
         <link rel="stylesheet" href="/css/article.css" />
-        <link rel="stylesheet" href="/css/hscroll-dynamic.css" />
         <script src="/@nrk/core-scroll.min.js" />
       </Head>
 
       <NewsFilmStrip news={news} lang={lang.value} BeforeAfter={MoreNews} />
-
-      <HScrollWithDynamicImage scrollerId="" images={articles} />
 
       <AlbumHeader
         text={t(`home.album.${lang}.articles`)}

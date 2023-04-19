@@ -34,7 +34,7 @@ export default function HScrollWithDynamicImage({ scrollerId, images }: Props) {
 
   return (
     <section className="dynamic-image-hscroll">
-      <img src={bigImage.img} />
+      <img className="dynamic-image-big" src={bigImage.img} />
       <div className="dynamic-scroll-details">
         <h2>{bigImage.title}</h2>
       </div>
