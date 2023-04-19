@@ -1,0 +1,14 @@
+.dynamic-image-hscroll {
+  position: relative;
+}
+
+.dynamic-scroll-details {
+  position: absolute;
+  top: 40%;
+}
+
+.dynamic-scroll-container {
+  position: absolute;
+  bottom: 20px;
+  padding: 0 2rem;
+}
