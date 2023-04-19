@@ -4,6 +4,8 @@ import { standardEN, standardNO } from "akvaplan_fresh/services/standard_no.ts";
 
 import { t } from "akvaplan_fresh/text/mod.ts";
 
+const _accred = { padding: "0.5rem" };
+
 const inspURL = (lang: string) =>
   `https://www.akkreditert.no${
     lang === "en" ? "/en" : ""
@@ -19,17 +21,19 @@ const LinkTo = ({ name, lang, text = name }) =>
     ? <a href={standardNO.get(name)} target="_blank">{text}</a>
     : <a href={standardEN.get(name)} target="_blank">{text}</a>;
 
-const _accred = { padding: "0.5rem" };
-
 const No = ({ lang = "no" } = {}) => {
   return (
     <div>
+      <p style={_accred}>
+        Akvaplan-niva tilbyr akkrediterte tjenester for å sikre presisjon,
+        sporbarhet og åpenhet i alle faser av våre prosjekt
+      </p>
       <Card>
         <p style={_accred}>
-          Akvaplan-niva tilbyr akkrediterte laboratorietjenester innen{" "}
+          Akvaplan-niva har akkrediterte laboratorietjenester innen{" "}
           <a href={labURL(lang)} target="_blank">
             kjemisk analyse, marine bunndyr og taksonomi
-          </a>{" "}
+          </a>
           , etter <LinkTo name="NS-EN ISO/IEC 17025:2017" lang={lang} />.
         </p>
       </Card>
@@ -65,47 +69,14 @@ const No = ({ lang = "no" } = {}) => {
   );
 };
 
-{
-  /* <div
-style={{
-  background: "white",
-  width: 100,
-}}
->
-<img
-  src="https://www.akkreditert.no/static/img/logostaendeengelsk.svg"
-  alt="Logo (Norwegian Accreditation)"
-/>
-</div>
-
-      <div
-        style={{
-          background: "white",
-          width: 100,
-        }}
-      >
-        <img
-          src="https://akkreditert.no/static/img/logostaendenorsk.svg"
-          alt="Logo (Norsk akkreditering)"
-        />
-
-      </div>
-
-  */
-}
 const En = ({ lang = "en" } = {}) => {
   return (
     <div>
-      <Card>
-        <p style={_accred}>
-          Akvaplan-niva offers{" "}
-          <a href="/en/services/?filter-accredited=true">
-            accredited services
-          </a>{" "}
-          to ensure precision, traceability and transparency in all phases of
-          our projects
-        </p>
-      </Card>
+      <p style={_accred}>
+        Akvaplan-niva offers accredited services to ensure precision,
+        traceability and transparency in all phases of our projects
+      </p>
+
       <Card>
         <p style={_accred}>
           Akvaplan-niva provide accredited laboratory services for{"  "}
@@ -151,7 +122,7 @@ const En = ({ lang = "en" } = {}) => {
 export const Accreditations = ({ lang }) => (
   <section>
     <AlbumHeader
-      text={t("home.album.accreditations")}
+      text={t("accreditations.Header")}
       href={routes(lang).get("services")}
     />
 

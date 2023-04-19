@@ -14,7 +14,7 @@ import ArticleHeader from "../../components/article/ArticleHeader.tsx";
 
 import { MynewsdeskItem } from "akvaplan_fresh/@interfaces/mynewsdesk.ts";
 
-import { Page } from "akvaplan_fresh/components/page.tsx";
+import { Card, Page } from "akvaplan_fresh/components/mod.ts";
 import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
 import { PeopleCard } from "../../components/mod.ts";
 
@@ -87,7 +87,7 @@ export default function NewsArticle(
 
   const __html = body;
   //https://cloudinary.com/documentation/transformation_reference#ar_aspect_ratio
-  const img = image?.replace(",w_1782", ",w_1782,ar_16:9") ?? defaultImage;
+  const img = image?.replace(",w_1782", ",w_1600,ar_16:9") ?? defaultImage;
 
   const published = isodate(published_at.datetime);
 
@@ -119,9 +119,19 @@ export default function NewsArticle(
         >
         </section>
 
+        {links && (
+          <section class="article-content">
+            {links?.map(({ url }) => (
+              <Card>
+                <a href={url} class="ellipsis">{url}</a>
+              </Card>
+            ))}
+          </section>
+        )}
+
         {contact && (
-          <section>
-            Contact
+          <section class="article-content">
+            <h2>Contact</h2>
             <PeopleCard
               person={contact}
             />

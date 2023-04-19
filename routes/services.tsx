@@ -50,7 +50,7 @@ export default function Services(
       <link rel="stylesheet" href="/css/hscroll.css" />
       <script src="/@nrk/core-scroll.min.js" />
       <h1>
-        <a href=".">{title}</a> [{lang}]
+        <a href=".">{title}</a>
       </h1>
 
       <HScroll>

@@ -4,6 +4,7 @@ type ArticleHeaderProps = {
   imageCaption?: string;
 };
 
+console.log("@todo ArticleHeader should not be repeated in markup");
 export default function ArticleHeader({
   header,
   image,
@@ -14,7 +15,7 @@ export default function ArticleHeader({
       <section class="article-title-mobile" aria-disabled="true">
         <h1>{header}</h1>
       </section>
-      <header class="article-header" style={{ minHeight: "800" }}>
+      <header class="article-header" style={{ minHeight: "600" }}>
         <img title={imageCaption} alt={imageCaption} src={image} width="1000" />
         <h1>{header}</h1>
       </header>

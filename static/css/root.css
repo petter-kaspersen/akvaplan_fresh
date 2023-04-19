@@ -117,7 +117,7 @@ option {
   margin: var(--size-1);
   display: inline-flex;
   white-space: nowrap;
-  font-size: var(--font-size-fluid-2);
+  font-size: var(--font-size-fluid-1);
   
   /* padding-left: var(--size-6);
   padding-right: var(--size-6);
@@ -130,7 +130,14 @@ option {
   /* transition: border-color .5s var(--ease-2) 1s; */
 }
 
- .limit-lines {
+.ellipsis {
+  maxLines: "1";
+  overflow: "hidden";
+  whiteSpace: "nowrap";
+  textOverflow: "ellipsis";
+}
+
+.limit-lines {
   display: block;
   text-overflow: ellipsis;
   word-wrap: break-word;
