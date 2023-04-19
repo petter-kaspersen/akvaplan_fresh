@@ -15,17 +15,19 @@ interface PeopleProps {
 // TODO: Handle lang variants (for position, unit, etc.)
 export function PeopleCard(
   {
-    person: { id, tel, email, name, given, family, position, unit, workplace },
+    person: { id, tel, email, name, given, family, position, unit, workplace } =
+      {},
     lang,
   }: PeopleProps,
 ) {
   return (
     <Card customClass="people-card">
       <Head>
+        <link rel="stylesheet" href="/css/article.css" />
         <link rel="stylesheet" href="/css/people-card.css" />
       </Head>
 
-      <h2 class="people-name">
+      <div class="people-name">
         {name?.length > 1
           ? <span>{name}</span>
           : (
@@ -35,7 +37,7 @@ export function PeopleCard(
               <span style={{ color: "var(--text2)" }}>{family}</span>
             </a>
           )}
-      </h2>
+      </div>
       <ApnSym width="2rem" />
       <span class="people-position">
         {position?.[lang ?? "no"] ?? ""}

@@ -22,10 +22,17 @@ const fetchResearch = async (
 
 export const searchResearch = async ({ q, lang, sort, filter } = {}) =>
   (await fetchResearch({ sort, filter })).map((
-    { details, detaljer, ...s },
+    { details, detaljer, en, no, topic, tema, ...s },
   ) => ({
-    name: s[lang],
-    href: routes(lang).get("services") + `?q=${encodeURIComponent(s[lang])}`,
-    desc: lang === "en" ? details : detaljer,
     ...s,
+    lang,
+    name: lang === "en" ? en : no,
+    href: routes(lang).get("research") +
+      `/${(lang === "en"
+        ? `topic/${encodeURIComponent(topic)}`
+        : `tema/${encodeURIComponent(tema)}`)}`,
+    desc: lang === "en" ? details : detaljer,
   }));
+
+export const getResearchTopicSearchwords = (topic: string) => {
+};

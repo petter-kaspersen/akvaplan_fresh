@@ -29,6 +29,8 @@ export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)",
 };
 
+const level0 = ({ level }) => level === 0;
+
 export const handler: Handlers = {
   async GET(req, ctx) {
     const sitelang = getLangFromURL(req.url);
@@ -37,9 +39,13 @@ export const handler: Handlers = {
     const limit = 64;
     const q = "";
 
-    const services = await searchServices({ q, lang: sitelang, limit });
+    const _services = await searchServices({ q, lang: sitelang, limit });
+    const services = _services.filter(level0);
+
     const news = await latestNews({ q, lang: sitelang, limit });
-    const topics = await searchResearch({ q, lang: sitelang, limit });
+
+    const _topics = await searchResearch({ q, lang: sitelang, limit });
+    const topics = _topics.filter(level0);
 
     const numNews = 6;
     const articles = news.filter(({ type, hreflang, title }) =>
@@ -101,22 +107,6 @@ export default function Home(
       <NewsFilmStrip news={news} lang={lang.value} BeforeAfter={MoreNews} />
 
       <AlbumHeader
-        text={t("home.album.services")}
-        href={routes(lang).get("services")}
-      />
-      <HScroll>
-        {services.map(ServiceGroup)}
-      </HScroll>
-
-      <AlbumHeader
-        text={t("home.album.research")}
-        href={routes(lang).get("research")}
-      />
-      <HScroll>
-        {topics.map(ResearchTopic)}
-      </HScroll>
-
-      <AlbumHeader
         text={t(`home.album.${lang}.articles`)}
         href={routes(lang).get("news")}
       />
@@ -140,6 +130,22 @@ export default function Home(
         {pr.map(ArticleSquare)}
       </HScroll>
 
+      <AlbumHeader
+        text={t("home.album.services")}
+        href={routes(lang).get("services")}
+      />
+      <HScroll>
+        {services.map(ServiceGroup)}
+      </HScroll>
+
+      <AlbumHeader
+        text={t("home.album.research")}
+        href={routes(lang).get("research")}
+      />
+      <HScroll>
+        {topics.map(ResearchTopic)}
+      </HScroll>
+
       {
         /* <AlbumHeader
         text={t("home.album.projects")}
@@ -150,7 +156,7 @@ export default function Home(
       </HScroll> */
       }
 
-      {/* Research facilities Sensor platforms */}
+      {/* Research facilities (Fisk Loise) Sensor platforms */}
     </Page>
   );
 }

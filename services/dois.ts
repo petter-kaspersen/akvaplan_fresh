@@ -34,3 +34,26 @@ export const getSlimPublication = async (
     return slim;
   }
 };
+
+// Top 20 authors (by article count)
+// {"name":"IMSLAND A","count":173}
+// {"name":"FALK-PETERSEN S","count":163}
+// {"name":"RENAUD P","count":136}
+// {"name":"CARROLL J","count":88}
+// {"name":"CAMUS L","count":85}
+// {"name":"FOSS A","count":81}
+// {"name":"BERGE J","count":79}
+// {"name":"HOP H","count":67}
+// {"name":"CARROLL M","count":61}
+// {"name":"STEFANSSON S","count":59}
+// {"name":"VARPE Ø","count":59}
+// {"name":"GABRIELSEN G","count":53}
+// {"name":"DAHLE S","count":52}
+// {"name":"AMBROSE W","count":52}
+// {"name":"HALSBAND C","count":50}
+// {"name":"CHRISTENSEN G","count":49}
+// {"name":"EVENSET A","count":45}
+// {"name":"LEU E","count":44}
+// {"name":"HATTERMANN T","count":34}
+// {"name":"BLEVIN P","count":34}
+// {"name":"COCHRANE S","count":33}

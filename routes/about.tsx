@@ -119,65 +119,6 @@ export default (
       </section>
 
       <section style={_section}>
-        <h2>{t("about.Contact")}</h2>
-
-        <Card>
-          <dl>
-            <dt>
-              Besøk
-            </dt>
-            <dd>
-              {akvaplan.addr.hq.visit}{" "}
-              (<a href="https://goo.gl/maps/P73K9hcVKeKd7jkz5" target="_blank">
-                {t("about.hq.GoogleMaps")}
-              </a>)
-            </dd>
-
-            <dt>Post</dt>
-            <dd>{akvaplan.addr.hq.post}</dd>
-
-            <a
-              href={`tel:${akvaplan.tel}`}
-            >
-              <dt>
-                <Icon name="phone_in_talk" />
-              </dt>
-              <dd>+47 77 75 03 00</dd>
-            </a>
-            <a
-              href={`mailto:${akvaplan.email}`}
-            >
-              <dt>
-                <Icon name="contact_mail" />
-              </dt>
-              <dd>
-                {akvaplan.email}
-              </dd>
-            </a>
-            <dt>
-              Sosiale media
-            </dt>
-            <dd>
-              <a
-                href="https://nb-no.facebook.com/Akvaplan/"
-                target="_blank"
-              >
-                Facebook
-              </a>
-            </dd>
-            <dd>
-              <a
-                href="https://twitter.com/AkvaplanNiva"
-                target="_blank"
-              >
-                Twitter
-              </a>
-            </dd>
-          </dl>
-        </Card>
-      </section>
-
-      <section style={_section}>
         <h2>{t("about.Other_media")}</h2>
 
         <Card>
@@ -246,35 +187,52 @@ export default (
         </Card>
       </section>
 
-      See also:
+      <section style={_section}>
+        <h2>{t("about.Contact")}</h2>
 
-      <ul>
-        <li>Faktureringsinformasjon</li>
-        <li>Offices</li>
-      </ul>
-
-      <section>
-        <h5>Follow us</h5>
         <Card>
-          <menu>
-            <li>
-              <a
-                href=""
-                target="_blank"
-              >
-                Twitter
-              </a>
-            </li>
+          <dl>
+            <dt>
+              Besøk
+            </dt>
+            <dd>
+              {akvaplan.addr.hq.visit}{" "}
+              (<a href="https://goo.gl/maps/P73K9hcVKeKd7jkz5" target="_blank">
+                {t("Google Maps")}
+              </a>)
+            </dd>
+
+            <dt>Post</dt>
+            <dd>{akvaplan.addr.hq.post}</dd>
 
             <a
-              href="https://www.mynewsdesk.com/no/pressroom/akvaplan-niva"
-              target="_blank"
+              href={`tel:${akvaplan.tel}`}
             >
-              MyNewsDesk
+              <dt>
+                <Icon name="phone_in_talk" />
+              </dt>
+              <dd>+47 77 75 03 00</dd>
             </a>
-          </menu>
+            <a
+              href={`mailto:${akvaplan.email}`}
+            >
+              <dt>
+                <Icon name="contact_mail" />
+              </dt>
+              <dd>
+                {akvaplan.email}
+              </dd>
+            </a>
+          </dl>
         </Card>
       </section>
+
+      {
+        /* <ul>
+        <li>Faktureringsinformasjon</li>
+        <li>Offices</li>
+      </ul> */
+      }
     </Page>
   );
 };

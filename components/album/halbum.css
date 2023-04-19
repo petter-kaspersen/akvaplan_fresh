@@ -1,8 +1,8 @@
 :root {
   --sm-space: 1rem;
   --md-space: 2rem;
-  --min-halbum-size: 140px;
-  --max-halbum-size: 480px;
+  --min-halbum-size: 145px;
+  --max-halbum-size: 580px;
 }
 
 .halbum-image {

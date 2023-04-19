@@ -13,7 +13,7 @@ const threeColumnGrid = {
   margin: 0,
   padding: borders["--border-size-3"],
   display: "grid",
-  background: "var(--surface1)",
+  //background: "var(--surface1)",
   gridTemplateColumns: "1fr auto 1fr",
   color: "var(--text1)",
 };
@@ -44,7 +44,7 @@ export function CleanHeader(
           color-scheme
           style={{
             border: "0",
-            background: "var(--surface0)",
+            background: "var(--surface2)",
             color: "var(--text1)",
           }}
         >
@@ -61,7 +61,7 @@ export function CleanHeader(
           <menu
             style={{
               margin: 0,
-              padding: "2rem",
+              //padding: "2rem",
               background: "var(--surface1)",
               display: "grid",
               placeItems: "center",

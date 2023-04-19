@@ -5,7 +5,10 @@ import { isodate } from "../../time/mod.ts";
 export const ArticleSquare = (
   { title, published, img, desc, href, hreflang, keywords, width, height },
 ) => (
-  <div class="halbum-image" style={{ fontSize: "1rem" }}>
+  <div
+    class="halbum-image"
+    style={{ fontSize: "var(--font-size-fluid-0,1rem)" }}
+  >
     <a
       class="image-container"
       href={href}
@@ -20,11 +23,7 @@ export const ArticleSquare = (
       />
     </a>
     <p>
-      <a
-        href={href}
-      >
-        {title}
-      </a>
+      <a href={href}>{title}</a>
     </p>
     <p>
       {isodate(published)}{" "}

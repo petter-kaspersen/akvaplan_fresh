@@ -20,7 +20,7 @@ export const ServiceGroup = (
         src={img}
       />
     </a>
-    <h3>
+    <h3 style={{ fontSize: "var(--font-size-fluid-0,1rem)" }}>
       <a
         href={keywords?.length > 0
           ? serviceGroupURL({
