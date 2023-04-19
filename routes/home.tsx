@@ -23,6 +23,7 @@ import {
 
 import { Handlers, RouteConfig } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
+import NewsArticle from "./article/[slug].tsx";
 
 export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)",
@@ -47,26 +48,29 @@ export const handler: Handlers = {
     const topics = _topics.filter(level0);
 
     const numNews = 6;
-    const articles = news
-      .filter(
-        ({ type, hreflang, title }) =>
-          ["news"].includes(type) &&
-          hreflang === sitelang &&
-          !/stillingsannonse/i.test(title)
-      )
-      .slice(0, numNews);
-    const articlesNotInSiteLang = news
-      .filter(
-        ({ type, hreflang, title }) =>
-          ["news"].includes(type) &&
-          hreflang !== sitelang &&
-          !/stillingsannonse/i.test(title)
-      )
-      .slice(0, numNews);
+    const articles = news.filter(({ type, hreflang, title }) =>
+      ["news"].includes(type) && hreflang === sitelang &&
+      !/stillingsannonse/i.test(title)
+    )
+      .slice(
+        0,
+        numNews,
+      );
+    const articlesNotInSiteLang = news.filter(({ type, hreflang, title }) =>
+      ["news"].includes(type) &&
+      hreflang !== sitelang &&
+      !/stillingsannonse/i.test(title)
+    )
+      .slice(
+        0,
+        numNews,
+      );
 
-    const pr = news
-      .filter(({ type }) => ["pressrelease"].includes(type))
-      .slice(0, numNews);
+    const pr = news.filter(({ type }) => ["pressrelease"].includes(type))
+      .slice(
+        0,
+        numNews,
+      );
     return ctx.render({
       news,
       services,
@@ -86,9 +90,11 @@ const ellipsis = {
   textOverflow: "ellipsis",
 };
 
-export default function Home({
-  data: { news, topics, lang, services, articles, articlesNotInSiteLang, pr },
-}) {
+export default function Home(
+  {
+    data: { news, topics, lang, services, articles, articlesNotInSiteLang, pr },
+  },
+) {
   return (
     <Page>
       <Head>
@@ -104,39 +110,51 @@ export default function Home({
         text={t(`home.album.${lang}.articles`)}
         href={routes(lang).get("news")}
       />
-      <HScroll>{articles.map(ArticleSquare)}</HScroll>
+      <HScroll>
+        {articles.map(ArticleSquare)}
+      </HScroll>
 
       <AlbumHeader
         text={t("home.album.articles_not_in_site_lang")}
         href={routes(lang).get("news")}
       />
-      <HScroll>{articlesNotInSiteLang.map(ArticleSquare)}</HScroll>
+      <HScroll>
+        {articlesNotInSiteLang.map(ArticleSquare)}
+      </HScroll>
 
       <AlbumHeader
         text={t("home.album.press_releases")}
         href={routes(lang).get("news")}
       />
-      <HScroll>{pr.map(ArticleSquare)}</HScroll>
+      <HScroll>
+        {pr.map(ArticleSquare)}
+      </HScroll>
 
       <AlbumHeader
         text={t("home.album.services")}
         href={routes(lang).get("services")}
       />
-      <HScroll>{services.map(ServiceGroup)}</HScroll>
+      <HScroll>
+        {services.map(ServiceGroup)}
+      </HScroll>
 
       <AlbumHeader
         text={t("home.album.research")}
         href={routes(lang).get("research")}
       />
-      <HScroll>{topics.map(ResearchTopic)}</HScroll>
+      <HScroll>
+        {topics.map(ResearchTopic)}
+      </HScroll>
 
-      {/* <AlbumHeader
+      {
+        /* <AlbumHeader
         text={t("home.album.projects")}
         href={routes(lang).get("projects")}
       />
       <HScroll>
         @todo (v1.1?)
-      </HScroll> */}
+      </HScroll> */
+      }
 
       {/* Research facilities (Fisk Loise) Sensor platforms */}
     </Page>
