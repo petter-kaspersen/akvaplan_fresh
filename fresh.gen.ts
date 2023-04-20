@@ -23,12 +23,13 @@ import * as $16 from "./routes/research.tsx";
 import * as $17 from "./routes/search.tsx";
 import * as $18 from "./routes/services.tsx";
 import * as $19 from "./routes/topics.tsx";
-import * as $$0 from "./islands/button_open_dialog.tsx";
-import * as $$1 from "./islands/doi_search.tsx";
-import * as $$2 from "./islands/lang_switcher.tsx";
-import * as $$3 from "./islands/pubs_histogram.tsx";
-import * as $$4 from "./islands/text.tsx";
-import * as $$5 from "./islands/theme_switcher.tsx";
+import * as $$0 from "./islands/HScrollWithDynamicImage.tsx";
+import * as $$1 from "./islands/button_open_dialog.tsx";
+import * as $$2 from "./islands/doi_search.tsx";
+import * as $$3 from "./islands/lang_switcher.tsx";
+import * as $$4 from "./islands/pubs_histogram.tsx";
+import * as $$5 from "./islands/text.tsx";
+import * as $$6 from "./islands/theme_switcher.tsx";
 
 const manifest = {
   routes: {
@@ -54,12 +55,13 @@ const manifest = {
     "./routes/topics.tsx": $19,
   },
   islands: {
-    "./islands/button_open_dialog.tsx": $$0,
-    "./islands/doi_search.tsx": $$1,
-    "./islands/lang_switcher.tsx": $$2,
-    "./islands/pubs_histogram.tsx": $$3,
-    "./islands/text.tsx": $$4,
-    "./islands/theme_switcher.tsx": $$5,
+    "./islands/HScrollWithDynamicImage.tsx": $$0,
+    "./islands/button_open_dialog.tsx": $$1,
+    "./islands/doi_search.tsx": $$2,
+    "./islands/lang_switcher.tsx": $$3,
+    "./islands/pubs_histogram.tsx": $$4,
+    "./islands/text.tsx": $$5,
+    "./islands/theme_switcher.tsx": $$6,
   },
   baseUrl: import.meta.url,
   config,

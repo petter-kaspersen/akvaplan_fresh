@@ -10,17 +10,35 @@ import { newsFromAkvaplanists } from "./news_akvaplanists.ts";
 
 import { type News, type Search } from "akvaplan_fresh/@interfaces/mod.ts";
 
-const sortLatest = (a, b) => b.published.localeCompare(a.published);
+const sortLatest = (a: News, b: News) => b.published.localeCompare(a.published);
 
-const newsWithDOI = (articles) =>
+//@todo News create task to find/save news articles with DOI
+const newsArticlesWithDOI = (articles: []) =>
   new Map<string, string | number>(
     articles.filter(({ rels }) => rels?.doi?.length > 0).map(
       (news) => [news.rels.doi.at(0), news],
     ),
   );
 
+export const buildoiNewsMap = async (
+  { q = "", lang = "en" } = {},
+): Promise<Map<string, News[]> | undefined> => {
+  const _news = await searchMynewsdesk({
+    q,
+    limit: 100,
+    type_of_media: "news",
+  });
+  const pr = "pressrelease";
+  const _pr = await searchMynewsdesk({ q, limit: 100, type_of_media: pr });
+
+  const articles = [..._news.items, ..._pr.items].map(
+    newsFromMynewsdesk({ lang }),
+  );
+  return newsArticlesWithDOI(articles);
+};
+
 export const searchNews = async (
-  { q = "", limit = 10, lang = "", sort = sortLatest } = {},
+  { q = "", limit = 10, lang, sort = sortLatest } = {},
 ): Promise<News[]> => {
   const _news = await searchMynewsdesk({ q, limit, type_of_media: "news" });
   const pr = "pressrelease";
@@ -29,7 +47,7 @@ export const searchNews = async (
   const articles = [..._news.items, ..._pr.items].map(
     newsFromMynewsdesk({ lang }),
   );
-  const news = newsWithDOI(articles);
+  const news = newsArticlesWithDOI(articles);
 
   const { data } = await searchPubs({ q, limit });
   const pubs = data.map(newsFromPubs({ lang }));
@@ -49,8 +67,20 @@ export const searchNews = async (
   // );
   return [...articles, ...pubs].sort(sort);
 };
-
 export const latestNews = async (params: Search) =>
   (await searchNews(params)).sort((a, b) =>
     b.published.localeCompare(a.published)
   ).slice(0, params.limit ?? 128);
+
+export const searchNewsArticles = async (
+  { q = "", limit = 10, lang = "", sort = sortLatest } = {},
+): Promise<News[]> => {
+  const _news = await searchMynewsdesk({ q, limit, type_of_media: "news" });
+  const pr = "pressrelease";
+  const _pr = await searchMynewsdesk({ q, limit, type_of_media: pr });
+
+  const articles = [..._news.items, ..._pr.items].map(
+    newsFromMynewsdesk({ lang }),
+  );
+  return articles.sort(sort);
+};
