@@ -66,19 +66,19 @@ footer {
 }
 
 p {
-  line-height: var(--font-lineheight-2);
+  /* line-height: var(--font-lineheight-2); */
 }
 
 h1 {
-  font-size: var(--font-size-fluid-3);
-}
-
-h2 {
   font-size: var(--font-size-fluid-2);
 }
 
-h3 {
+h2 {
   font-size: var(--font-size-fluid-1);
+}
+
+h3 {
+  font-size: var(--font-size-fluid-0);
 }
 
 button,

@@ -108,7 +108,12 @@ export default (
         <Card>
           <menu>
             <li>
-              https://www.nmdc.no/resources/nmdc/Akvaplan-niva-dataforvaltningspolitikk.pdf
+              <a
+                hreflang="no"
+                href="https://www.nmdc.no/resources/nmdc/Akvaplan-niva-dataforvaltningspolitikk.pdf"
+              >
+                Data policy
+              </a>
             </li>
             <li>Kvalitetspolicy og etiske retningslinjer</li>
             <li>Generelle vilkår (for kjøp av tjenester)</li>
@@ -123,6 +128,33 @@ export default (
 
         <Card>
           <dl>
+            <dt>
+              Sosiale media
+            </dt>
+            <dd>
+              <a
+                href="https://facebook.com/Akvaplan/"
+                target="_blank"
+              >
+                Facebook
+              </a>
+            </dd>
+            <dd>
+              <a
+                href="https://no.linkedin.com/company/akvaplan-niva"
+                target="_blank"
+              >
+                LinkedIn
+              </a>
+            </dd>
+            <dd>
+              <a
+                href="https://twitter.com/AkvaplanNiva"
+                target="_blank"
+              >
+                Twitter
+              </a>
+            </dd>
             <dt>
               Datasett
             </dt>
@@ -154,33 +186,6 @@ export default (
                 target="_blank"
               >
                 YouTube
-              </a>
-            </dd>
-            <dt>
-              Sosiale media
-            </dt>
-            <dd>
-              <a
-                href="https://facebook.com/Akvaplan/"
-                target="_blank"
-              >
-                Facebook
-              </a>
-            </dd>
-            <dd>
-              <a
-                href="https://no.linkedin.com/company/akvaplan-niva"
-                target="_blank"
-              >
-                LinkedIn
-              </a>
-            </dd>
-            <dd>
-              <a
-                href="https://twitter.com/AkvaplanNiva"
-                target="_blank"
-              >
-                Twitter
               </a>
             </dd>
           </dl>

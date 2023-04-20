@@ -56,13 +56,15 @@ export default function Services(
       <link rel="stylesheet" href="/css/hscroll-dynamic.css" />
       <script src="/@nrk/core-scroll.min.js" />
 
-      <HScrollWithDynamicImage
-        scrollerId=""
-        images={services}
-      />
       <h1>
         <a href=".">{title}</a>
       </h1>
+      {
+        /* <HScrollWithDynamicImage
+        scrollerId=""
+        images={services}
+      /> */
+      }
 
       <HScroll>
         {services.map(ServiceGroup)}

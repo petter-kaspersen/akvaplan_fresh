@@ -24,12 +24,10 @@ export const ArticleSquare = (
         loading="lazy"
         src={img}
       />
-    </a>
-    <p>
-      <a href={href}>
+      <p style={{ textAlign: "left" }}>
         {title}
-      </a>
-    </p>
+      </p>
+    </a>
     <p>
       {isodate(published)}{" "}
       {lang.value !== hreflang ? <span>({t(`lang.${hreflang}`)})</span> : null}
