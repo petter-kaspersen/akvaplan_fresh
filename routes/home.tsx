@@ -26,7 +26,7 @@ import { Head } from "$fresh/runtime.ts";
 import NewsArticle from "./article/[slug].tsx";
 
 export const config: RouteConfig = {
-  routeOverride: "/:lang(en|no)",
+  routeOverride: "/:lang(en|no){/:page(home|hjem)}?",
 };
 
 const level0 = ({ level }) => level === 0;

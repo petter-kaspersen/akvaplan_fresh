@@ -1,14 +1,20 @@
 import {
+  //getResearchTopicSearchwords,
+  //getServiceTopicSearchwords,
   newsFromMynewsdesk,
   searchMynewsdesk,
+  searchResearch,
   searchServices,
 } from "akvaplan_fresh/services/mod.ts";
 
 import {
   AlbumHeader,
+  Article,
+  ArticleHeader,
   ArticleSquare,
   HScroll,
   Page,
+  PeopleCard,
 } from "akvaplan_fresh/components/mod.ts";
 
 import { researchTopicURL, routes } from "akvaplan_fresh/services/nav.ts";
@@ -23,10 +29,11 @@ import {
   type PageProps,
   type RouteConfig,
 } from "$fresh/server.ts";
+
 import { Head } from "$fresh/runtime.ts";
 export const config: RouteConfig = {
   routeOverride:
-    "/:lang(en|no){/:page(services|tjenester|research|forskning)}?/:groupname(topic|topics|tema){/:topic}?",
+    "/:lang(en|no){/:page(news|nyheter|services|tjenester|research|forskning)}?/:groupname(topic|topics|tema){/:topic}?",
 };
 
 export const handler: Handlers = {
@@ -36,18 +43,29 @@ export const handler: Handlers = {
 
     lang.value = params.lang;
 
-    const { topic } = params;
-    const title = t(`service.topic.${topic}`);
+    const page = ["research", "forskning", "news"].includes(params.page)
+      ? "research"
+      : "services";
 
-    const q = topic;
     const base = `/${params.lang}/${params.page}/${params.groupname}`;
 
+    const allservices = await searchServices({ q: "", lang: params.lang });
+
+    const alltopics = await searchResearch({ q: "", lang: params.lang });
+
+    const topics = alltopics.slice(0, 3);
+    const services = allservices.slice(0, 3);
+
+    const q = params.topic;
+    const topic = q;
     const { items } = await searchMynewsdesk({
       q,
       lang: params.lang,
       limit: 128,
     });
+
     const news = items.map(newsFromMynewsdesk(params.lang));
+
     const fx = news.length > 3
       ? ({ published }) => published.substring(0, 4)
       : () => t(`topic.${topic}`);
@@ -57,17 +75,14 @@ export const handler: Handlers = {
       fx,
     );
 
-    const services = await searchServices({
-      q,
-      lang: params.lang,
-      filter: ({ keywords }) => keywords?.includes(topic),
-    });
+    const title = `${t(`Topic_${page}`)}: ${topic}`; //t(`topic.${params.page}`);
 
     return ctx.render({
       lang,
       title,
       base,
       services,
+      topics,
       news: newsGrouped,
       topic,
       page: params.page,
@@ -77,10 +92,11 @@ export const handler: Handlers = {
 };
 
 export default function TopicsOrTopic(
-  { data: { lang, title, base, services, news, topic, keywords, page } }:
-    PageProps<
-      unknown
-    >,
+  {
+    data: { lang, title, base, services, topics, news, topic, keywords, page },
+  }: PageProps<
+    unknown
+  >,
 ) {
   const width = 512;
   const height = 512;
@@ -88,14 +104,45 @@ export default function TopicsOrTopic(
     <Page title={title} base={base}>
       <Head>
         <link rel="stylesheet" href="/css/hscroll.css" />
-        <link rel="stylesheet" href="/css/mini-news.css" />
         <link rel="stylesheet" href="/css/article.css" />
         <script src="/@nrk/core-scroll.min.js" />
       </Head>
       <div>
-        <h1>
-          <a href=".">{title}</a> [{lang}]
-        </h1>
+        {!topics && (
+          <h1>
+            <a href=".">{t(`Topic_${page}`)}</a>: {topic}
+          </h1>
+        )}
+        {topics && topics?.at(0)?.img && (
+          <section
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 10fr 1fr",
+              gap: "1rem",
+            }}
+          >
+            <div></div>
+            <Article>
+              <ArticleHeader
+                header={
+                  <span>
+                    <a href=".">{t(`Topic_${page}`)}</a>:{" "}
+                    {topics?.at(0)?.name ?? topic}
+                  </span>
+                }
+                image={topics?.at(0)?.img?.replace(
+                  "/preview/",
+                  "/preview_big/",
+                )}
+                imageCaption={"cap"}
+              />
+              <div>
+                <PeopleCard person={{ name: topics?.at(0)?.contact_id }} />
+              </div>
+            </Article>
+            <div></div>
+          </section>
+        )}
 
         <HScroll>
           {services.map(({ name, img, desc, href, keywords }) => (
@@ -110,9 +157,7 @@ export default function TopicsOrTopic(
 
               <h3>
                 <a
-                  href={keywords?.length > 0
-                    ? researchTopicURL({ topic, lang })
-                    : href}
+                  href={href}
                   title={desc}
                 >
                   {name}
@@ -122,11 +167,11 @@ export default function TopicsOrTopic(
           ))}
         </HScroll>
 
-        <h2>{t(`topic.${topic}`)}</h2>
-        {[...news].map(([grp, arr]) => (
+        {/* <h2>{t("nav.News")}</h2> */}
+        {[...news].slice(0, 3).map(([grp, arr]) => (
           <div>
             <AlbumHeader
-              text={`«${topic}» ${t("news.in")} ${grp}`}
+              text={t(grp)}
               href={routes(lang).get("news")}
             />
             <HScroll>

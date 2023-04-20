@@ -8,6 +8,8 @@ import {
 
 import { ServiceGroup } from "akvaplan_fresh/components/album/service_group.tsx";
 
+import HScrollWithDynamicImage from "akvaplan_fresh/islands/HScrollWithDynamicImage.tsx";
+
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
 
 import {
@@ -34,7 +36,9 @@ export const handler: Handlers = {
     const group = groupname?.length > 0 ? groupname : "year";
     const q = searchParams.get("q") ?? "";
 
-    const services = await searchServices({ q, lang: params.lang });
+    const services = (await searchServices({ q, lang: params.lang })).filter((
+      { img },
+    ) => img?.length > 0);
 
     return ctx.render({ lang, title, base, services });
   },
@@ -48,7 +52,14 @@ export default function Services(
   return (
     <Page title={title} base={base}>
       <link rel="stylesheet" href="/css/hscroll.css" />
+      <link rel="stylesheet" href="/css/akvaplanist.css" />
+      <link rel="stylesheet" href="/css/hscroll-dynamic.css" />
       <script src="/@nrk/core-scroll.min.js" />
+
+      <HScrollWithDynamicImage
+        scrollerId=""
+        images={services}
+      />
       <h1>
         <a href=".">{title}</a>
       </h1>

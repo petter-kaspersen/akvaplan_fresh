@@ -48,7 +48,7 @@ export const handler: Handlers = {
 };
 
 const OnlyIn = ({ language, lang }) => {
-  return <div lang={lang}>{t(`Only.${String(language)}`)}</div>;
+  return <div lang={lang}>{t(`lang.Only.${String(language)}`)}</div>;
 };
 
 interface ArticleProps {
@@ -85,11 +85,12 @@ export default function NewsArticle(
     ...mynewsdeskItem
   } = item;
 
-  const __html = body;
   //https://cloudinary.com/documentation/transformation_reference#ar_aspect_ratio
   const img = image?.replace(",w_1782", ",w_1600,ar_16:9") ?? defaultImage;
 
   const published = isodate(published_at.datetime);
+
+  const __html = body + `<p>${published}</p>`;
 
   const _caption = {
     fontSize: "0.75rem",
@@ -119,22 +120,21 @@ export default function NewsArticle(
         >
         </section>
 
-        {links && (
-          <section class="article-content">
-            {links?.map(({ url }) => (
-              <Card>
-                <a href={url} class="ellipsis">{url}</a>
-              </Card>
-            ))}
-          </section>
-        )}
+        {(links && links?.length > 0) &&
+          (
+            <section class="article-content">
+              {links?.map(({ url }) => (
+                <Card>
+                  <a href={url} class="ellipsis">{url}</a>
+                </Card>
+              ))}
+            </section>
+          )}
 
         {contact && (
-          <section class="article-content">
-            <h2>Contact</h2>
-            <PeopleCard
-              person={contact}
-            />
+          <section>
+            <br />
+            <PeopleCard person={contact} />
           </section>
         )}
       </Article>

@@ -1,7 +1,10 @@
 import { getSlimPublication } from "akvaplan_fresh/services/dois.ts";
-import { SlimPublication } from "akvaplan_fresh/@interfaces/slim_publication.ts";
+
+import { buildoiNewsMap } from "akvaplan_fresh/services/news.ts";
 
 import { Card, Icon, Page } from "akvaplan_fresh/components/mod.ts";
+
+import { SlimPublication } from "akvaplan_fresh/@interfaces/slim_publication.ts";
 
 import {
   HandlerContext,
@@ -27,8 +30,10 @@ export const handler: Handlers<SlimPublication> = {
     const { params } = ctx;
     const doi = doiFromParams(params);
     const slim = await getSlimPublication(doi);
+
     if (slim) {
-      return ctx.render(slim);
+      const news = await buildoiNewsMap();
+      return ctx.render({ slim, news });
     } else {
       return ctx.renderNotFound();
     }
@@ -36,16 +41,18 @@ export const handler: Handlers<SlimPublication> = {
 };
 
 export default function DoiPublication(
-  { params, data }: PageProps<SlimPublication>,
+  { params, data: { slim, news } }: PageProps<
+    { slim: SlimPublication; news: unknown }
+  >,
 ) {
-  const { title, type, published, container, authors, doi, ...rest } = data;
+  const { title, type, published, container, authors, doi, ...rest } = slim;
   const href = `https://doi.org/${doi}`;
 
   return (
     <Page title={title}>
       <article>
         <Card>
-          <h2>{title}</h2>
+          <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
 
           <div class="mdc-typography--headline4">
           </div>
@@ -75,10 +82,10 @@ export default function DoiPublication(
           </div>
         </Card>
         <Card>
-          <pre>{JSON.stringify(authors)}</pre>
+          <pre>{JSON.stringify(news.get(doi))}</pre>
         </Card>
 
-        <pre>{JSON.stringify(rest)}</pre>
+        <code></code>
       </article>
     </Page>
   );
