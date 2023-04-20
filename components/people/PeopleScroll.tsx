@@ -21,11 +21,11 @@ export const GroupedPeople = (
   <div>
     {[...grouped].map(([grpkey, grpmembers]) => (
       <div>
-        <h3>
+        <h2>
           <a href={`${group}/${grpkey.toLowerCase()}`}>
             {group === "unit" ? t(`unit.${grpkey}`) : grpkey}
           </a>
-        </h3>
+        </h2>
         <HScroll scrollerId="news-scroll">
           {grpmembers.map((person) => (
             <PeopleCard

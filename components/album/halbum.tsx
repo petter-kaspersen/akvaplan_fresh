@@ -61,7 +61,7 @@ const PreviewFigure = ({
 
   return (
     <div class="halbum-image">
-      <a href={href} aria-label="…">
+      <a href={href} aria-label={headline}>
         <div class="image-container">
           <img
             width={width}

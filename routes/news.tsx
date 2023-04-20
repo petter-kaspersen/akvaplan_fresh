@@ -6,7 +6,7 @@ import { ArticleSquare, HScroll, Page } from "akvaplan_fresh/components/mod.ts";
 import HScrollWithDynamicImage from "akvaplan_fresh/islands/HScrollWithDynamicImage.tsx";
 
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
-import { isodate } from "akvaplan_fresh/time/mod.ts";
+import { isodate, monthname } from "akvaplan_fresh/time/mod.ts";
 import { groupIntoMap } from "akvaplan_fresh/grouping/mod.ts";
 
 import {
@@ -23,25 +23,28 @@ import { Head } from "$fresh/runtime.ts";
 import { MynewsdeskItem } from "../@interfaces/mynewsdesk.ts";
 
 type Props = {};
-
+const _section = {
+  marginTop: "4rem",
+  marginBottom: "6rem",
+};
 export const handler: Handlers<Props> = {
   async GET(req: Request, ctx: HandlerContext) {
     const { params } = ctx;
     lang.value = params.lang;
     const base = `/${params.lang}/${params.page}/`;
-    const title = t("news.News");
+    const title = t("nav.News");
 
     const { searchParams } = new URL(req.url);
     const _q = searchParams.get("q") ?? "";
     const q = _q.toLocaleLowerCase();
 
     const _news =
-      await searchNewsArticles({ q, lang: lang.value, limit: 512 }) ??
+      await searchNewsArticles({ q, lang: lang.value, limit: 24 }) ??
         { items: [] };
 
     const news = groupIntoMap(
       _news,
-      ({ published }) => published.substring(0, 4),
+      ({ published }) => published.substring(0, 7),
     );
     // group by
     // latest news articles (by month)?
@@ -58,21 +61,21 @@ export default function News(
 ) {
   return (
     <Page title={title} base={base}>
-      <HScrollWithDynamicImage
-        scrollerId=""
-        images={[...news.values()].at(0).slice(0, 4)}
-      />
-      <h1>
-        <a href="." style={{ color: "var(--text2)" }}>{title} [{lang}]</a>
-      </h1>
-
-      {[...news].map(([grpkey, grpmembers]) => (
-        <section>
-          <h2>
-            <a href={`${"year"}/${grpkey.toLowerCase()}`}>
-              {grpkey}
-            </a>
-          </h2>
+      {[...news].map(([grpkey, grpmembers], i) => (
+        <section style={_section}>
+          {i === 0
+            ? (
+              <h1>
+                <a href="." style={{ color: "var(--text2)" }}>{title}</a>
+              </h1>
+            )
+            : (
+              <h1>
+                <span href={`${"month"}/${grpkey.toLowerCase()}`}>
+                  {monthname(new Date(grpmembers[0].published), lang.value)}
+                </span>
+              </h1>
+            )}
 
           <HScroll scrollerId="news-scroll">
             {grpmembers.slice(0, 7).map(ArticleSquare)}

@@ -31,6 +31,11 @@ export const config: RouteConfig = {
 
 const level0 = ({ level }) => level === 0;
 
+const _section = {
+  marginTop: "2rem",
+  marginBottom: "3rem",
+};
+
 export const handler: Handlers = {
   async GET(req, ctx) {
     const sitelang = getLangFromURL(req.url);
@@ -47,7 +52,7 @@ export const handler: Handlers = {
     const _topics = await searchResearch({ q, lang: sitelang, limit });
     const topics = _topics.filter(level0);
 
-    const numNews = 6;
+    const numNews = 5;
     const articles = news.filter(({ type, hreflang, title }) =>
       ["news"].includes(type) && hreflang === sitelang &&
       !/stillingsannonse/i.test(title)
@@ -83,13 +88,6 @@ export const handler: Handlers = {
   },
 };
 
-const ellipsis = {
-  maxLines: "1",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
-};
-
 export default function Home(
   {
     data: { news, topics, lang, services, articles, articlesNotInSiteLang, pr },
@@ -106,45 +104,52 @@ export default function Home(
 
       <NewsFilmStrip news={news} lang={lang.value} BeforeAfter={MoreNews} />
 
-      <AlbumHeader
-        text={t(`home.album.${lang}.articles`)}
-        href={routes(lang).get("news")}
-      />
-      <HScroll>
-        {articles.map(ArticleSquare)}
-      </HScroll>
+      <section style={_section}>
+        <AlbumHeader
+          text={t(`home.album.${lang}.articles`)}
+          href={routes(lang).get("news")}
+        />
+        <HScroll>
+          {articles.map(ArticleSquare)}
+        </HScroll>
+      </section>
 
-      <AlbumHeader
-        text={t("home.album.articles_not_in_site_lang")}
-        href={routes(lang).get("news")}
-      />
-      <HScroll>
-        {articlesNotInSiteLang.map(ArticleSquare)}
-      </HScroll>
-
-      <AlbumHeader
-        text={t("home.album.press_releases")}
-        href={routes(lang).get("news")}
-      />
-      <HScroll>
-        {pr.map(ArticleSquare)}
-      </HScroll>
-
-      <AlbumHeader
-        text={t("home.album.services")}
-        href={routes(lang).get("services")}
-      />
-      <HScroll>
-        {services.map(ServiceGroup)}
-      </HScroll>
-
-      <AlbumHeader
-        text={t("home.album.research")}
-        href={routes(lang).get("research")}
-      />
-      <HScroll>
-        {topics.map(ResearchTopic)}
-      </HScroll>
+      <section style={_section}>
+        <AlbumHeader
+          text={t("home.album.articles_not_in_site_lang")}
+          href={routes(lang).get("news")}
+        />
+        <HScroll>
+          {articlesNotInSiteLang.map(ArticleSquare)}
+        </HScroll>
+      </section>
+      <section style={_section}>
+        <AlbumHeader
+          text={t("home.album.press_releases")}
+          href={routes(lang).get("news")}
+        />
+        <HScroll>
+          {pr.map(ArticleSquare)}
+        </HScroll>
+      </section>
+      <section style={_section}>
+        <AlbumHeader
+          text={t("home.album.services")}
+          href={routes(lang).get("services")}
+        />
+        <HScroll>
+          {services.map(ServiceGroup)}
+        </HScroll>
+      </section>
+      <section style={_section}>
+        <AlbumHeader
+          text={t("home.album.research")}
+          href={routes(lang).get("research")}
+        />
+        <HScroll>
+          {topics.map(ResearchTopic)}
+        </HScroll>
+      </section>
 
       {
         /* <AlbumHeader
