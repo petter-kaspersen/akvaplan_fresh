@@ -7,7 +7,10 @@ export const ArticleSquare = (
 ) => (
   <div
     class="halbum-image"
-    style={{ fontSize: "var(--font-size-fluid-0,1rem)" }}
+    style={{
+      fontSize: "var(--font-size-fluid-1,1rem)",
+      wordBreak: "break-word",
+    }}
   >
     <a
       class="image-container"
@@ -23,7 +26,9 @@ export const ArticleSquare = (
       />
     </a>
     <p>
-      <a href={href}>{title}</a>
+      <a href={href}>
+        {title}
+      </a>
     </p>
     <p>
       {isodate(published)}{" "}
