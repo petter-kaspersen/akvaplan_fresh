@@ -23,6 +23,10 @@ export type StdProps =
     Header?: FunctionComponent;
   };
 
+const slagord = "Fra forskning til verdiskapning";
+
+const slogun = "From research to value creation";
+
 export function Page(
   {
     title,
@@ -33,9 +37,11 @@ export function Page(
 ) {
   const head = (
     <Head>
-      {title
-        ? <title>{t(title)} – Akvaplan-niva</title>
-        : <title>Akvaplan-niva</title>}
+      {title ? <title>{t(title)} – Akvaplan-niva</title> : (
+        <title>
+          Akvaplan-niva – {lang.value === "en" ? slogun : slagord}
+        </title>
+      )}
 
       <script
         dangerouslySetInnerHTML={{ __html: buildInitTheming() }}

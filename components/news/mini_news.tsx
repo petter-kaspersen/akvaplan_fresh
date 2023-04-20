@@ -38,9 +38,9 @@ export const MiniNewsCard = (
           href={href}
           class="line-clamp3"
           style={{ paddingBlockEnd: "var(--size-1)" }}
-        >
-          {title}
-        </a>
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
+
         <time>{isodate(published)}</time>{" "}
         <span>{t(`news.${type}`).value.toUpperCase()}</span>
         {hreflang !== lang

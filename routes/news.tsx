@@ -1,7 +1,9 @@
-import { searchNews } from "akvaplan_fresh/services/news.ts";
+import { searchNewsArticles } from "akvaplan_fresh/services/news.ts";
 import { href } from "akvaplan_fresh/services/mynewsdesk.ts";
 
 import { ArticleSquare, HScroll, Page } from "akvaplan_fresh/components/mod.ts";
+
+import HScrollWithDynamicImage from "akvaplan_fresh/islands/HScrollWithDynamicImage.tsx";
 
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
 import { isodate } from "akvaplan_fresh/time/mod.ts";
@@ -33,8 +35,9 @@ export const handler: Handlers<Props> = {
     const _q = searchParams.get("q") ?? "";
     const q = _q.toLocaleLowerCase();
 
-    const _news = await searchNews({ q, lang: lang.value, limit: 512 }) ??
-      { items: [] };
+    const _news =
+      await searchNewsArticles({ q, lang: lang.value, limit: 512 }) ??
+        { items: [] };
 
     const news = groupIntoMap(
       _news,
@@ -55,6 +58,10 @@ export default function News(
 ) {
   return (
     <Page title={title} base={base}>
+      <HScrollWithDynamicImage
+        scrollerId=""
+        images={[...news.values()].at(0).slice(0, 4)}
+      />
       <h1>
         <a href="." style={{ color: "var(--text2)" }}>{title} [{lang}]</a>
       </h1>
@@ -75,6 +82,7 @@ export default function News(
 
       <link rel="stylesheet" href="/css/hscroll.css" />
       <link rel="stylesheet" href="/css/akvaplanist.css" />
+      <link rel="stylesheet" href="/css/hscroll-dynamic.css" />
       <script src="/@nrk/core-scroll.min.js" />
     </Page>
   );
