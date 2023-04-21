@@ -4,11 +4,11 @@ import {
   fetchItemBySlug,
 } from "akvaplan_fresh/services/mynewsdesk.ts";
 import { isodate } from "akvaplan_fresh/time/mod.ts";
-import { t } from "akvaplan_fresh/text/mod.ts";
+import { lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
 
-import Article from "../../components/article/Article.tsx";
-import ArticleContact from "../../components/article/ArticleContact.tsx";
-import ArticleHeader from "../../components/article/ArticleHeader.tsx";
+import Article from "akvaplan_fresh/components/article/Article.tsx";
+import ArticleContact from "akvaplan_fresh/components/article/ArticleContact.tsx";
+import ArticleHeader from "akvaplan_fresh/components/article/ArticleHeader.tsx";
 
 //import { YouTube } from "akvaplan_fresh/components/video/youtube.tsx";
 
@@ -28,6 +28,7 @@ console.log("@todo News article: auto-fetch related contacts");
 export const handler: Handlers = {
   async GET(req, ctx) {
     const { slug, lang, type } = ctx.params;
+    langSignal.value = lang;
     const type_of_media = type.startsWith("press") ? "pressrelease" : "news";
     const item = await fetchItemBySlug(slug, type_of_media);
     if (!item) {
@@ -113,7 +114,7 @@ export default function NewsArticle(
         <figure style={_caption}>
           <figcaption>{image_caption}</figcaption>
         </figure>
-
+        {lang}
         <section
           class="article-content"
           dangerouslySetInnerHTML={{ __html }}
@@ -132,7 +133,7 @@ export default function NewsArticle(
           )}
 
         {contact && (
-          <section>
+          <section class="article-content">
             <br />
             <PeopleCard person={contact} />
           </section>
