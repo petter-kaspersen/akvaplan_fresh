@@ -1,5 +1,7 @@
 // import PubsHistogram from "../islands/pubs_histogram.tsx";
 // <PubsHistogram period="2000/" />
+
+import { normalize } from "akvaplan_fresh/text/mod.ts";
 import { SlimCard } from "../components/slim_card.tsx";
 import { type SlimPublication } from "../@interfaces/slim_publication.ts";
 
@@ -30,28 +32,25 @@ button[type="submit"] {
 `;
 export interface DoiSearchResultsProps {
   results: SlimPublication[];
+  all: SlimPublication[];
   q: string;
   start?: number;
 }
 
-// @todo DoiSearch: implement proper search, currently just naive string filtering
-// @todo DoiSearch: unicode normalization
-const lowjson = (x: unknown) => JSON.stringify(x).toLocaleLowerCase();
-const naiveSearchFilter = (value: string) => (slim, i) =>
-  lowjson(slim).includes(value.toLocaleLowerCase());
+const queryFilter = (
+  q: string,
+) => ((p: unknown) => normalize(JSON.stringify(p)).includes(normalize(q)));
 
 export default function DoiSearch(
-  { q, results, start }: DoiSearchResultsProps,
+  { q, results, start, all }: DoiSearchResultsProps,
 ) {
   const query = useSignal(q);
   const filtered = useSignal(results);
   const first = useSignal(true);
 
   const handleSearch = async ({ target: { value } }) => {
-    //const r = await fetch(value);
-    console.warn("Search:", value);
-    //filtered.value = results.filter(naiveSearchFilter(value));
-    //query.value = value;
+    filtered.value = all.filter(queryFilter(value));
+    query.value = value;
   };
 
   // Handle search via URL q (on first load)
