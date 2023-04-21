@@ -11,6 +11,11 @@ const en = new Map<string, string>(Object.entries(_en));
 const no = new Map<string, string>(Object.entries(_no));
 const tr = new Map([["en", en], ["no", no]]);
 
+export const normalize = (s) =>
+  s.normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLocaleLowerCase();
+
 export const languages = new Set(tr.keys());
 
 let _siteLang = null;

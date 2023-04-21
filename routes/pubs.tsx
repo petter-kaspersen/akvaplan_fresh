@@ -1,7 +1,8 @@
 import DoiSearch, { DoiSearchResultsProps } from "../islands/doi_search.tsx";
-//import PubsHistogram from "../islands/pubs_histogram.tsx";
 import { SlimPublication } from "../@interfaces/slim_publication.ts";
 import { Page } from "../components/page.tsx";
+
+import { normalize } from "akvaplan_fresh/text/mod.ts";
 
 import {
   HandlerContext,
@@ -15,19 +16,25 @@ export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)/(pubs|publikasjoner)",
 };
 
+const queryFilter = (
+  q,
+) => ((p: unknown) => normalize(JSON.stringify(p)).includes(normalize(q)));
+
 export const handler: Handlers<DoiSearchResultsProps> = {
   async GET(request: Request, context: HandlerContext) {
     const { searchParams } = new URL(request.url);
     const _q = searchParams.get("q") ?? "";
     const q = _q.toLocaleLowerCase();
+    // FIXME Ouch the service does not support queries, so we load all (via limit -1)
     const url = `https://dois.deno.dev/doi?limit=-1&sort=-published&q=${q}`;
 
     const response = await fetch(url);
 
     if (response.ok) {
       const json = await response.json();
-      const results: SlimPublication[] = json.data;
-      return context.render({ results, q });
+      const all: SlimPublication[] = json.data;
+      const results: SlimPublication[] = all.filter(queryFilter(q));
+      return context.render({ all, results, q });
     }
   },
 };
@@ -41,10 +48,10 @@ export const handler: Handlers<DoiSearchResultsProps> = {
 // }
 
 export default function ApnPubs({ data }: PageProps<DoiSearchResultsProps>) {
-  const { results, q } = data;
+  const { all, results, q } = data;
   return (
     <Page title="Pubs">
-      <DoiSearch q={q} results={results} />
+      <DoiSearch q={q} results={results} all={all} />
     </Page>
   );
 }
