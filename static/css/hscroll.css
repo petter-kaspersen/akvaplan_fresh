@@ -11,13 +11,13 @@
 }
 
 .max-visible-children > * {
-  width: auto;
-  min-width: auto;
+  width: calc(100% / var(--max-visible-children) - calc(var(--size-1) * 2));
+  min-width: calc(100% / var(--max-visible-children) - calc(var(--size-1) * 2));
 }
 
 .max-visible-children > * img {
-  width: calc(100vw / var(--max-visible-children));
-  max-width: calc(100vw / var(--max-visible-children));
+  width: 100%;
+  max-width: 100%;
 }
 
 .hscroll > *:not(:last-child) {
