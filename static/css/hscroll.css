@@ -1,3 +1,7 @@
+:root {
+  --min-child-size: 145px;
+}
+
 .scroll-container {
   overflow: hidden;
   position: relative;
@@ -11,8 +15,14 @@
 }
 
 .max-visible-children > * {
-  width: calc(100% / var(--max-visible-children) - calc(var(--size-1) * 2));
-  min-width: calc(100% / var(--max-visible-children) - calc(var(--size-1) * 2));
+  width: max(
+    var(--min-child-size),
+    calc(100% / var(--max-visible-children) - calc(var(--size-1) * 2))
+  );
+  min-width: max(
+    var(--min-child-size),
+    calc(100% / var(--max-visible-children) - calc(var(--size-1) * 2))
+  );
 }
 
 .max-visible-children > * img {
