@@ -1,4 +1,5 @@
-import PubsHistogram from "../islands/pubs_histogram.tsx";
+// import PubsHistogram from "../islands/pubs_histogram.tsx";
+// <PubsHistogram period="2000/" />
 import { SlimCard } from "../components/slim_card.tsx";
 import { type SlimPublication } from "../@interfaces/slim_publication.ts";
 
@@ -47,10 +48,10 @@ export default function DoiSearch(
   const first = useSignal(true);
 
   const handleSearch = async ({ target: { value } }) => {
-    const r = await fetch(value);
-    console.warn(r);
-    filtered.value = results.filter(naiveSearchFilter(value));
-    query.value = value;
+    //const r = await fetch(value);
+    console.warn("Search:", value);
+    //filtered.value = results.filter(naiveSearchFilter(value));
+    //query.value = value;
   };
 
   // Handle search via URL q (on first load)
@@ -78,10 +79,12 @@ export default function DoiSearch(
           <button type="submit">Search</button>
         </form>
       </label>
-      <PubsHistogram period="2000/" />
-      {filtered.value.slice(0, 100).map((slim, n) => (
-        <SlimCard slim={slim} n={n} />
-      ))}
+
+      <ol>
+        {filtered.value.slice(0, 100).map((slim, n) => (
+          <SlimCard slim={slim} n={n} />
+        ))}
+      </ol>
     </main>
   );
 }
