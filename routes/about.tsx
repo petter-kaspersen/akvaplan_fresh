@@ -1,4 +1,7 @@
 import { Card, Icon, Page, PeopleCard } from "akvaplan_fresh/components/mod.ts";
+import Article from "akvaplan_fresh/components/article/Article.tsx";
+import ArticleContact from "akvaplan_fresh/components/article/ArticleContact.tsx";
+import ArticleHeader from "akvaplan_fresh/components/article/ArticleHeader.tsx";
 
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
 import { routes } from "akvaplan_fresh/services/nav.ts";
@@ -60,6 +63,10 @@ const _section = {
   marginTop: "2rem",
   marginBottom: "3rem",
 };
+const _header = {
+  marginBlockStart: "1rem",
+  marginBlockEnd: "0.5rem",
+};
 export default (
   { data: { title, lang, base, akvaplan } }: PageProps<AboutProps>,
 ) => {
@@ -68,170 +75,199 @@ export default (
       <Head>
         <link rel="stylesheet" href="/css/people-card.css" />
       </Head>
-      <section style={_section}>
-        <h1>
-          {t("nav.About")}
-        </h1>
-        <Card>{t("about.desc.Medium")}</Card>
-      </section>
+      <div>
+        <header>
+        </header>
+        <Article>
+          {
+            /* <figure style={_caption}>
+          <figcaption>{image_caption}</figcaption>
+        </figure>
+        {lang} */
+          }
 
-      <section style={_section}>
-        <h2>{t("about.Management")}</h2>
-
-        <PeopleCard person={admDir} lang={lang} />
-
-        <p style={{ marginBlockStart: "1rem" }}>{t("about.See_also")}</p>
-
-        <Card>
-          <menu>
-            <li>
-              <a href={akvaplan.links.leaders}>
-                {t("about.Leaders")}
-              </a>
-            </li>
-            <li>
-              <a href={akvaplan.links.sectionleaders}>
-                {t("about.Section_leaders")}
-              </a>
-            </li>
-            <li>
-              <a href={akvaplan.links.board} target="_blank">
-                {t("about.Board")}
-              </a>
-            </li>
-          </menu>
-        </Card>
-      </section>
-
-      <section style={_section}>
-        <h2>{t("about.Policies")}</h2>
-        <Card>
-          <menu>
-            <li>
-              <a
-                hreflang="no"
-                href="https://www.nmdc.no/resources/nmdc/Akvaplan-niva-dataforvaltningspolitikk.pdf"
+          <section style={_section}>
+            <h1 style={_header}>
+              {t("about.About_us")}
+            </h1>
+            <Card>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "1rem",
+                }}
               >
-                Data policy
-              </a>
-            </li>
-            <li>Kvalitetspolicy og etiske retningslinjer</li>
-            <li>Generelle vilkår (for kjøp av tjenester)</li>
-            <li>Arbeid for likestilling og mot diskriminering</li>
-            <li>Likestillingsplan</li>
-          </menu>
-        </Card>
-      </section>
+                <img
+                  title=""
+                  alt=""
+                  src="https://mediebank.deno.dev/preview_big/8022361"
+                  height="auto"
+                />
+                <p>{t("about.desc.Medium")}</p>
+              </div>
+            </Card>
+          </section>
 
-      <section style={_section}>
-        <h2>{t("about.Other_media")}</h2>
+          <section style={_section}>
+            <h1 style={_header}>
+              {t("about.Management")}
+            </h1>
+            <PeopleCard person={admDir} lang={lang} />
 
-        <Card>
-          <dl>
-            <dt>
-              Sosiale media
-            </dt>
-            <dd>
-              <a
-                href="https://facebook.com/Akvaplan/"
-                target="_blank"
-              >
-                Facebook
-              </a>
-            </dd>
-            <dd>
-              <a
-                href="https://no.linkedin.com/company/akvaplan-niva"
-                target="_blank"
-              >
-                LinkedIn
-              </a>
-            </dd>
-            <dd>
-              <a
-                href="https://twitter.com/AkvaplanNiva"
-                target="_blank"
-              >
-                Twitter
-              </a>
-            </dd>
-            <dt>
-              Datasett
-            </dt>
-            <dd>
-              <a
-                href="https://zenodo.org/communities/akvaplan-niva"
-                target="_blank"
-              >
-                Zenodo
-              </a>
-            </dd>
-            <dt>
-              Kildekode
-            </dt>
-            <dd>
-              <a
-                href="https://github.com/akvaplan-niva"
-                target="_blank"
-              >
-                GitHub
-              </a>
-            </dd>
-            <dt>
-              Video
-            </dt>
-            <dd>
-              <a
-                href="https://www.youtube.com/channel/UCD-AkBT1riN6TeNDzBP7g8g"
-                target="_blank"
-              >
-                YouTube
-              </a>
-            </dd>
-          </dl>
-        </Card>
-      </section>
+            <Card>
+              <menu>
+                <li>
+                  <a href={akvaplan.links.leaders}>
+                    {t("about.Leaders")}
+                  </a>
+                </li>
+                <li>
+                  <a href={akvaplan.links.sectionleaders}>
+                    {t("about.Section_leaders")}
+                  </a>
+                </li>
+                <li>
+                  <a href={akvaplan.links.board} target="_blank">
+                    {t("about.Board")}
+                  </a>
+                </li>
+              </menu>
+            </Card>
+          </section>
 
-      <section style={_section}>
-        <h2>{t("about.Contact")}</h2>
+          <section style={_section}>
+            <h1 style={_header}>{t("about.Policies")}</h1>
+            <Card>
+              <menu>
+                <li>
+                  <a
+                    hreflang="no"
+                    href="https://www.nmdc.no/resources/nmdc/Akvaplan-niva-dataforvaltningspolitikk.pdf"
+                  >
+                    Data policy
+                  </a>
+                </li>
+                <li>Kvalitetspolicy og etiske retningslinjer</li>
+                <li>Generelle vilkår (for kjøp av tjenester)</li>
+                <li>Arbeid for likestilling og mot diskriminering</li>
+                <li>Likestillingsplan</li>
+              </menu>
+            </Card>
+          </section>
 
-        <Card>
-          <dl>
-            <dt>
-              Besøk
-            </dt>
-            <dd>
-              {akvaplan.addr.hq.visit}{" "}
-              (<a href="https://goo.gl/maps/P73K9hcVKeKd7jkz5" target="_blank">
-                {t("Google Maps")}
-              </a>)
-            </dd>
+          <section style={_section}>
+            <h1 style={_header}>{t("about.Other_media")}</h1>
 
-            <dt>Post</dt>
-            <dd>{akvaplan.addr.hq.post}</dd>
+            <Card>
+              <dl>
+                <dt>
+                  Sosiale media
+                </dt>
+                <dd>
+                  <a
+                    href="https://facebook.com/Akvaplan/"
+                    target="_blank"
+                  >
+                    Facebook
+                  </a>
+                </dd>
+                <dd>
+                  <a
+                    href="https://no.linkedin.com/company/akvaplan-niva"
+                    target="_blank"
+                  >
+                    LinkedIn
+                  </a>
+                </dd>
+                <dd>
+                  <a
+                    href="https://twitter.com/AkvaplanNiva"
+                    target="_blank"
+                  >
+                    Twitter
+                  </a>
+                </dd>
+                <dt>
+                  Datasett
+                </dt>
+                <dd>
+                  <a
+                    href="https://zenodo.org/communities/akvaplan-niva"
+                    target="_blank"
+                  >
+                    Zenodo
+                  </a>
+                </dd>
+                <dt>
+                  Kildekode
+                </dt>
+                <dd>
+                  <a
+                    href="https://github.com/akvaplan-niva"
+                    target="_blank"
+                  >
+                    GitHub
+                  </a>
+                </dd>
+                <dt>
+                  Video
+                </dt>
+                <dd>
+                  <a
+                    href="https://www.youtube.com/channel/UCD-AkBT1riN6TeNDzBP7g8g"
+                    target="_blank"
+                  >
+                    YouTube
+                  </a>
+                </dd>
+              </dl>
+            </Card>
+          </section>
 
-            <a
-              href={`tel:${akvaplan.tel}`}
-            >
-              <dt>
-                <Icon name="phone_in_talk" />
-              </dt>
-              <dd>+47 77 75 03 00</dd>
-            </a>
-            <a
-              href={`mailto:${akvaplan.email}`}
-            >
-              <dt>
-                <Icon name="contact_mail" />
-              </dt>
-              <dd>
-                {akvaplan.email}
-              </dd>
-            </a>
-          </dl>
-        </Card>
-      </section>
+          <section style={_section}>
+            <h1 style={_header}>{t("about.Contact")}</h1>
 
+            <Card>
+              <dl>
+                <dt>
+                  Besøk
+                </dt>
+                <dd>
+                  {akvaplan.addr.hq.visit} (<a
+                    href="https://goo.gl/maps/P73K9hcVKeKd7jkz5"
+                    target="_blank"
+                  >
+                    {t("Google Maps")}
+                  </a>)
+                </dd>
+
+                <dt>Post</dt>
+                <dd>{akvaplan.addr.hq.post}</dd>
+
+                <a
+                  href={`tel:${akvaplan.tel}`}
+                >
+                  <dt>
+                    <Icon name="phone_in_talk" />
+                  </dt>
+                  <dd>+47 77 75 03 00</dd>
+                </a>
+                <a
+                  href={`mailto:${akvaplan.email}`}
+                >
+                  <dt>
+                    <Icon name="contact_mail" />
+                  </dt>
+                  <dd>
+                    {akvaplan.email}
+                  </dd>
+                </a>
+              </dl>
+            </Card>
+          </section>
+        </Article>
+      </div>
       {
         /* <ul>
         <li>Faktureringsinformasjon</li>

@@ -1,8 +1,6 @@
 import { ApnLogo, SiteNav } from "akvaplan_fresh/components/mod.ts";
 
 import ButtonOpenDialog from "akvaplan_fresh/islands/button_open_dialog.tsx";
-import ThemeSwitcher from "akvaplan_fresh/islands/theme_switcher.tsx";
-import { LinkLang } from "akvaplan_fresh/islands/lang_switcher.tsx";
 
 import { routes } from "akvaplan_fresh/services/nav.ts";
 import { lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
@@ -21,7 +19,7 @@ export function CleanHeader(
   { href = "/", lang, HeaderLogo = ApnLogo },
 ) {
   return (
-    <header style={threeColumnGrid}>
+    <header id="top" style={threeColumnGrid}>
       <span></span>
       <a href={href}>
         <HeaderLogo />
@@ -98,17 +96,6 @@ export function CleanHeader(
               placeItems: "center",
             }}
           >
-            {langSignal?.value !== "en" && (
-              <p>
-                Switch to <LinkLang lang="en" /> site
-              </p>
-            )}
-            {langSignal?.value !== "no" && (
-              <p>
-                Bytt til <LinkLang lang="no" /> nettsted
-              </p>
-            )}
-            <ThemeSwitcher mini />
             <form method="dialog">
               <button>
                 {lang === "en" ? "Close" : "Lukk"}

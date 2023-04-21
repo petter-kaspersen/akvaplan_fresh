@@ -85,7 +85,7 @@ export const searchMynewsdesk = async (
   { q = "", type_of_media = "news", limit = 100 } = {},
 ) => {
   const url = searchURL(q, type_of_media, { limit });
-  console.debug(url.href);
+  
   const response = await fetch(url);
   if (response.ok) {
     const { search_result: { items }, ...rest } = await response.json();

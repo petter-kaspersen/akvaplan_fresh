@@ -52,7 +52,7 @@ export const handler: Handlers = {
     const _topics = await searchResearch({ q, lang: sitelang, limit });
     const topics = _topics.filter(level0);
 
-    const numNews = 5;
+    const numNews = 15;
     const articles = news.filter(({ type, hreflang, title }) =>
       ["news"].includes(type) && hreflang === sitelang &&
       !/stillingsannonse/i.test(title)
@@ -93,6 +93,8 @@ export default function Home(
     data: { news, topics, lang, services, articles, articlesNotInSiteLang, pr },
   },
 ) {
+  const maxVis = 5;
+
   return (
     <Page>
       <Head>
@@ -109,7 +111,7 @@ export default function Home(
           text={t(`home.album.${lang}.articles`)}
           href={routes(lang).get("news")}
         />
-        <HScroll>
+        <HScroll maxVisibleChildren={5}>
           {articles.map(ArticleSquare)}
         </HScroll>
       </section>
@@ -119,7 +121,7 @@ export default function Home(
           text={t("home.album.articles_not_in_site_lang")}
           href={routes(lang).get("news")}
         />
-        <HScroll>
+        <HScroll maxVisibleChildren={5}>
           {articlesNotInSiteLang.map(ArticleSquare)}
         </HScroll>
       </section>
@@ -128,7 +130,7 @@ export default function Home(
           text={t("home.album.press_releases")}
           href={routes(lang).get("news")}
         />
-        <HScroll>
+        <HScroll maxVisibleChildren={5}>
           {pr.map(ArticleSquare)}
         </HScroll>
       </section>
@@ -137,7 +139,9 @@ export default function Home(
           text={t("home.album.services")}
           href={routes(lang).get("services")}
         />
-        <HScroll>
+        <HScroll
+          maxVisibleChildren={services.length < 8 ? services.length : 8}
+        >
           {services.map(ServiceGroup)}
         </HScroll>
       </section>
@@ -146,7 +150,7 @@ export default function Home(
           text={t("home.album.research")}
           href={routes(lang).get("research")}
         />
-        <HScroll>
+        <HScroll maxVisibleChildren={topics.length}>
           {topics.map(ResearchTopic)}
         </HScroll>
       </section>

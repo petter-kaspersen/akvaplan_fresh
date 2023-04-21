@@ -77,8 +77,7 @@ export const admDir = {
     "en": "Managing Director",
   },
   "tel": "+4797518909",
-  "unit": "LEDELS",
-  "workplace": "Tromsø",
-  "country": "+4797518909",
+  //"unit": "LEDELS",
+  //"workplace": "Tromsø",
   "email": "mkr@akvaplan.niva.no",
 };

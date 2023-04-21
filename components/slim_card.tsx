@@ -16,17 +16,18 @@ export function SlimCard(props: { slim: SlimPublication; n: number }) {
   } = props.slim;
   const n = props.n;
   return (
-    <Card>
-      <h3>
-        <a href={`/doi/${doi}`}>
-          {title}
-        </a>
-      </h3>
-      <time>
-        ({published})
-      </time>
-      <code>
-      </code>
-    </Card>
+    <li value={n} style={{ margin: "1rem" }}>
+      <Card>
+        <header>
+          <a href={`/doi/${doi}`} dangerouslySetInnerHTML={{ __html: title }} />
+        </header>{" "}
+        <p style={{ fontSize: "1rem" }}>
+          {authors.map(({ family }, n) => (
+            <span>{family}{n === authors.length - 1 ? null : ", "}</span>
+          ))}. <em dangerouslySetInnerHTML={{ __html: container }} />{" "}
+          (<time>{published}</time>)
+        </p>
+      </Card>
+    </li>
   );
 }
