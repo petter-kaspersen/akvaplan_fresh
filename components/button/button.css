@@ -14,7 +14,7 @@ button[color-scheme] {
   display: inline-flex;
   white-space: nowrap;
   font-size: var(--font-size-fluid-1);
-  font-weight: var(--font-weight-7);
+  font-weight: var(--font-weight-5);
 
   padding-left: var(--size-6);
   padding-right: var(--size-6);

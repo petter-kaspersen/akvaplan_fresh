@@ -78,7 +78,7 @@ export function Page(
         <main style={{ minHeight: "100vh", padding: "0 var(--size-4)" }}>
           {children}
         </main>
-        <Footer />
+        <Footer lang={lang.value} />
       </body>
     </>
   );
