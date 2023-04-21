@@ -21,7 +21,6 @@
     calc(var(--brand-saturation) / 2)
     calc(var(--brand-lightness) / 1.5)
   );
-
   --size: 48px;
 }
 
@@ -37,7 +36,6 @@ a:hover {
 html,
 body {
   color-scheme: dark light;
-  /* width: 99vw; */
   min-height: 100vh;
   background: var(--surface1);
   color: var(--text1);
@@ -64,10 +62,11 @@ header,
 footer {
   color: var(--text1);
 }
-
+/*
 p {
-  /* line-height: var(--font-lineheight-2); */
+  line-height: var(--font-lineheight-2); 
 }
+*/
 
 h1 {
   font-size: var(--font-size-fluid-2);
