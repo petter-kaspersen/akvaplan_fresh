@@ -120,15 +120,19 @@ const OneGroup = (
   </ul>
 );
 
+const before = "bb7x8e4rmevc5kboua8e";
+const frida = "viemsy7cszuo7laedtcd";
+const id = frida;
+
 const banner =
-  "https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_1782,ar_6:1/bb7x8e4rmevc5kboua8e";
+  `https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_1782,ar_6:1/${id}`;
 
 const Picture = () => (
   <picture>
     <source media="(min-width: 1024px)" srcset={banner} />
     <source
       media="(max-width: 1023px)"
-      srcset="https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_512,ar_3:1/bb7x8e4rmevc5kboua8e"
+      srcset={`https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_512,ar_3:1/${id}`}
     />
     <img
       src={banner}
