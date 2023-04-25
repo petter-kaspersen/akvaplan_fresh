@@ -73,7 +73,7 @@ export default function Services(
 
       <h1>{title}</h1>
 
-      <HScroll>
+      <HScroll maxVisibleChildren={6.5}>
         {services.map(ArticleSquare)}
       </HScroll>
 
