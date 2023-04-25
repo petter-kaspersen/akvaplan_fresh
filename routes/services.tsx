@@ -1,11 +1,12 @@
 import { getServicesLevel0 } from "akvaplan_fresh/services/svc.ts";
-
+import { akvaplanistMap } from "akvaplan_fresh/services/akvaplanist.ts";
 import {
   Accreditations,
   ArticleSquare,
   Card,
   HScroll,
   Page,
+  PeopleCard,
 } from "akvaplan_fresh/components/mod.ts";
 
 import HScrollWithDynamicImage from "akvaplan_fresh/islands/HScrollWithDynamicImage.tsx";
@@ -47,12 +48,17 @@ export const handler: Handlers = {
 
     const services = getServicesLevel0(params.lang);
 
-    return ctx.render({ lang, title, base, services });
+    const people = await akvaplanistMap();
+    const contacts = new Map([["lab", "mfr"]]);
+
+    return ctx.render({ lang, title, base, services, people, contacts });
   },
 };
 
 export default function Services(
-  { data: { lang, title, base, services } }: PageProps<unknown>,
+  { data: { lang, title, base, services, people, contacts } }: PageProps<
+    unknown
+  >,
 ) {
   const width = 512;
   const height = 512;
@@ -83,6 +89,8 @@ export default function Services(
           <h1>{t("services.lab.Header")}</h1>
           <p>{t("services.lab.Intro")}</p>
         </Card>
+        <PeopleCard person={people.get(contacts.get("lab"))} lang={lang} />
+        <PeopleCard person={people.get("tri")} lang={lang} />
       </section>
 
       <section style={_section}>
@@ -90,6 +98,8 @@ export default function Services(
           <h1>{t("services.autonomous.Header")}</h1>
           <p>{t("services.autonomous.Intro")}</p>
         </Card>
+        <PeopleCard person={people.get("lca")} lang={lang} />
+        <PeopleCard person={people.get("mth")} lang={lang} />
       </section>
 
       <section style={_section}>
@@ -99,6 +109,32 @@ export default function Services(
           </h1>
           <p>{t("services.consult.Intro")}</p>
         </Card>
+        <PeopleCard person={people.get("cst")} lang={lang} />
+        <PeopleCard person={people.get("lhl")} lang={lang} />
+        <PeopleCard person={people.get("ksa")} lang={lang} />
+      </section>
+
+      <section style={_section}>
+        <Card>
+          <h1>
+            {t("services.oceanography.Header")}
+          </h1>
+          <p>{t("services.oceanography.Intro")}</p>
+        </Card>
+        <PeopleCard person={people.get("mad")} lang={lang} />
+      </section>
+
+      <section style={_section}>
+        <Card>
+          <h1>
+            {t("services.aquaculture.Header")}
+          </h1>
+          <p>{t("services.aquaculture.Intro")}</p>
+        </Card>
+
+        <PeopleCard person={people.get("atf")} lang={lang} />
+        {/* <PeopleCard person={people.get("aki")} lang={lang} /> */}
+        <PeopleCard person={people.get("los")} lang={lang} />
       </section>
 
       <section style={_section}>
@@ -108,6 +144,10 @@ export default function Services(
           </h1>
           <p>{t("services.accreditations.Intro")}</p>
         </Card>
+        <PeopleCard person={people.get("kaj")} lang={lang} />
+        <PeopleCard person={people.get("khs")} lang={lang} />
+        <PeopleCard person={people.get("krs")} lang={lang} />
+        <PeopleCard person={people.get("lit")} lang={lang} />
         <Accreditations lang={lang.value} />
       </section>
     </Page>
