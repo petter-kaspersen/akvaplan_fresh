@@ -54,7 +54,7 @@ export const handler: Handlers = {
     const topics = await searchResearch({ q, lang: params.lang });
 
     const { data } = await searchPubs({ q, limit: 100 });
-    const pubs = data; //.map(newsFromPubs({ lang }));
+    const pubs = data;
 
     const grouped = (pubs).reduce(
       groupReducer(({ published }) => published.substring(0, 7)),
