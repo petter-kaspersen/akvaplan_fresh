@@ -2,8 +2,6 @@ export * from "./akvaplan/accreditations.tsx";
 export * from "./akvaplan/logo.tsx";
 export * from "./akvaplan/symbol.tsx";
 export * from "./album/halbum.tsx";
-export * from "./album/research_topic.tsx";
-export * from "./album/service_group.tsx";
 export * from "./album/album_header.tsx";
 
 import Article from "./article/Article.tsx";
