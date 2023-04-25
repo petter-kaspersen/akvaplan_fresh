@@ -1,7 +1,9 @@
 import { Card } from "./card.tsx";
-import { SlimPublication } from "../@interfaces/slim_publication.ts";
+import { SlimPublication } from "akvaplan_fresh/@interfaces/slim_publication.ts";
 
-export function SlimCard(props: { slim: SlimPublication; n: number }) {
+export function SlimCard(
+  props: { slim: SlimPublication; n: number; lang: string },
+) {
   const {
     title,
     doi,
@@ -14,12 +16,15 @@ export function SlimCard(props: { slim: SlimPublication; n: number }) {
     cites,
     authors,
   } = props.slim;
-  const n = props.n;
+  const { n, lang } = props;
   return (
-    <li value={n} style={{ margin: "1rem" }}>
+    <li>
       <Card>
         <header>
-          <a href={`/doi/${doi}`} dangerouslySetInnerHTML={{ __html: title }} />
+          <a
+            href={`/${lang}/doi/${doi}`}
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
         </header>{" "}
         <p style={{ fontSize: "1rem" }}>
           {authors.map(({ family }, n) => (
