@@ -1,10 +1,12 @@
+import { buildContainsFilter } from "akvaplan_fresh/search/filter.ts";
+
 import {
+  getServicesLevel0,
   //getResearchTopicSearchwords,
   //getServiceTopicSearchwords,
   newsFromMynewsdesk,
   searchMynewsdesk,
   searchResearch,
-  searchServices,
 } from "akvaplan_fresh/services/mod.ts";
 
 import {
@@ -35,7 +37,8 @@ export const config: RouteConfig = {
   routeOverride:
     "/:lang(en|no){/:page(news|nyheter|services|tjenester|research|forskning)}?/:groupname(topic|topics|tema){/:topic}?",
 };
-
+const buildTopicFilter = (params) => ({ topic, tema }) =>
+  [topic, tema].includes(params.topic);
 export const handler: Handlers = {
   async GET(req: Request, ctx: HandlerContext) {
     const { params } = ctx;
@@ -43,28 +46,27 @@ export const handler: Handlers = {
 
     lang.value = params.lang;
 
-    const page = ["research", "forskning", "news"].includes(params.page)
+    const page = ["research", "forskning"].includes(params.page)
       ? "research"
-      : "services";
+      : "services"; // news and blank ?
 
     const base = `/${params.lang}/${params.page}/${params.groupname}`;
 
-    const allservices = await searchServices({ q: "", lang: params.lang });
-
-    const alltopics = await searchResearch({ q: "", lang: params.lang });
-
-    const topics = alltopics.slice(0, 3);
-    const services = allservices.slice(0, 3);
-
-    const q = params.topic;
-    const topic = q;
     const { items } = await searchMynewsdesk({
-      q,
+      q: params.topic,
       lang: params.lang,
       limit: 128,
-    });
+    }) ?? {};
 
-    const news = items.map(newsFromMynewsdesk(params.lang));
+    const _research = await searchResearch({ q: "", lang: params.lang });
+    const topics = _research.filter((r) =>
+      JSON.stringify(r).includes(params.topic)
+    );
+
+    const _services = getServicesLevel0(params.lang);
+    const services = _services.filter(buildTopicFilter(params));
+
+    const news = items?.map(newsFromMynewsdesk({ lang: params.lang })) ?? [];
 
     const fx = news.length > 3
       ? ({ published }) => published.substring(0, 4)
@@ -75,7 +77,7 @@ export const handler: Handlers = {
       fx,
     );
 
-    const title = `${t(`Topic_${page}`)}: ${topic}`; //t(`topic.${params.page}`);
+    const title = `${t(`Topic_${page}`)}: ${params.topic}`; //t(`topic.${params.page}`);
 
     return ctx.render({
       lang,
@@ -84,22 +86,33 @@ export const handler: Handlers = {
       services,
       topics,
       news: newsGrouped,
-      topic,
+      topic: params.topic,
       page: params.page,
-      keywords: [topic],
+      searchwords: [],
     });
   },
 };
 
 export default function TopicsOrTopic(
   {
-    data: { lang, title, base, services, topics, news, topic, keywords, page },
+    data: {
+      lang,
+      title,
+      base,
+      services,
+      topics,
+      news,
+      topic,
+      searchwords,
+      page,
+    },
   }: PageProps<
     unknown
   >,
 ) {
   const width = 512;
   const height = 512;
+
   return (
     <Page title={title} base={base}>
       <Head>
@@ -108,11 +121,6 @@ export default function TopicsOrTopic(
         <script src="/@nrk/core-scroll.min.js" />
       </Head>
       <div>
-        {!topics && (
-          <h1>
-            <a href=".">{t(`Topic_${page}`)}</a>: {topic}
-          </h1>
-        )}
         {topics && topics?.at(0)?.img && (
           <section
             style={{
@@ -144,7 +152,11 @@ export default function TopicsOrTopic(
           </section>
         )}
 
-        <HScroll>
+        <h1>
+          {t(topic)}
+        </h1>
+
+        <HScroll maxVisibleChildren={3}>
           {services.map(({ name, img, desc, href, keywords }) => (
             <div class="halbum-image">
               <img
@@ -174,7 +186,7 @@ export default function TopicsOrTopic(
               text={t(grp)}
               href={routes(lang).get("news")}
             />
-            <HScroll>
+            <HScroll maxVisibleChildren={5}>
               {arr.map(ArticleSquare)}
             </HScroll>
           </div>
