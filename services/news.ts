@@ -30,8 +30,9 @@ export const buildoiNewsMap = async (
   });
   const pr = "pressrelease";
   const _pr = await searchMynewsdesk({ q, limit: 100, type_of_media: pr });
-
-  const articles = [..._news.items, ..._pr.items].map(
+  const newsItems = _news?.items ?? [];
+  const prItems = _pr?.items ?? [];
+  const articles = [...newsItems, ...prItems].map(
     newsFromMynewsdesk({ lang }),
   );
   return newsArticlesWithDOI(articles);
@@ -62,10 +63,10 @@ export const searchNews = async (
     return p;
   });
 
-  // const akvaplanists = (await searchAkvaplanists({ q, limit })).map(
-  //   newsFromAkvaplanists({ lang }),
-  // );
-  return [...articles, ...pubs].sort(sort);
+  const akvaplanists = (await searchAkvaplanists({ q, limit })).map(
+    newsFromAkvaplanists({ lang }),
+  );
+  return [...articles, ...pubs, ...akvaplanists].sort(sort);
 };
 export const latestNews = async (params: Search) =>
   (await searchNews(params)).sort((a, b) =>

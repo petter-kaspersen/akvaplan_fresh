@@ -85,7 +85,7 @@ export const searchMynewsdesk = async (
   { q = "", type_of_media = "news", limit = 100 } = {},
 ) => {
   const url = searchURL(q, type_of_media, { limit });
-  
+
   const response = await fetch(url);
   if (response.ok) {
     const { search_result: { items }, ...rest } = await response.json();
@@ -99,7 +99,7 @@ export const searchMynewsdesk = async (
     });
     return { ...rest, items: withDOIs };
   }
-  throw `Mynewsdesk search failed`;
+  //throw `Mynewsdesk search failed`;
 };
 
 export const slug = ({ header }) => postprocess(_slug(preprocess(header)));
@@ -127,3 +127,6 @@ export const defaultImage =
 
 // Generic bubbles
 //https://resources.mynewsdesk.com/image/upload/c_fill,dpr_auto,f_auto,g_auto,q_auto:good,w_1782,ar_16:9/awdzhbjdkc1hz2dbfqaj
+
+// jobAdRegexes = [/stillingsannonse/i, /ledig stilling/i]
+// getJobAdverts
