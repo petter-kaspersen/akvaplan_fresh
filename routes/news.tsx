@@ -27,6 +27,13 @@ const _section = {
   marginTop: "4rem",
   marginBottom: "6rem",
 };
+
+// const quarters = (published) => {
+//   const t = new Date(published);
+//   const year = t.getFullYear();
+//   const quarter = "Q" + t.getMonth() / 12;
+//   return `${year}-H${quarter}`;
+// };
 export const handler: Handlers<Props> = {
   async GET(req: Request, ctx: HandlerContext) {
     const { params } = ctx;
@@ -39,7 +46,7 @@ export const handler: Handlers<Props> = {
     const q = _q.toLocaleLowerCase();
 
     const _news =
-      await searchNewsArticles({ q, lang: lang.value, limit: 24 }) ??
+      await searchNewsArticles({ q, lang: lang.value, limit: 48 }) ??
         { items: [] };
 
     const news = groupIntoMap(
@@ -48,7 +55,7 @@ export const handler: Handlers<Props> = {
     );
     // group by
     // latest news articles (by month)?
-    // project (containing the word project)
+    // projects
     // pressreleases
     // pubs
     // people?
@@ -77,8 +84,11 @@ export default function News(
               </h1>
             )}
 
-          <HScroll scrollerId="news-scroll">
-            {grpmembers.slice(0, 7).map(ArticleSquare)}
+          <HScroll
+            scrollerId="news-scroll"
+            maxVisibleChildren={grpmembers.length > 5 ? 7 : 5}
+          >
+            {grpmembers.map(ArticleSquare)}
           </HScroll>
         </section>
       ))}
