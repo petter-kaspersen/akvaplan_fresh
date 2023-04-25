@@ -13,9 +13,9 @@ import { type News, type Search } from "akvaplan_fresh/@interfaces/mod.ts";
 const sortLatest = (a: News, b: News) => b.published.localeCompare(a.published);
 
 //@todo News create task to find/save news articles with DOI
-const newsArticlesWithDOI = (articles: []) =>
+const newsArticlesWithDOI = (articles: News[]) =>
   new Map<string, string | number>(
-    articles.filter(({ rels }) => rels?.doi?.length > 0).map(
+    articles?.filter(({ rels }) => rels?.doi?.length > 0).map(
       (news) => [news.rels.doi.at(0), news],
     ),
   );
@@ -45,7 +45,9 @@ export const searchNews = async (
   const pr = "pressrelease";
   const _pr = await searchMynewsdesk({ q, limit, type_of_media: pr });
 
-  const articles = [..._news.items, ..._pr.items].map(
+  const newsItems = _news?.items ?? [];
+  const prItems = _pr?.items ?? [];
+  const articles = [...newsItems, ...prItems].map(
     newsFromMynewsdesk({ lang }),
   );
   const news = newsArticlesWithDOI(articles);
