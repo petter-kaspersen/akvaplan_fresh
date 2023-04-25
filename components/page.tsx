@@ -1,6 +1,5 @@
 import { CleanHeader } from "akvaplan_fresh/components/header/clean_header.tsx";
 import { Footer } from "./footer.tsx";
-//import { Menu } from "./menu.tsx";
 import { Styles } from "./styles.tsx";
 
 import { base as baseForLang, lang, t } from "akvaplan_fresh/text/mod.ts";
