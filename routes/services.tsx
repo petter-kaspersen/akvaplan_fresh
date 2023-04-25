@@ -1,12 +1,12 @@
-import { searchServices } from "akvaplan_fresh/services/svc.ts";
+import { getServicesLevel0 } from "akvaplan_fresh/services/svc.ts";
 
 import {
   Accreditations,
+  ArticleSquare,
+  Card,
   HScroll,
   Page,
 } from "akvaplan_fresh/components/mod.ts";
-
-import { ServiceGroup } from "akvaplan_fresh/components/album/service_group.tsx";
 
 import HScrollWithDynamicImage from "akvaplan_fresh/islands/HScrollWithDynamicImage.tsx";
 
@@ -18,9 +18,18 @@ import {
   type PageProps,
   type RouteConfig,
 } from "$fresh/server.ts";
-
+import { Head } from "$fresh/runtime.ts";
 export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)/:page(services|tjenester)",
+};
+
+const _section = {
+  marginTop: "2rem",
+  marginBottom: "3rem",
+};
+const _header = {
+  marginBlockStart: "1rem",
+  marginBlockEnd: "0.5rem",
 };
 
 export const handler: Handlers = {
@@ -29,16 +38,14 @@ export const handler: Handlers = {
     const { searchParams } = new URL(req.url);
     lang.value = params.lang;
 
-    const title = t("Services");
+    const title = t("home.album.services");
     const base = `/${params.lang}/${params.page}/`;
 
     const { groupname, filter } = params;
     const group = groupname?.length > 0 ? groupname : "year";
     const q = searchParams.get("q") ?? "";
 
-    const services = (await searchServices({ q, lang: params.lang })).filter((
-      { img },
-    ) => img?.length > 0);
+    const services = getServicesLevel0(params.lang);
 
     return ctx.render({ lang, title, base, services });
   },
@@ -51,14 +58,19 @@ export default function Services(
   const height = 512;
   return (
     <Page title={title} base={base}>
-      <link rel="stylesheet" href="/css/hscroll.css" />
-      <link rel="stylesheet" href="/css/akvaplanist.css" />
-      <link rel="stylesheet" href="/css/hscroll-dynamic.css" />
-      <script src="/@nrk/core-scroll.min.js" />
+      <Head>
+        <link rel="stylesheet" href="/css/hscroll.css" />
+        <link rel="stylesheet" href="/css/akvaplanist.css" />
+        <link rel="stylesheet" href="/css/hscroll-dynamic.css" />
+        <script src="/@nrk/core-scroll.min.js" />
+      </Head>
 
-      <h1>
-        <a href=".">{title}</a>
-      </h1>
+      <h1>{title}</h1>
+
+      <HScroll>
+        {services.map(ArticleSquare)}
+      </HScroll>
+
       {
         /* <HScrollWithDynamicImage
         scrollerId=""
@@ -66,11 +78,38 @@ export default function Services(
       /> */
       }
 
-      <HScroll>
-        {services.map(ServiceGroup)}
-      </HScroll>
+      <section style={_section}>
+        <Card>
+          <h1>{t("services.lab.Header")}</h1>
+          <p>{t("services.lab.Intro")}</p>
+        </Card>
+      </section>
 
-      <Accreditations lang={lang.value} />
+      <section style={_section}>
+        <Card>
+          <h1>{t("services.autonomous.Header")}</h1>
+          <p>{t("services.autonomous.Intro")}</p>
+        </Card>
+      </section>
+
+      <section style={_section}>
+        <Card>
+          <h1>
+            {t("services.consult.Header")}
+          </h1>
+          <p>{t("services.consult.Intro")}</p>
+        </Card>
+      </section>
+
+      <section style={_section}>
+        <Card>
+          <h1>
+            {t("services.accreditations.Header")}
+          </h1>
+          <p>{t("services.accreditations.Intro")}</p>
+        </Card>
+        <Accreditations lang={lang.value} />
+      </section>
     </Page>
   );
 }
