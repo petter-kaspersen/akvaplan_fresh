@@ -24,10 +24,6 @@ const LinkTo = ({ name, lang, text = name }) =>
 const No = ({ lang = "no" } = {}) => {
   return (
     <div>
-      <p style={_accred}>
-        Akvaplan-niva tilbyr akkrediterte tjenester for å sikre presisjon,
-        sporbarhet og åpenhet i alle faser av våre prosjekt
-      </p>
       <Card>
         <p style={_accred}>
           Akvaplan-niva har akkrediterte laboratorietjenester innen{" "}
@@ -72,14 +68,9 @@ const No = ({ lang = "no" } = {}) => {
 const En = ({ lang = "en" } = {}) => {
   return (
     <div>
-      <p style={_accred}>
-        Akvaplan-niva offers accredited services to ensure precision,
-        traceability and transparency in all phases of our projects
-      </p>
-
       <Card>
         <p style={_accred}>
-          Akvaplan-niva provide accredited laboratory services for{"  "}
+          Akvaplan-niva provides accredited laboratory services for{"  "}
           <a href={labURL(lang)} target="_blank">
             chemical analysis, benthic fauna analysis, and taxonomy
           </a>{" "}
@@ -120,20 +111,13 @@ const En = ({ lang = "en" } = {}) => {
   );
 };
 export const Accreditations = ({ lang }) => (
-  <section>
-    <AlbumHeader
-      text={t("accreditations.Header")}
-      href={routes(lang).get("services")}
-    />
-
-    <div
-      style={{
-        display: "grid",
-        gap: "1rem",
-        gridTemplateColumns: "1fr",
-      }}
-    >
-      {lang == "no" ? <No /> : <En />}
-    </div>
-  </section>
+  <div
+    style={{
+      display: "grid",
+      gap: "1rem",
+      gridTemplateColumns: "1fr",
+    }}
+  >
+    {lang == "no" ? <No /> : <En />}
+  </div>
 );
