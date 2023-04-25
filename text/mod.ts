@@ -92,7 +92,6 @@ export const setLang = (
     // update signal
     if (lang?.value) {
       lang.value = name;
-      console.warn(lang);
     }
 
     // persist (if el===root)
