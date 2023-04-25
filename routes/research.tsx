@@ -7,6 +7,7 @@ import { lang, t } from "akvaplan_fresh/text/mod.ts";
 import {
   AlbumHeader,
   ArticleSquare,
+  Card,
   HScroll,
   Page,
   PeopleCard as PersonCard,
@@ -22,6 +23,15 @@ import {
 
 export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)/:page(research|forskning)",
+};
+
+const _section = {
+  marginTop: "2rem",
+  marginBottom: "3rem",
+};
+const _header = {
+  marginBlockStart: "1rem",
+  marginBlockEnd: "0.5rem",
 };
 
 export const groupReducer = (fx) =>
@@ -51,7 +61,8 @@ export const handler: Handlers = {
     const group = groupname?.length > 0 ? groupname : "year";
     const q = searchParams.get("q") ?? "";
 
-    const topics = await searchResearch({ q, lang: params.lang });
+    const _topics = await searchResearch({ q, lang: params.lang });
+    const topics = _topics.filter(({ level }) => level === 0);
 
     const { data } = await searchPubs({ q, limit: 100 });
     const pubs = data;
@@ -84,9 +95,24 @@ export default function Research(
       <h1>
         <a href=".">{title}</a>
       </h1>
-      <HScroll>
+      <HScroll maxVisibleChildren={7}>
         {topics.map(ArticleSquare)}
       </HScroll>
+
+      {
+        /* <section style={_section}>
+        <Card>
+          <h1>{t("research.people.Header")}</h1>
+          <p>
+            {t("research.people.Intro")}
+          </p>
+        </Card>
+        <PersonCard id="aki" lang={lang} />
+        <PersonCard id="aev" lang={lang} />
+        <PersonCard id="gnc" lang={lang} />
+        <PersonCard id="per" lang={lang} />
+      </section> */
+      }
 
       <AlbumHeader
         text={t("research.Latest_pubs")}

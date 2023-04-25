@@ -16,7 +16,7 @@ import {
   ArticleSquare,
   HScroll,
   Page,
-  PeopleCard,
+  PeopleCard as PersonCard,
 } from "akvaplan_fresh/components/mod.ts";
 
 import { researchTopicURL, routes } from "akvaplan_fresh/services/nav.ts";
@@ -145,7 +145,7 @@ export default function TopicsOrTopic(
                 imageCaption={"cap"}
               />
               <div>
-                <PeopleCard person={{ name: topics?.at(0)?.contact_id }} />
+                <PersonCard id={topics?.at(0)?.contact_id} />
               </div>
             </Article>
             <div></div>

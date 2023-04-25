@@ -1,25 +1,36 @@
-import { ApnSym, Card, Icon } from "akvaplan_fresh/components/mod.ts";
-import { t } from "akvaplan_fresh/text/mod.ts";
-
+import { akvaplanistMap } from "akvaplan_fresh/services/akvaplanist.ts";
 import { personURL } from "akvaplan_fresh/services/nav.ts";
+
+import { ApnSym, Card, Icon } from "akvaplan_fresh/components/mod.ts";
+
+import { t } from "akvaplan_fresh/text/mod.ts";
 
 import { type Akvaplanist } from "akvaplan_fresh/@interfaces/mod.ts";
 
 import { Head } from "$fresh/runtime.ts";
 
 interface PeopleProps {
-  person: Akvaplanist;
-  lang: string;
+  id?: string;
+  person?: Akvaplanist;
+  lang?: string;
 }
-
+const people = await akvaplanistMap();
 // TODO: Handle lang variants (for position, unit, etc.)
+
 export function PeopleCard(
   {
-    person: { id, tel, email, name, given, family, position, unit, workplace } =
-      {},
+    person,
     lang,
+    id,
   }: PeopleProps,
 ) {
+  id = id ?? person.id;
+
+  person = person ?? people.get(id);
+
+  const { tel, email, name, given, family, position, unit, workplace } =
+    person ?? {};
+
   return (
     <Card customClass="people-card">
       <Head>

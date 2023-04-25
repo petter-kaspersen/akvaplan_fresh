@@ -86,7 +86,7 @@ export default function News(
 
           <HScroll
             scrollerId="news-scroll"
-            maxVisibleChildren={grpmembers.length > 5 ? 7 : 5}
+            maxVisibleChildren={grpmembers.length > 5 ? 6.5 : 5}
           >
             {grpmembers.map(ArticleSquare)}
           </HScroll>

@@ -5,6 +5,7 @@ import {
 } from "akvaplan_fresh/services/mynewsdesk.ts";
 import { isodate } from "akvaplan_fresh/time/mod.ts";
 import { lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
+import { akvaplanistMap } from "akvaplan_fresh/services/akvaplanist.ts";
 
 import Article from "akvaplan_fresh/components/article/Article.tsx";
 import ArticleContact from "akvaplan_fresh/components/article/ArticleContact.tsx";
@@ -39,8 +40,11 @@ export const handler: Handlers = {
     );
     if (relcontact) {
       const { item_id } = relcontact;
-      const contact = await fetchItem(item_id, "contact_person");
-
+      const contact_person = await fetchItem(item_id, "contact_person");
+      const { email } = contact_person;
+      const id = email?.split("@")?.at(0);
+      const people = await akvaplanistMap();
+      const contact = people.get(id) ?? contact_person;
       return ctx.render({ item, lang, contact });
     } else {
       return ctx.render({ item, lang, contact: null });
@@ -133,7 +137,7 @@ export default function NewsArticle(
           )}
 
         {contact && (
-          <section class="article-content">
+          <section>
             <br />
             <PeopleCard person={contact} />
           </section>

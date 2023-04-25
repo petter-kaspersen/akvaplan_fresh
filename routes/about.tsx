@@ -67,6 +67,12 @@ const _header = {
   marginBlockStart: "1rem",
   marginBlockEnd: "0.5rem",
 };
+
+const conditionsURL = (lang: string) =>
+  lang === "en"
+    ? "https://resources.mynewsdesk.com/image/upload/f_pdf,fl_attachment/zqb5hq7cgpc29klpd1ax"
+    : "https://resources.mynewsdesk.com/image/upload/f_pdf,fl_attachment/jqjukz69thilinjupcpx";
+
 export default (
   { data: { title, lang, base, akvaplan } }: PageProps<AboutProps>,
 ) => {
@@ -149,7 +155,11 @@ export default (
                   </a>
                 </li>
                 <li>Kvalitetspolicy og etiske retningslinjer</li>
-                <li>Generelle vilkår (for kjøp av tjenester)</li>
+                <li>
+                  <a href={conditionsURL(lang.value)} target="_blank">
+                    Generelle vilkår (for kjøp av tjenester)
+                  </a>
+                </li>
                 <li>Arbeid for likestilling og mot diskriminering</li>
                 <li>Likestillingsplan</li>
               </menu>
