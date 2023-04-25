@@ -2,7 +2,9 @@ import { getSlimPublication } from "akvaplan_fresh/services/dois.ts";
 
 import { buildoiNewsMap } from "akvaplan_fresh/services/news.ts";
 
-import { Card, Icon, Page } from "akvaplan_fresh/components/mod.ts";
+import { Card, Page } from "akvaplan_fresh/components/mod.ts";
+
+import { lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
 
 import { SlimPublication } from "akvaplan_fresh/@interfaces/slim_publication.ts";
 
@@ -28,6 +30,8 @@ const doiFromParams = (params: Record<string, string>) => {
 export const handler: Handlers<SlimPublication> = {
   async GET(request: Request, ctx: HandlerContext) {
     const { params } = ctx;
+
+    langSignal.value = params.lang;
     const doi = doiFromParams(params);
     const slim = await getSlimPublication(doi);
 
@@ -45,47 +49,58 @@ export default function DoiPublication(
     { slim: SlimPublication; news: unknown }
   >,
 ) {
-  const { title, type, published, container, authors, doi, ...rest } = slim;
+  const {
+    title,
+    type,
+    license,
+    printed,
+    published,
+    container,
+    authors,
+    doi,
+    ...rest
+  } = slim;
   const href = `https://doi.org/${doi}`;
 
   return (
     <Page title={title}>
       <article>
         <Card>
-          <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
-
-          <div class="mdc-typography--headline4">
-          </div>
-
-          <div class="mdc-typography--headline6">
-          </div>
-
-          <div class="mdc-typography--headline6">
-            <p>
-              <em>{container}</em>&nbsp;<span>({published})</span>
-            </p>
-          </div>
-          <div>
-            {type}
-          </div>
-
-          <div class="headline6">
-            <a
-              target="_blank"
-              style="display:grid; grid-gap: 0.25rem; grid-template-columns: auto 1fr; align-items: center;"
-              href={`https://doi.org/${doi}`}
-            >
-              <Icon name="exit_to_app" />
-
-              <span>https://doi.org/{doi}</span>
-            </a>
-          </div>
+          <h1
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
+          <p>
+            <em dangerouslySetInnerHTML={{ __html: container }} />{" "}
+            (<time>{printed ?? published}</time>)
+          </p>
         </Card>
         <Card>
-          <pre>{JSON.stringify(news.get(doi))}</pre>
+          <p>
+            {t(`news.${type}`)}
+          </p>
+          <p>{license?.toUpperCase()}</p>
+          <p>
+            <a
+              target="_blank"
+              href={`https://doi.org/${doi}`}
+            >
+              https://doi.org/{doi}
+            </a>
+          </p>
         </Card>
-
-        <code></code>
+        <Card>
+          <h2 style={{ color: "var(--accent)" }}>
+            {authors.length > 1 ? t("pubs.Authors") : t("pubs.Author")}
+          </h2>
+          <ol>
+            {authors.map(({ family, given }, n) => (
+              <li>
+                {given} {family}
+                {/* {n === authors.length - 1 ? null : ", "} */}
+              </li>
+            ))}
+          </ol>
+        </Card>
       </article>
     </Page>
   );

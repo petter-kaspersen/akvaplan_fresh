@@ -41,7 +41,7 @@ interface AkvaplanistsProps {
 const pipe = <span>{" "}|{" "}</span>;
 export const config: RouteConfig = {
   routeOverride:
-    "{/:lang}?/:page(people|folk|ansatte|employees|akvaplanist){/:groupname}?{/:filter}?{/:fn}?{/:gn}?",
+    "{/:lang}?/:page(people|folk|ansatte|employees|akvaplanist|person){/:groupname}?{/:filter}?{/:fn}?{/:gn}?",
 };
 const _ = (s: string) => s?.toLowerCase();
 export const handler: Handlers = {

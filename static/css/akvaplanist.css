@@ -12,9 +12,10 @@
 }
 
 .page-header__content h1 {
-  font-size: var(--font-size-5);
+  font-size: var(--font-size-fluid-2);
   margin-bottom: var(--size-2);
-  font-weight: bold;
+  backdrop-filter: blur(15px);
+  padding: var(--size-fluid-1);
 }
 
 .page-header__content p {

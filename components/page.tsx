@@ -12,8 +12,6 @@ import { computed } from "@preact/signals-core";
 import { symbolDataURI } from "akvaplan_fresh/components/akvaplan/symbol.tsx";
 import { StringSignal } from "akvaplan_fresh/@interfaces/signal.ts";
 
-const nav = computed(() => buildMobileNav(lang));
-
 export type StdProps =
   & JSX.HTMLAttributes<HTMLElement>
   & {
@@ -32,6 +30,8 @@ export function Page(
     title,
     base = baseForLang,
     href,
+    Left = null,
+    Right = null,
     ...props
   }: StdProps,
 ) {
@@ -58,7 +58,7 @@ export function Page(
 
       <link
         rel="icon"
-        href={symbolDataURI}
+        href="/akvaplan_symbol.svg"
         type="image/svg+xml"
       />
 
@@ -75,7 +75,7 @@ export function Page(
 
       <body {...propsExceptChildren}>
         <CleanHeader href={href} lang={lang.value} />
-        <main style={{ minHeight: "100vh", padding: "0 var(--size-4)" }}>
+        <main style={{ minHeight: "100vh", padding: "0 var(--size-3)" }}>
           {children}
         </main>
         <Footer lang={lang.value} />

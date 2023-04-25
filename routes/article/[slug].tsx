@@ -114,7 +114,7 @@ export default function NewsArticle(
         <figure style={_caption}>
           <figcaption>{image_caption}</figcaption>
         </figure>
-        {lang}
+
         <section
           class="article-content"
           dangerouslySetInnerHTML={{ __html }}

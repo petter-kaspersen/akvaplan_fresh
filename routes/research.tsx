@@ -6,11 +6,11 @@ import { lang, t } from "akvaplan_fresh/text/mod.ts";
 
 import {
   AlbumHeader,
+  ArticleSquare,
   HScroll,
-  NewsFilmStrip,
   Page,
   PeopleCard as PersonCard,
-  ResearchTopic,
+  SlimCard,
 } from "akvaplan_fresh/components/mod.ts";
 
 import {
@@ -54,7 +54,7 @@ export const handler: Handlers = {
     const topics = await searchResearch({ q, lang: params.lang });
 
     const { data } = await searchPubs({ q, limit: 100 });
-    const pubs = data.map(newsFromPubs({ lang }));
+    const pubs = data;
 
     const grouped = (pubs).reduce(
       groupReducer(({ published }) => published.substring(0, 7)),
@@ -85,7 +85,7 @@ export default function Research(
         <a href=".">{title}</a>
       </h1>
       <HScroll>
-        {topics.map(ResearchTopic)}
+        {topics.map(ArticleSquare)}
       </HScroll>
 
       <AlbumHeader
@@ -100,11 +100,7 @@ export default function Research(
               {grpkey}
             </h3>
             <ul>
-              {pubs.map(({ title, href }) => (
-                <li>
-                  <a href={href}>{title}</a>
-                </li>
-              ))}
+              {pubs.map((slim) => <SlimCard slim={slim} lang={lang.value} />)}
             </ul>
           </div>
         ))}

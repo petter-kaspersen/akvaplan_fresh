@@ -1,38 +1,38 @@
-import { routes } from "./nav.ts";
+import { serviceGroupURL } from "./nav.ts";
 
-//https://www.30secondsofcode.org/js/s/shuffle/
-const shuffle = ([...arr]) => {
-  let m = arr.length;
-  while (m) {
-    const i = Math.floor(Math.random() * m--);
-    [arr[m], arr[i]] = [arr[i], arr[m]];
-  }
-  return arr;
+import { shuffle } from "akvaplan_fresh/grouping/mod.ts";
+
+//Beware, imports are cached
+import services from "https://svc.deno.dev/?v=2023-04-25" assert {
+  type: "json",
 };
+type Svc = Record<string, string | Number | string[]>;
+export const servicesLevel = (n: Number) =>
+  services.filter(({ level }: Svc) => level === n);
 
-const level0 = ({ level }) => {
-  return level !== "" && (level === "0" || Number(level) === 0);
+export const en0 = servicesLevel(0).map((
+  { topic, en, no, details, detaljer, ...s }: Svc,
+) => ({
+  ...s,
+  topic,
+  name: en ?? no,
+  desc: details ?? detaljer,
+  lang: "en",
+  href: serviceGroupURL({ lang: "en", topic }),
+}));
+
+const no0 = servicesLevel(0).map((
+  { no, en, tema, details, detaljer, ...s }: Svc,
+) => ({
+  ...s,
+  name: no ?? en,
+  desc: detaljer ?? details,
+  topic: tema,
+  lang: "no",
+  href: serviceGroupURL({ lang: "no", topic: tema }),
+}));
+
+export const getServicesLevel0 = (lang: string) => {
+  const svc = lang === "en" ? en0 : no0;
+  return shuffle(svc);
 };
-
-const fetchSvc = async ({ order = "random", sort, filter = level0 } = {}) => {
-  const r = await fetch("https://svc.deno.dev");
-  if (r.ok) {
-    const arr = (await r.json()).filter(filter);
-
-    if ("random" === order) {
-      return shuffle(arr);
-    }
-    if (sort) {
-      return arr.sort(sort);
-    }
-    return arr;
-  }
-};
-
-export const searchServices = async ({ q, lang, sort, filter } = {}) =>
-  (await fetchSvc({ sort, filter })).map(({ details, detaljer, ...s }) => ({
-    name: s[lang],
-    href: routes(lang).get("services") + `?q=${encodeURIComponent(s[lang])}`,
-    desc: lang === "en" ? details : detaljer,
-    ...s,
-  }));

@@ -1,6 +1,6 @@
 //import { buildMobileNav } from "akvaplan_fresh/services/nav.ts";
 import { homeAlbums } from "akvaplan_fresh/services/mediebank.ts";
-import { searchServices } from "akvaplan_fresh/services/svc.ts";
+import { getServicesLevel0 } from "akvaplan_fresh/services/svc.ts";
 import { searchResearch } from "akvaplan_fresh/services/research.ts";
 import { latestNews } from "akvaplan_fresh/services/news.ts";
 import {
@@ -17,8 +17,6 @@ import {
   MoreNews,
   NewsFilmStrip,
   Page,
-  ResearchTopic,
-  ServiceGroup,
 } from "akvaplan_fresh/components/mod.ts";
 
 import { Handlers, RouteConfig } from "$fresh/server.ts";
@@ -44,38 +42,30 @@ export const handler: Handlers = {
     const limit = 64;
     const q = "";
 
-    const _services = await searchServices({ q, lang: sitelang, limit });
-    const services = _services.filter(level0);
+    const services = await getServicesLevel0(sitelang);
 
     const news = await latestNews({ q, lang: sitelang, limit });
 
     const _topics = await searchResearch({ q, lang: sitelang, limit });
     const topics = _topics.filter(level0);
 
-    const numNews = 15;
+    const maxNumNews = 32;
     const articles = news.filter(({ type, hreflang, title }) =>
-      ["news"].includes(type) && hreflang === sitelang &&
+      ["news", "pressrelease"].includes(type) && hreflang === sitelang &&
       !/stillingsannonse/i.test(title)
-    )
-      .slice(
-        0,
-        numNews,
-      );
+    ).slice(
+      0,
+      maxNumNews,
+    );
     const articlesNotInSiteLang = news.filter(({ type, hreflang, title }) =>
       ["news"].includes(type) &&
       hreflang !== sitelang &&
       !/stillingsannonse/i.test(title)
-    )
-      .slice(
-        0,
-        numNews,
-      );
+    ).slice(
+      0,
+      maxNumNews,
+    );
 
-    const pr = news.filter(({ type }) => ["pressrelease"].includes(type))
-      .slice(
-        0,
-        numNews,
-      );
     return ctx.render({
       news,
       services,
@@ -83,14 +73,15 @@ export const handler: Handlers = {
       lang,
       articles,
       articlesNotInSiteLang,
-      pr,
     });
   },
 };
-
+console.log(
+  "@todo Home & other routes: use asset() for all references css files",
+);
 export default function Home(
   {
-    data: { news, topics, lang, services, articles, articlesNotInSiteLang, pr },
+    data: { news, topics, lang, services, articles, articlesNotInSiteLang },
   },
 ) {
   const maxVis = 5;
@@ -121,11 +112,15 @@ export default function Home(
           text={t("home.album.articles_not_in_site_lang")}
           href={routes(lang).get("news")}
         />
+        <span style={{ fontSize: "1rem" }}>
+          {t(`news.Only_in_alt_lang`)} {t(`lang.alt.${lang}`)}
+        </span>
         <HScroll maxVisibleChildren={5}>
           {articlesNotInSiteLang.map(ArticleSquare)}
         </HScroll>
       </section>
-      <section style={_section}>
+      {
+        /* <section style={_section}>
         <AlbumHeader
           text={t("home.album.press_releases")}
           href={routes(lang).get("news")}
@@ -133,16 +128,17 @@ export default function Home(
         <HScroll maxVisibleChildren={5}>
           {pr.map(ArticleSquare)}
         </HScroll>
-      </section>
+      </section> */
+      }
       <section style={_section}>
         <AlbumHeader
           text={t("home.album.services")}
           href={routes(lang).get("services")}
         />
         <HScroll
-          maxVisibleChildren={services.length < 8 ? services.length : 8}
+          maxVisibleChildren={Math.min(services.length, 7)}
         >
-          {services.map(ServiceGroup)}
+          {services.map(ArticleSquare)}
         </HScroll>
       </section>
       <section style={_section}>
@@ -150,8 +146,8 @@ export default function Home(
           text={t("home.album.research")}
           href={routes(lang).get("research")}
         />
-        <HScroll maxVisibleChildren={topics.length}>
-          {topics.map(ResearchTopic)}
+        <HScroll maxVisibleChildren={Math.min(topics.length, 7)}>
+          {topics.map(ArticleSquare)}
         </HScroll>
       </section>
 
@@ -160,9 +156,7 @@ export default function Home(
         text={t("home.album.projects")}
         href={routes(lang).get("projects")}
       />
-      <HScroll>
-        @todo (v1.1?)
-      </HScroll> */
+        */
       }
 
       {/* Research facilities (Fisk Loise) Sensor platforms */}
