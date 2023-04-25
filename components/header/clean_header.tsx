@@ -4,7 +4,7 @@ import { routes } from "akvaplan_fresh/services/nav.ts";
 import { lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
 
 import borders from "open-props/src/props.borders.js";
-import { SiteMenu } from "./SiteMenu.tsx";
+import { SiteMenu } from "./site_menu.tsx";
 
 const Empty = (_ign: unknown) => <span></span>;
 
