@@ -84,7 +84,7 @@ export default function Home(
     data: { news, topics, lang, services, articles, articlesNotInSiteLang },
   },
 ) {
-  const maxVis = 5;
+  const maxVisNews = 5.5;
 
   return (
     <Page>
@@ -102,7 +102,7 @@ export default function Home(
           text={t(`home.album.${lang}.articles`)}
           href={routes(lang).get("news")}
         />
-        <HScroll maxVisibleChildren={5}>
+        <HScroll maxVisibleChildren={maxVisNews}>
           {articles.map(ArticleSquare)}
         </HScroll>
       </section>
@@ -115,7 +115,7 @@ export default function Home(
         <span style={{ fontSize: "1rem" }}>
           {t(`news.Only_in_alt_lang`)} {t(`lang.alt.${lang}`)}
         </span>
-        <HScroll maxVisibleChildren={5}>
+        <HScroll maxVisibleChildren={maxVisNews}>
           {articlesNotInSiteLang.map(ArticleSquare)}
         </HScroll>
       </section>
@@ -136,7 +136,7 @@ export default function Home(
           href={routes(lang).get("services")}
         />
         <HScroll
-          maxVisibleChildren={Math.min(services.length, 7)}
+          maxVisibleChildren={Math.min(services.length, 6.5)}
         >
           {services.map(ArticleSquare)}
         </HScroll>
