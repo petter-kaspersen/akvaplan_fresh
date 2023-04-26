@@ -92,9 +92,9 @@ export default function Research(
       <link rel="stylesheet" href="/css/hscroll.css" />
       <script src="/@nrk/core-scroll.min.js" />
       <h1>
-        <a href=".">{title}</a>
+        {title}
       </h1>
-      <HScroll maxVisibleChildren={7}>
+      <HScroll maxVisibleChildren={6.5}>
         {topics.map(ArticleSquare)}
       </HScroll>
 

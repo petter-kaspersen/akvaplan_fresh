@@ -49,13 +49,10 @@ export const handler: Handlers = {
 
     const base = `/${params.lang}/${params.page}/${params.groupname}`;
 
-    const queries = new Set(
-      [
-        topic,
-        ...(service?.searchwords ?? []),
-        //...service.name.split(/\s/),
-      ].filter((s) => s.length > 3).map((s) => s.toLowerCase()),
-    );
+    const queries = [
+      topic,
+      ...(service?.searchwords ?? []),
+    ].filter((s) => s.length > 3).map((s) => s.toLowerCase());
 
     const _news = await multiSearchMynewsdesk(
       queries,
