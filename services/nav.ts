@@ -17,7 +17,7 @@ const En = new Map([
   ["documents", "/en/documents"],
   ["akvaplanists", "/en/people"],
   ["people", "/en/people"],
-  ["about", "/en/company"],
+  ["about", "/en/about-us"],
 ]);
 const No = new Map([
   ["search", "/no/_"],
