@@ -20,7 +20,7 @@ import {
 } from "akvaplan_fresh/components/mod.ts";
 
 import { Handlers, RouteConfig } from "$fresh/server.ts";
-import { Head } from "$fresh/runtime.ts";
+import { asset, Head } from "$fresh/runtime.ts";
 import NewsArticle from "./article/[slug].tsx";
 
 export const config: RouteConfig = {
@@ -89,10 +89,10 @@ export default function Home(
   return (
     <Page>
       <Head>
-        <link rel="stylesheet" href="/css/hscroll.css" />
-        <link rel="stylesheet" href="/css/mini-news.css" />
-        <link rel="stylesheet" href="/css/article.css" />
-        <script src="/@nrk/core-scroll.min.js" />
+        <link rel="stylesheet" href={asset("/css/mini-news.css")} />
+        <link rel="stylesheet" href={asset("/css/hscroll.css")} />
+        <link rel="stylesheet" href={asset("/css/article.css")} />
+        <script src={asset("/@nrk/core-scroll.min.js")} />
       </Head>
 
       <NewsFilmStrip news={news} lang={lang.value} BeforeAfter={MoreNews} />

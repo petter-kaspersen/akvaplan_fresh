@@ -33,10 +33,10 @@ import {
 } from "$fresh/server.ts";
 
 import { Head } from "$fresh/runtime.ts";
-export const config: RouteConfig = {
-  routeOverride:
-    "/:lang(en|no){/:page(news|nyheter|services|tjenester|research|forskning)}?/:groupname(topic|topics|tema){/:topic}?",
-};
+// export const config: RouteConfig = {
+//   routeOverride:
+//     "/:lang(en|no){/:page(news|nyheter|services|tjenester|research|forskning)}?/:groupname(topic|topics|tema){/:topic}?",
+// };
 const buildTopicFilter = (params) => ({ topic, tema }) =>
   [topic, tema].includes(params.topic);
 export const handler: Handlers = {
