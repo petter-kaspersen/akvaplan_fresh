@@ -136,7 +136,7 @@ export const multiSearchMynewsdesk = async (
   types: string[],
   opts: Record<string, string>,
 ) => {
-  const result = new Map<string, News>();
+  const result = new Map<string, unknown>();
   const limit = opts?.limit ?? 64;
 
   for await (const q of new Set([...queries])) {

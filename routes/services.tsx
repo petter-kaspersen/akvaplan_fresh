@@ -39,7 +39,7 @@ export const handler: Handlers = {
     const { searchParams } = new URL(req.url);
     lang.value = params.lang;
 
-    const title = t("home.album.services");
+    const title = t("nav.Services");
     const base = `/${params.lang}/${params.page}/`;
 
     const { groupname, filter } = params;
