@@ -19,7 +19,7 @@ import {
   type PageProps,
   type RouteConfig,
 } from "$fresh/server.ts";
-import { Head } from "$fresh/runtime.ts";
+import { asset, Head } from "$fresh/runtime.ts";
 export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)/:page(services|tjenester)",
 };
@@ -46,7 +46,7 @@ export const handler: Handlers = {
     const group = groupname?.length > 0 ? groupname : "year";
     const q = searchParams.get("q") ?? "";
 
-    const services = getServicesLevel0(params.lang);
+    const services = await getServicesLevel0(params.lang);
 
     const people = await akvaplanistMap();
     const contacts = new Map([["lab", "mfr"]]);
@@ -65,12 +65,10 @@ export default function Services(
   return (
     <Page title={title} base={base}>
       <Head>
-        <link rel="stylesheet" href="/css/hscroll.css" />
-        <link rel="stylesheet" href="/css/akvaplanist.css" />
-        <link rel="stylesheet" href="/css/hscroll-dynamic.css" />
-        <script src="/@nrk/core-scroll.min.js" />
+        <link rel="stylesheet" href={asset("/css/hscroll.css")} />
+        <link rel="stylesheet" href={asset("/css/article.css")} />
+        <script src={asset("/@nrk/core-scroll.min.js")} />
       </Head>
-
       <h1>{title}</h1>
 
       <HScroll maxVisibleChildren={6.5}>
@@ -89,7 +87,7 @@ export default function Services(
           <h1>{t("services.lab.Header")}</h1>
           <p>{t("services.lab.Intro")}</p>
         </Card>
-        <PeopleCard person={people.get(contacts.get("lab"))} lang={lang} />
+        <PeopleCard id={contacts.get("lab")} lang={lang} />
         <PeopleCard person={people.get("tri")} lang={lang} />
       </section>
 
@@ -134,6 +132,7 @@ export default function Services(
 
         <PeopleCard person={people.get("atf")} lang={lang} />
         {/* <PeopleCard person={people.get("aki")} lang={lang} /> */}
+        <PeopleCard person={people.get("crs")} lang={lang} />
         <PeopleCard person={people.get("los")} lang={lang} />
       </section>
 
@@ -144,11 +143,11 @@ export default function Services(
           </h1>
           <p>{t("services.accreditations.Intro")}</p>
         </Card>
+        <Accreditations lang={lang.value} />
         <PeopleCard person={people.get("kaj")} lang={lang} />
         <PeopleCard person={people.get("khs")} lang={lang} />
         <PeopleCard person={people.get("krs")} lang={lang} />
         <PeopleCard person={people.get("lit")} lang={lang} />
-        <Accreditations lang={lang.value} />
       </section>
     </Page>
   );

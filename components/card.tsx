@@ -20,7 +20,7 @@ export function Card({
         padding: "var(--size-2)",
         borderRadius: "var(--radius-2)",
         boxShadow: "var(--shadow-4)",
-        margin: "0.25rem",
+        //margin: "0.25rem",
       }}
     >
       {img ? <img src={img} alt="Card image cap" /> : null}

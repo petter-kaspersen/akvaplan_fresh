@@ -1,12 +1,12 @@
 import { buildContainsFilter } from "akvaplan_fresh/search/filter.ts";
 
 import {
+  getResearchLevel0,
   getServicesLevel0,
   //getResearchTopicSearchwords,
   //getServiceTopicSearchwords,
   newsFromMynewsdesk,
   searchMynewsdesk,
-  searchResearch,
 } from "akvaplan_fresh/services/mod.ts";
 
 import {
@@ -33,10 +33,10 @@ import {
 } from "$fresh/server.ts";
 
 import { Head } from "$fresh/runtime.ts";
-export const config: RouteConfig = {
-  routeOverride:
-    "/:lang(en|no){/:page(news|nyheter|services|tjenester|research|forskning)}?/:groupname(topic|topics|tema){/:topic}?",
-};
+// export const config: RouteConfig = {
+//   routeOverride:
+//     "/:lang(en|no){/:page(news|nyheter|services|tjenester|research|forskning)}?/:groupname(topic|topics|tema){/:topic}?",
+// };
 const buildTopicFilter = (params) => ({ topic, tema }) =>
   [topic, tema].includes(params.topic);
 export const handler: Handlers = {
@@ -58,7 +58,7 @@ export const handler: Handlers = {
       limit: 128,
     }) ?? {};
 
-    const _research = await searchResearch({ q: "", lang: params.lang });
+    const _research = await getResearchLevel0(params.lang);
     const topics = _research.filter((r) =>
       JSON.stringify(r).includes(params.topic)
     );

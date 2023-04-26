@@ -21,9 +21,11 @@ import * as $14 from "./routes/null.tsx";
 import * as $15 from "./routes/pref.tsx";
 import * as $16 from "./routes/pubs.tsx";
 import * as $17 from "./routes/research.tsx";
-import * as $18 from "./routes/search.tsx";
-import * as $19 from "./routes/services.tsx";
-import * as $20 from "./routes/topics.tsx";
+import * as $18 from "./routes/research_topics.tsx";
+import * as $19 from "./routes/search.tsx";
+import * as $20 from "./routes/service_topics.tsx";
+import * as $21 from "./routes/services.tsx";
+import * as $22 from "./routes/topics.tsx";
 import * as $$0 from "./islands/HScrollWithDynamicImage.tsx";
 import * as $$1 from "./islands/button_open_dialog.tsx";
 import * as $$2 from "./islands/doi_search.tsx";
@@ -52,9 +54,11 @@ const manifest = {
     "./routes/pref.tsx": $15,
     "./routes/pubs.tsx": $16,
     "./routes/research.tsx": $17,
-    "./routes/search.tsx": $18,
-    "./routes/services.tsx": $19,
-    "./routes/topics.tsx": $20,
+    "./routes/research_topics.tsx": $18,
+    "./routes/search.tsx": $19,
+    "./routes/service_topics.tsx": $20,
+    "./routes/services.tsx": $21,
+    "./routes/topics.tsx": $22,
   },
   islands: {
     "./islands/HScrollWithDynamicImage.tsx": $$0,

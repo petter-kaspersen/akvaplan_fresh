@@ -19,9 +19,9 @@ import {
 export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)/:page(news|nyheter)",
 };
-import { Head } from "$fresh/runtime.ts";
-import { MynewsdeskItem } from "../@interfaces/mynewsdesk.ts";
 
+import { MynewsdeskItem } from "../@interfaces/mynewsdesk.ts";
+import { asset, Head } from "$fresh/runtime.ts";
 type Props = {};
 const _section = {
   marginTop: "4rem",
@@ -93,10 +93,12 @@ export default function News(
         </section>
       ))}
 
-      <link rel="stylesheet" href="/css/hscroll.css" />
-      <link rel="stylesheet" href="/css/akvaplanist.css" />
-      <link rel="stylesheet" href="/css/hscroll-dynamic.css" />
-      <script src="/@nrk/core-scroll.min.js" />
+      <Head>
+        <link rel="stylesheet" href={asset("/css/akvaplanist.css")} />
+        <link rel="stylesheet" href={asset("/css/hscroll.css")} />
+        <link rel="stylesheet" href={asset("/css/article.css")} />
+        <script src={asset("/@nrk/core-scroll.min.js")} />
+      </Head>
     </Page>
   );
 }

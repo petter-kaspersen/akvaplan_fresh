@@ -1,7 +1,7 @@
 //import { buildMobileNav } from "akvaplan_fresh/services/nav.ts";
 import { homeAlbums } from "akvaplan_fresh/services/mediebank.ts";
 import { getServicesLevel0 } from "akvaplan_fresh/services/svc.ts";
-import { searchResearch } from "akvaplan_fresh/services/research.ts";
+import { getResearchLevel0 } from "akvaplan_fresh/services/research.ts";
 import { latestNews } from "akvaplan_fresh/services/news.ts";
 import {
   pubURL,
@@ -20,7 +20,7 @@ import {
 } from "akvaplan_fresh/components/mod.ts";
 
 import { Handlers, RouteConfig } from "$fresh/server.ts";
-import { Head } from "$fresh/runtime.ts";
+import { asset, Head } from "$fresh/runtime.ts";
 import NewsArticle from "./article/[slug].tsx";
 
 export const config: RouteConfig = {
@@ -46,8 +46,7 @@ export const handler: Handlers = {
 
     const news = await latestNews({ q, lang: sitelang, limit });
 
-    const _topics = await searchResearch({ q, lang: sitelang, limit });
-    const topics = _topics?.filter(level0);
+    const topics = await getResearchLevel0(sitelang);
 
     const maxNumNews = 32;
     const articles = news.filter(({ type, hreflang, title }) =>
@@ -89,10 +88,10 @@ export default function Home(
   return (
     <Page>
       <Head>
-        <link rel="stylesheet" href="/css/hscroll.css" />
-        <link rel="stylesheet" href="/css/mini-news.css" />
-        <link rel="stylesheet" href="/css/article.css" />
-        <script src="/@nrk/core-scroll.min.js" />
+        <link rel="stylesheet" href={asset("/css/mini-news.css")} />
+        <link rel="stylesheet" href={asset("/css/hscroll.css")} />
+        <link rel="stylesheet" href={asset("/css/article.css")} />
+        <script src={asset("/@nrk/core-scroll.min.js")} />
       </Head>
 
       <NewsFilmStrip news={news} lang={lang.value} BeforeAfter={MoreNews} />

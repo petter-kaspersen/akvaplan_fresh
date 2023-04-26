@@ -1,4 +1,4 @@
-import { searchResearch } from "akvaplan_fresh/services/research.ts";
+import { getResearchLevel0 } from "akvaplan_fresh/services/research.ts";
 import { search as searchPubs } from "akvaplan_fresh/services/dois.ts";
 import { newsFromPubs } from "akvaplan_fresh/services/news_pubs.ts";
 import { researchTopicURL, routes } from "akvaplan_fresh/services/nav.ts";
@@ -61,8 +61,7 @@ export const handler: Handlers = {
     const group = groupname?.length > 0 ? groupname : "year";
     const q = searchParams.get("q") ?? "";
 
-    const _topics = await searchResearch({ q, lang: params.lang });
-    const topics = _topics.filter(({ level }) => level === 0);
+    const topics = await getResearchLevel0(params.lang);
 
     const { data } = await searchPubs({ q, limit: 100 });
     const pubs = data;
