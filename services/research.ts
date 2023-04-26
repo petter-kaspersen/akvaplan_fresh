@@ -1,10 +1,13 @@
 import { routes } from "./nav.ts";
 import { shuffle } from "akvaplan_fresh/grouping/mod.ts";
 
-const _all = () => true;
+const research =
+  (await fetch("https://research.deno.dev/").catch(() => {}).then((
+    r,
+  ) => r.json())) ?? [];
 
 const fetchResearch = async (
-  { order = "random", sort, filter = _all } = {},
+  { order = "random", sort, filter = () => true } = {},
 ) => {
   const r = await fetch("https://research.deno.dev/?v=2023-04-26").catch(
     () => {},
@@ -39,5 +42,7 @@ export const searchResearch = async ({ q, lang, sort, filter } = {}) => {
     }));
   }
 };
-export const getResearchTopicSearchwords = (topic: string) => {
+export const getResearchLevel0 = (lang: string) => {
+  //const svc = lang === "en" ? en0 : no0;
+  return shuffle(svc);
 };
