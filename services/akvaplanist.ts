@@ -25,7 +25,7 @@ export const akvaplanists = async (): Promise<Akvaplanist[]> => {
       return p;
     });
   }
-  throw "Failed fetching akvaplanists";
+  //throw "Failed fetching akvaplanists";
 };
 
 export const akvaplanistMap = async () => {
@@ -85,4 +85,16 @@ export const admDir = {
   //"unit": "LEDELS",
   //"workplace": "Tromsø",
   "email": "mkr@akvaplan.niva.no",
+};
+
+export const akvaplan = {
+  name: "Akvaplan-niva",
+  tel: "+47 77 75 03 00",
+  email: "info@akvaplan.niva.no",
+  addr: {
+    hq: {
+      visit: "Framsenteret, 9296 Tromsø, Norway",
+      post: "Framsenteret, Postbox 6606, Stakkevollan, 9296 Tromsø, Norway",
+    },
+  },
 };
