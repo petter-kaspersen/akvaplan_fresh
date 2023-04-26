@@ -130,3 +130,24 @@ export const defaultImage =
 
 // jobAdRegexes = [/stillingsannonse/i, /ledig stilling/i]
 // getJobAdverts
+
+export const multiSearchMynewsdesk = async (
+  queries: string[],
+  types: string[],
+  opts: Record<string, string>,
+) => {
+  const result = new Map<string, News>();
+  const limit = opts?.limit ?? 64;
+
+  for await (const q of new Set([...queries])) {
+    for await (const type_of_media of new Set([...types])) {
+      const { items } = await searchMynewsdesk({ q, type_of_media, limit });
+      if (items) {
+        for (const n of items) {
+          result.set(n.id, n);
+        }
+      }
+    }
+  }
+  return [...result.values()];
+};
