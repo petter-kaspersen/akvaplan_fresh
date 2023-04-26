@@ -4,6 +4,8 @@ import { shuffle } from "akvaplan_fresh/grouping/mod.ts";
 
 import { nytek } from "./topic/nytek.tsx";
 
+type Svc = Record<string, string | number | string[]>;
+
 const _services = [];
 
 const getServices = async () => {
@@ -13,8 +15,7 @@ const getServices = async () => {
   }
 };
 
-type Svc = Record<string, string | Number | string[]>;
-const servicesLevelFilter = (n: Number) => ({ level }: Svc) => level === n;
+const servicesLevelFilter = (n: number) => ({ level }: Svc) => level === n;
 
 export const getServicesLevel0 = async (lang: string) => {
   const svc0 = (await getServices() ?? [])?.filter(servicesLevelFilter(0));

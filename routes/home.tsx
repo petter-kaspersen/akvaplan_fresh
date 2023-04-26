@@ -1,7 +1,7 @@
 //import { buildMobileNav } from "akvaplan_fresh/services/nav.ts";
 import { homeAlbums } from "akvaplan_fresh/services/mediebank.ts";
 import { getServicesLevel0 } from "akvaplan_fresh/services/svc.ts";
-import { searchResearch } from "akvaplan_fresh/services/research.ts";
+import { getResearchLevel0 } from "akvaplan_fresh/services/research.ts";
 import { latestNews } from "akvaplan_fresh/services/news.ts";
 import {
   pubURL,
@@ -46,8 +46,7 @@ export const handler: Handlers = {
 
     const news = await latestNews({ q, lang: sitelang, limit });
 
-    const _topics = await searchResearch({ q, lang: sitelang, limit });
-    const topics = _topics?.filter(level0);
+    const topics = await getResearchLevel0(sitelang);
 
     const maxNumNews = 32;
     const articles = news.filter(({ type, hreflang, title }) =>
