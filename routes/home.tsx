@@ -76,9 +76,9 @@ export const handler: Handlers = {
     });
   },
 };
-console.log(
-  "@todo Home & other routes: use asset() for all references css files",
-);
+// console.log(
+//   "@todo Home & other routes: use asset() for all references css files",
+// );
 export default function Home(
   {
     data: { news, topics, lang, services, articles, articlesNotInSiteLang },

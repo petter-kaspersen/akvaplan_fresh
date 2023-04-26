@@ -105,7 +105,7 @@ export const searchMynewsdesk = async (
 export const slug = ({ header }) => postprocess(_slug(preprocess(header)));
 
 // Get localized application URL for a news article
-console.debug("@todo Decide news URL structure for news vs press releases");
+//console.log("@todo Decide news URL structure for news vs press releases");
 export const href = (
   { header, type_of_media, language, published_at: { datetime } }:
     MynewsdeskItem, // language -> article language

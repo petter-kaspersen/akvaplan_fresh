@@ -4,7 +4,7 @@ type ArticleHeaderProps = {
   imageCaption?: string;
 };
 
-console.log("@todo ArticleHeader should not be repeated in markup");
+//console.log("@todo ArticleHeader should not be repeated in markup");
 export default function ArticleHeader({
   header,
   image,

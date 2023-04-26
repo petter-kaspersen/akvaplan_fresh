@@ -24,7 +24,7 @@ export const config: RouteConfig = {
     "{/:lang}?/:type(news|nyhet|pressrelease|pressemelding|press){/:isodate}?/:slug",
 };
 
-console.log("@todo News article: auto-fetch related contacts");
+//console.log("@todo News article: auto-fetch related contacts");
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -59,7 +59,7 @@ interface ArticleProps {
   lang: string;
 }
 
-console.debug("@todo News article needs bullet points for <li> elements");
+//console.log("@todo News article needs bullet points for <li> elements");
 
 export default function NewsArticle(
   { data: { item, lang, contact, contact_person } }: PageProps<ArticleProps>,

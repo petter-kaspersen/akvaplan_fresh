@@ -17,4 +17,4 @@ if (!IS_BROWSER) {
 export const Styles = ({ styles = IS_BROWSER ? [] : defaultStyles } = {}) => (
   <style dangerouslySetInnerHTML={{ __html: styles.join("\n") }} />
 );
-console.log("@todo add deno task to compile styles per route");
+//console.log("@todo add deno task to compile styles per route");
