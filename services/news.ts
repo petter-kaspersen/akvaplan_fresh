@@ -10,7 +10,8 @@ import { newsFromAkvaplanists } from "./news_akvaplanists.ts";
 
 import { type News, type Search } from "akvaplan_fresh/@interfaces/mod.ts";
 
-const sortLatest = (a: News, b: News) => b.published.localeCompare(a.published);
+export const sortLatest = (a: News, b: News) =>
+  b.published.localeCompare(a.published);
 
 //@todo News create task to find/save news articles with DOI
 const newsArticlesWithDOI = (articles: News[]) =>
