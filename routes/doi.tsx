@@ -1,5 +1,5 @@
 import { getSlimPublication } from "akvaplan_fresh/services/dois.ts";
-
+import { getOpenAlexWork } from "akvaplan_fresh/services/openalex.ts";
 import { buildoiNewsMap } from "akvaplan_fresh/services/news.ts";
 
 import { Card, Page } from "akvaplan_fresh/components/mod.ts";
@@ -36,8 +36,9 @@ export const handler: Handlers<SlimPublication> = {
     const slim = await getSlimPublication(doi);
 
     if (slim) {
-      const news = await buildoiNewsMap();
-      return ctx.render({ slim, news });
+      const news = await buildoiNewsMap() ?? {};
+      const openalex = await getOpenAlexWork({ doi }) ?? {};
+      return ctx.render({ slim, news, openalex });
     } else {
       return ctx.renderNotFound();
     }
@@ -45,7 +46,7 @@ export const handler: Handlers<SlimPublication> = {
 };
 
 export default function DoiPublication(
-  { params, data: { slim, news } }: PageProps<
+  { params, data: { slim, news, openalex } }: PageProps<
     { slim: SlimPublication; news: unknown }
   >,
 ) {
@@ -100,6 +101,17 @@ export default function DoiPublication(
               </li>
             ))}
           </ol>
+        </Card>
+        <Card>
+          <p>
+            {t("pubs.View_in")}{" "}
+            <a
+              target="_blank"
+              href={openalex.id}
+            >
+              OpenAlex
+            </a>
+          </p>
         </Card>
       </article>
     </Page>
