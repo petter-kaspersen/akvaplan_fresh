@@ -2,15 +2,17 @@ import { serviceGroupURL } from "./nav.ts";
 
 import { shuffle } from "akvaplan_fresh/grouping/mod.ts";
 
+import { nytek } from "./topic/nytek.tsx";
+
 //Beware, imports are cached
-import services from "https://svc.deno.dev/" assert {
+import services from "https://svc.deno.dev/?x=y2139871298" assert {
   type: "json",
 };
 type Svc = Record<string, string | Number | string[]>;
 export const servicesLevel = (n: Number) =>
   services.filter(({ level }: Svc) => level === n);
 
-export const en0 = servicesLevel(0).map((
+const en0 = servicesLevel(0).map((
   { topic, en, no, details, detaljer, ...s }: Svc,
 ) => ({
   ...s,
@@ -36,3 +38,10 @@ export const getServicesLevel0 = (lang: string) => {
   const svc = lang === "en" ? en0 : no0;
   return shuffle(svc);
 };
+
+const desc = new Map([
+  ["nytek", nytek],
+]);
+
+export const getServiceDesc = (topic: string, lang: string) =>
+  desc?.get(topic)?.get(lang) ?? (() => null);
