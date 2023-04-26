@@ -1,10 +1,12 @@
 import {
   akvaplanists,
   buildPeopleGrouper,
-  groupByChar0,
+  //groupByChar0,
   groupByGiven0,
 } from "akvaplan_fresh/services/akvaplanist.ts";
 import { searchNews } from "akvaplan_fresh/services/news.ts";
+
+import { buildContainsFilter } from "akvaplan_fresh/search/filter.ts";
 
 import {
   GroupedPeople,
@@ -12,7 +14,7 @@ import {
 } from "akvaplan_fresh/components/people/PeopleScroll.tsx";
 import { PeopleCard } from "akvaplan_fresh/components/people/PeopleCard.tsx";
 import { NewsFilmStrip, Page } from "akvaplan_fresh/components/mod.ts";
-import { lang, t } from "akvaplan_fresh/text/mod.ts";
+import { lang, t, tr } from "akvaplan_fresh/text/mod.ts";
 
 import { type Akvaplanist } from "akvaplan_fresh/@interfaces/mod.ts";
 
@@ -67,7 +69,22 @@ export const handler: Handlers = {
     const sort = (a: Akvaplanist, b: Akvaplanist) =>
       a?.[sortkey].localeCompare(b?.[sortkey]);
 
-    const people = (await akvaplanists()).sort(sort);
+    const people = (await akvaplanists()).sort(sort).map(({ unit, ...p }) => {
+      // @todo akvaplanist.tsx: implement proper search (and indexing) (in service?)
+      const unitnames = ["en", "no"].map((lang) =>
+        tr.get(lang).get(`unit.${unit}`)
+      );
+      if ("LEDELS" === unit) {
+        unitnames.push("ledelse");
+        unitnames.push("management");
+      }
+      p.search = JSON.stringify({ unitnames });
+      p.unit = unit;
+      // {
+      //   position?.[lang ?? "no"] ?? "";
+      // }
+      return p;
+    });
     const news = (await searchNews({ q: "", lang: "no", limit: 64 })).filter((
       { type },
     ) => "person" === type);
@@ -76,10 +93,8 @@ export const handler: Handlers = {
       ? [...people].filter((p: Akvaplanist) => _(p?.[group]) === _(filter))
       : people;
 
-    // @todo akvaplanist.tsx: implement proper search (and indexing, need to expand codes prior to indexing)z
-    const results = filtered.filter((p) =>
-      q?.length > 0 ? _(JSON.stringify(p)).includes(_(q)) : true
-    );
+    const queryFilter = q?.length > 0 ? buildContainsFilter(q) : () => true;
+    const results = filtered.filter(queryFilter);
 
     const grouped = (results).reduce(
       buildPeopleGrouper(fx),
