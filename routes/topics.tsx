@@ -70,7 +70,7 @@ export const handler: Handlers = {
 
     const fx = news.length > 3
       ? ({ published }) => published.substring(0, 4)
-      : () => t(`topic.${topic}`);
+      : () => t(`topic.${params.topic}`);
 
     const newsGrouped = groupIntoMap(
       news,

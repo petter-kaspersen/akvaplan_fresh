@@ -9,7 +9,7 @@ const getStorage = () => globalThis?.localStorage;
 
 const en = new Map<string, string>(Object.entries(_en));
 const no = new Map<string, string>(Object.entries(_no));
-const tr = new Map([["en", en], ["no", no]]);
+export const tr = new Map([["en", en], ["no", no]]);
 
 export const normalize = (s) =>
   s.normalize("NFD")
@@ -82,7 +82,7 @@ export const removeLang = (el: HTMLElement = getRoot()) => {
   getStorage()?.removeItem("lang");
 };
 // Dictionary is computed from lang signal
-const dict = computed(() => tr.get(lang.value));
+export const dict = computed(() => tr.get(lang.value));
 
 export const setLang = (
   name: string,

@@ -12,7 +12,7 @@ export const groupByFx = (fx: Function) =>
   return previous;
 };
 
-console.debug("@todo Check groupIntoMap signature");
+//console.log("@todo Check groupIntoMap signature");
 export const groupIntoMap = (arr: Array<unknown>, fx: Function) =>
   arr.reduce(groupByFx(fx), new Map());
 

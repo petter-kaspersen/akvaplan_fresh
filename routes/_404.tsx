@@ -4,7 +4,7 @@ import { UnknownPageProps } from "$fresh/server.ts";
 
 export default function NotFoundPage({ url }: UnknownPageProps) {
   const title = "Unknown URL";
-
+  console.debug(404, url.pathname);
   return (
     <html>
       <Head>

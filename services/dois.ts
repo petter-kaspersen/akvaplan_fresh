@@ -16,9 +16,9 @@ export const search = async (params: Record<string, string> = {}) => {
   entries(defaults).map(([k, v]) => searchParams.set(k, v));
   entries(params).map(([k, v]) => searchParams.set(k, v));
 
-  const response = await fetch(url);
+  const response = await fetch(url).catch(() => {});
 
-  if (response.ok) {
+  if (response?.ok) {
     return await response.json();
   }
 };
@@ -28,8 +28,8 @@ export const getSlimPublication = async (
 ): Promise<SlimPublication | undefined> => {
   const base = Deno?.env?.get("dois_base") ?? DOIS_BASE;
   const url = new URL(`/doi/${doi}`, base);
-  const response = await fetch(url);
-  if (response.ok) {
+  const response = await fetch(url).catch(() => {});
+  if (response?.ok) {
     const slim: SlimPublication = await response.json();
     return slim;
   }
@@ -43,7 +43,6 @@ export const getSlimPublication = async (
 // {"name":"CAMUS L","count":85}
 // {"name":"FOSS A","count":81}
 // {"name":"BERGE J","count":79}
-// {"name":"HOP H","count":67}
 // {"name":"CARROLL M","count":61}
 // {"name":"STEFANSSON S","count":59}
 // {"name":"VARPE Ø","count":59}

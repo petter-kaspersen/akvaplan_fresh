@@ -1,14 +1,20 @@
-import { Card, Icon, Page, PeopleCard } from "akvaplan_fresh/components/mod.ts";
-import Article from "akvaplan_fresh/components/article/Article.tsx";
-import ArticleContact from "akvaplan_fresh/components/article/ArticleContact.tsx";
-import ArticleHeader from "akvaplan_fresh/components/article/ArticleHeader.tsx";
+// console.log(
+//   "@todo About: add links to Faktureringsinformasjon, other office locations",
+// );
+import {
+  Article,
+  Card,
+  Icon,
+  Page,
+  PeopleCard,
+} from "akvaplan_fresh/components/mod.ts";
 
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
 import { routes } from "akvaplan_fresh/services/nav.ts";
 
 import {
   admDir,
-  boardUpdated,
+  akvaplan as apn,
   boardURL,
 } from "akvaplan_fresh/services/akvaplanist.ts";
 
@@ -28,7 +34,8 @@ interface AboutProps {
 }
 
 export const config: RouteConfig = {
-  routeOverride: "/:lang(en|no)/:page(about|company|om|om-oss)",
+  routeOverride:
+    "/:lang(en|no)/:page(about|about-us|company|om|om-oss|selskapet)",
 };
 
 export const handler: Handlers = {
@@ -37,15 +44,7 @@ export const handler: Handlers = {
     lang.value = params.lang;
 
     const akvaplan = {
-      name: "Akvaplan-niva",
-      tel: "+47 77 75 03 00",
-      email: "info@akvaplan.niva.no",
-      addr: {
-        hq: {
-          visit: "Framsenteret, 9296 Tromsø, Norway",
-          post: "Framsenteret, Postbox 6606, Stakkevollan, 9296 Tromsø, Norway",
-        },
-      },
+      ...apn,
       links: {
         board: boardURL(lang.value),
         leaders: routes(lang.value).get("people") + "/unit/ledels",
@@ -53,7 +52,7 @@ export const handler: Handlers = {
       },
     };
 
-    const title = akvaplan.name;
+    const title = t("about.About_us");
 
     const base = `/${params.lang}/${params.page}/`;
     return ctx.render({ lang, title, base, akvaplan });
@@ -68,11 +67,6 @@ const _header = {
   marginBlockEnd: "0.5rem",
 };
 
-const conditionsURL = (lang: string) =>
-  lang === "en"
-    ? "https://resources.mynewsdesk.com/image/upload/f_pdf,fl_attachment/zqb5hq7cgpc29klpd1ax"
-    : "https://resources.mynewsdesk.com/image/upload/f_pdf,fl_attachment/jqjukz69thilinjupcpx";
-
 export default (
   { data: { title, lang, base, akvaplan } }: PageProps<AboutProps>,
 ) => {
@@ -82,16 +76,7 @@ export default (
         <link rel="stylesheet" href="/css/people-card.css" />
       </Head>
       <div>
-        <header>
-        </header>
         <Article>
-          {
-            /* <figure style={_caption}>
-          <figcaption>{image_caption}</figcaption>
-        </figure>
-        {lang} */
-          }
-
           <section style={_section}>
             <h1 style={_header}>
               {t("about.About_us")}
@@ -105,10 +90,8 @@ export default (
                 }}
               >
                 <img
-                  title=""
                   alt=""
                   src="https://mediebank.deno.dev/preview_big/8022361"
-                  height="auto"
                 />
                 <p>{t("about.desc.Medium")}</p>
               </div>
@@ -149,19 +132,41 @@ export default (
                 <li>
                   <a
                     hreflang="no"
-                    href="https://www.nmdc.no/resources/nmdc/Akvaplan-niva-dataforvaltningspolitikk.pdf"
+                    href={t("policy.data.url")}
+                    target="_blank"
                   >
-                    Data policy
+                    {t("policy.data")}
                   </a>
                 </li>
-                <li>Kvalitetspolicy og etiske retningslinjer</li>
                 <li>
-                  <a href={conditionsURL(lang.value)} target="_blank">
-                    Generelle vilkår (for kjøp av tjenester)
+                  <a
+                    href={t("policy.quality.url")}
+                    target="_blank"
+                  >
+                    {t("policy.quality")}
                   </a>
                 </li>
-                <li>Arbeid for likestilling og mot diskriminering</li>
-                <li>Likestillingsplan</li>
+                <li>
+                  <a href={t("policy.terms.url")} target="_blank">
+                    {t("policy.terms")}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={t("policy.equality.url")}
+                    target="_blank"
+                  >
+                    {t("policy.equality")}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={t("policy.gender.url")}
+                    target="_blank"
+                  >
+                    {t("policy.gender")}
+                  </a>
+                </li>
               </menu>
             </Card>
           </section>
@@ -172,7 +177,7 @@ export default (
             <Card>
               <dl>
                 <dt>
-                  Sosiale media
+                  {t("about.Social_media")}
                 </dt>
                 <dd>
                   <a
@@ -199,7 +204,7 @@ export default (
                   </a>
                 </dd>
                 <dt>
-                  Datasett
+                  {t("about.Open_access")}
                 </dt>
                 <dd>
                   <a
@@ -209,9 +214,6 @@ export default (
                     Zenodo
                   </a>
                 </dd>
-                <dt>
-                  Kildekode
-                </dt>
                 <dd>
                   <a
                     href="https://github.com/akvaplan-niva"
@@ -241,7 +243,7 @@ export default (
             <Card>
               <dl>
                 <dt>
-                  Besøk
+                  {t("about.Visit")} ({t("about.HQ")})
                 </dt>
                 <dd>
                   {akvaplan.addr.hq.visit} (<a
@@ -278,12 +280,6 @@ export default (
           </section>
         </Article>
       </div>
-      {
-        /* <ul>
-        <li>Faktureringsinformasjon</li>
-        <li>Offices</li>
-      </ul> */
-      }
     </Page>
   );
 };

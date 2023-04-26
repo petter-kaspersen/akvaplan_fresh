@@ -17,14 +17,14 @@ import { MynewsdeskItem } from "akvaplan_fresh/@interfaces/mynewsdesk.ts";
 
 import { Card, Page } from "akvaplan_fresh/components/mod.ts";
 import { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
-import { PeopleCard } from "../../components/mod.ts";
+import { PeopleCard as PersonCard } from "../../components/mod.ts";
 
 export const config: RouteConfig = {
   routeOverride:
     "{/:lang}?/:type(news|nyhet|pressrelease|pressemelding|press){/:isodate}?/:slug",
 };
 
-console.log("@todo News article: auto-fetch related contacts");
+//console.log("@todo News article: auto-fetch related contacts");
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -42,10 +42,8 @@ export const handler: Handlers = {
       const { item_id } = relcontact;
       const contact_person = await fetchItem(item_id, "contact_person");
       const { email } = contact_person;
-      const id = email?.split("@")?.at(0);
-      const people = await akvaplanistMap();
-      const contact = people.get(id) ?? contact_person;
-      return ctx.render({ item, lang, contact });
+      const contact = email?.split("@")?.at(0);
+      return ctx.render({ item, lang, contact, contact_person });
     } else {
       return ctx.render({ item, lang, contact: null });
     }
@@ -61,10 +59,10 @@ interface ArticleProps {
   lang: string;
 }
 
-console.debug("@todo News article needs bullet points for <li> elements");
+//console.log("@todo News article needs bullet points for <li> elements");
 
 export default function NewsArticle(
-  { data: { item, lang, contact } }: PageProps<ArticleProps>,
+  { data: { item, lang, contact, contact_person } }: PageProps<ArticleProps>,
 ) {
   const {
     header,
@@ -138,8 +136,7 @@ export default function NewsArticle(
 
         {contact && (
           <section>
-            <br />
-            <PeopleCard person={contact} />
+            <PersonCard id={contact} person={contact_person} />
           </section>
         )}
       </Article>

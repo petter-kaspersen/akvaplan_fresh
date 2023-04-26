@@ -6,7 +6,8 @@ export * from "./album/album_header.tsx";
 
 import Article from "./article/Article.tsx";
 import ArticleHeader from "./article/ArticleHeader.tsx";
-export { Article, ArticleHeader };
+import ArticleContact from "akvaplan_fresh/components/article/ArticleContact.tsx";
+export { Article, ArticleContact, ArticleHeader };
 
 export * from "./card.tsx";
 export * from "./header/clean_header.tsx";

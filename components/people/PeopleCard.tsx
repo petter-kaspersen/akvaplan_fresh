@@ -24,9 +24,9 @@ export function PeopleCard(
     id,
   }: PeopleProps,
 ) {
-  id = id ?? person.id;
-
-  person = person ?? people.get(id);
+  if (people.has(id)) {
+    person = { id, ...people.get(id) };
+  }
 
   const { tel, email, name, given, family, position, unit, workplace } =
     person ?? {};

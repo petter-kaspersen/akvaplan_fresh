@@ -47,7 +47,7 @@ export const handler: Handlers = {
     const news = await latestNews({ q, lang: sitelang, limit });
 
     const _topics = await searchResearch({ q, lang: sitelang, limit });
-    const topics = _topics.filter(level0);
+    const topics = _topics?.filter(level0);
 
     const maxNumNews = 32;
     const articles = news.filter(({ type, hreflang, title }) =>
@@ -76,9 +76,9 @@ export const handler: Handlers = {
     });
   },
 };
-console.log(
-  "@todo Home & other routes: use asset() for all references css files",
-);
+// console.log(
+//   "@todo Home & other routes: use asset() for all references css files",
+// );
 export default function Home(
   {
     data: { news, topics, lang, services, articles, articlesNotInSiteLang },
@@ -146,8 +146,8 @@ export default function Home(
           text={t("home.album.research")}
           href={routes(lang).get("research")}
         />
-        <HScroll maxVisibleChildren={Math.min(topics.length, 7)}>
-          {topics.map(ArticleSquare)}
+        <HScroll maxVisibleChildren={Math.min(topics?.length, 7)}>
+          {topics?.map(ArticleSquare)}
         </HScroll>
       </section>
 

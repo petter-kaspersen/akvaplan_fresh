@@ -3,7 +3,7 @@ import { serviceGroupURL } from "./nav.ts";
 import { shuffle } from "akvaplan_fresh/grouping/mod.ts";
 
 //Beware, imports are cached
-import services from "https://svc.deno.dev/?v=2023-04-25" assert {
+import services from "https://svc.deno.dev/" assert {
   type: "json",
 };
 type Svc = Record<string, string | Number | string[]>;

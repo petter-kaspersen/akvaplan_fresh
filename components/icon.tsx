@@ -60,6 +60,6 @@ const fetchAndSaveIcons = async () => {
 
 if (import.meta.main) {
   // deno task icons
-  console.log("@todo Icon, deno task icons must save to TSX, not SVG");
+  //console.log("@todo Icon, deno task icons must save to TSX, not SVG");
   fetchAndSaveIcons();
 }
