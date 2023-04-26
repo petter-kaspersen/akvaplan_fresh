@@ -46,7 +46,7 @@ export const handler: Handlers = {
     const group = groupname?.length > 0 ? groupname : "year";
     const q = searchParams.get("q") ?? "";
 
-    const services = getServicesLevel0(params.lang);
+    const services = await getServicesLevel0(params.lang);
 
     const people = await akvaplanistMap();
     const contacts = new Map([["lab", "mfr"]]);
