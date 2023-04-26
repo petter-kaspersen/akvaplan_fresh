@@ -53,7 +53,7 @@ export const handler: Handlers = {
       [
         topic,
         ...(service?.searchwords ?? []),
-        ...service.name.split(/\s/),
+        //...service.name.split(/\s/),
       ].filter((s) => s.length > 3).map((s) => s.toLowerCase()),
     );
 
