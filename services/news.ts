@@ -1,4 +1,4 @@
-// @todo rename to search
+// @todo rename service from news.ts to search.ts
 import { searchMynewsdesk } from "./mynewsdesk.ts";
 import { newsFromMynewsdesk } from "./news_mynewsdesk.ts";
 
