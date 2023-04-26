@@ -19,7 +19,7 @@ import {
   type PageProps,
   type RouteConfig,
 } from "$fresh/server.ts";
-import { Head } from "$fresh/runtime.ts";
+import { asset, Head } from "$fresh/runtime.ts";
 export const config: RouteConfig = {
   routeOverride: "/:lang(en|no)/:page(services|tjenester)",
 };
@@ -65,11 +65,10 @@ export default function Services(
   return (
     <Page title={title} base={base}>
       <Head>
-        <link rel="stylesheet" href="/css/hscroll.css" />
-        <link rel="stylesheet" href="/css/akvaplanist.css" />
-        <script src="/@nrk/core-scroll.min.js" />
+        <link rel="stylesheet" href={asset("/css/hscroll.css")} />
+        <link rel="stylesheet" href={asset("/css/article.css")} />
+        <script src={asset("/@nrk/core-scroll.min.js")} />
       </Head>
-
       <h1>{title}</h1>
 
       <HScroll maxVisibleChildren={6.5}>
