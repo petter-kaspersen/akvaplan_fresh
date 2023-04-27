@@ -1,16 +1,17 @@
 # akvaplan_fresh
 
-- Production: (not yet)
-- Preview: https://akvaplan.deno.dev/
+Akvaplan-niva company site: https://akvaplan.no/
+
+- HTML-first multi-page web app
+- Server side routed and rendered on the edge
+- Fully functional without JavaScript
 
 ## Tech stack
 
-The web site has a perfect lighthouse score
-
-- [Deno](https://deno.land) / [Deploy](https://deno.com/deploy)
+- [Deno](https://deno.land)
+- [Deploy](https://deno.com/deploy)
 - [Fresh](https://fresh.deno.dev/)
-- [Preact](https://preactjs.com/)
-- Signals
+- [Preact](https://preactjs.com/)/Signals
 - TSX components
 
 ### Development
@@ -20,13 +21,3 @@ Start development server:
 ```sh
 deno task dev
 ```
-
-### Data services
-
-The app relies on the following data services:
-
-- https://dois.deno.dev [see [source](https://github.com/akvaplan-niva/dois)]
-- https://datacite.deno.dev –
-  [source](https://github.com/akvaplan-niva/datacite)
-- https://mediebank.deno.dev
-  ([source](https://github.com/akvaplan-niva/ntb_mediebank))

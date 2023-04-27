@@ -93,7 +93,10 @@ export default (
                   alt=""
                   src="https://mediebank.deno.dev/preview_big/8022361"
                 />
-                <p>{t("about.desc.Medium")}</p>
+                <details>
+                  <summary>{t("about.Summary")}</summary>
+                  <p>{t("about.Details")}</p>
+                </details>
               </div>
             </Card>
           </section>
@@ -195,6 +198,15 @@ export default (
                     LinkedIn
                   </a>
                 </dd>
+                <dd>
+                  <a
+                    href=" https://www.mynewsdesk.com/no/akvaplan-niva"
+                    target="_blank"
+                  >
+                    Mynewsdesk
+                  </a>
+                </dd>
+
                 <dd>
                   <a
                     href="https://twitter.com/AkvaplanNiva"
