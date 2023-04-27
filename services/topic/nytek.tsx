@@ -1,4 +1,4 @@
-const no = () => (
+const no = (
   <div class="page-header">
     <h2>Lokalitetsundersøkelse og anleggssertifikat</h2>
     Akvaplan-niva er akkreditert etter NS-EN ISO/IEC 17020 for inspeksjon av
@@ -8,7 +8,7 @@ const no = () => (
   </div>
 );
 
-const en = () => (
+const en = (
   <div class="page-header">
     <h2>Location Investigations and Construction Certificates</h2>
     Akvaplan-niva is accredited according to NS-EN ISO / IEC 17020 for

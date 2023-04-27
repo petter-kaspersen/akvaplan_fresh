@@ -23,3 +23,4 @@ export * from "./news/article_square.tsx";
 export * from "./page.tsx";
 export * from "./slim_card.tsx";
 export * from "./site_nav.tsx";
+export * from "./service_summary.tsx";

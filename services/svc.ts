@@ -2,8 +2,6 @@ import { serviceGroupURL } from "./nav.ts";
 
 import { shuffle } from "akvaplan_fresh/grouping/mod.ts";
 
-import { serviceSummaryMap } from "./topic/mod.ts";
-
 type Svc = Record<string, string | number | string[]>;
 
 const _services = [];
@@ -44,6 +42,3 @@ export const getServicesLevel0 = async (lang: string) => {
   const svc = lang === "en" ? en0 : no0;
   return shuffle(svc);
 };
-
-export const ServiceSummary = (topic: string, lang: string) =>
-  serviceSummaryMap.get(topic)?.get(lang) ?? (() => null);

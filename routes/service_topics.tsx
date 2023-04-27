@@ -2,7 +2,6 @@ import {
   getServicesLevel0,
   multiSearchMynewsdesk,
   newsFromMynewsdesk,
-  ServiceSummary,
   sortLatest,
 } from "akvaplan_fresh/services/mod.ts";
 
@@ -13,6 +12,7 @@ import {
   HScroll,
   Page,
   PeopleCard as PersonCard,
+  ServiceSummary,
 } from "akvaplan_fresh/components/mod.ts";
 
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
@@ -44,8 +44,6 @@ export const handler: Handlers = {
     }
 
     const { topic } = params;
-
-    const Desc = getServiceDesc(topic, lang.value);
 
     const base = `/${params.lang}/${params.page}/${params.groupname}`;
 
