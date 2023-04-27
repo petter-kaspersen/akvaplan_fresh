@@ -1,8 +1,8 @@
 import {
-  getServiceDesc,
   getServicesLevel0,
   multiSearchMynewsdesk,
   newsFromMynewsdesk,
+  ServiceSummary,
   sortLatest,
 } from "akvaplan_fresh/services/mod.ts";
 
@@ -67,7 +67,6 @@ export const handler: Handlers = {
       title: service.name,
       base,
       service,
-      Desc,
       news: new Map([["ui.Read more", news.sort(sortLatest)]]),
       topic,
     });
@@ -86,7 +85,6 @@ export default function ServiceTopics(
       topic,
       searchwords,
       page,
-      Desc,
     },
   }: PageProps<
     unknown
@@ -125,7 +123,7 @@ export default function ServiceTopics(
               <PersonCard id={service.contact} />
             </div>
             <section class="article-content">
-              <Desc />
+              <ServiceSummary topic={topic} lang={lang.value} />
             </section>
           </Article>
           <div></div>
