@@ -1,4 +1,4 @@
-const no = () => (
+const no = (
   <div class="">
     <details>
       <summary>
@@ -15,7 +15,7 @@ const no = () => (
   </div>
 );
 
-const en = () => (
+const en = (
   <div class="">
     <details>
       <summary>
