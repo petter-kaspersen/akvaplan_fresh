@@ -50,7 +50,7 @@ export function Page(
       <base href={base} />
 
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      {/* <meta name="color-scheme" content="dark" /> */}
+      <meta name="color-scheme" content="dark light" />
       <meta
         name="description"
         content={t("meta.description")}

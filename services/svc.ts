@@ -2,7 +2,7 @@ import { serviceGroupURL } from "./nav.ts";
 
 import { shuffle } from "akvaplan_fresh/grouping/mod.ts";
 
-import { nytek } from "./topic/nytek.tsx";
+import { serviceSummaryMap } from "./topic/mod.ts";
 
 type Svc = Record<string, string | number | string[]>;
 
@@ -45,9 +45,5 @@ export const getServicesLevel0 = async (lang: string) => {
   return shuffle(svc);
 };
 
-const desc = new Map([
-  ["nytek", nytek],
-]);
-
-export const getServiceDesc = (topic: string, lang: string) =>
-  desc?.get(topic)?.get(lang) ?? (() => null);
+export const ServiceSummary = (topic: string, lang: string) =>
+  serviceSummaryMap.get(topic)?.get(lang) ?? (() => null);
