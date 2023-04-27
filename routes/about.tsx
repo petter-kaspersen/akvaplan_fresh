@@ -200,6 +200,15 @@ export default (
                 </dd>
                 <dd>
                   <a
+                    href=" https://www.mynewsdesk.com/no/akvaplan-niva"
+                    target="_blank"
+                  >
+                    Mynewsdesk
+                  </a>
+                </dd>
+
+                <dd>
+                  <a
                     href="https://twitter.com/AkvaplanNiva"
                     target="_blank"
                   >
