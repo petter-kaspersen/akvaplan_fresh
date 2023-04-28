@@ -34,20 +34,6 @@ export function Footer({ lang }) {
         }}
       >
         <ThemeSwitcher mini />
-        <span style={{ marginTop: "1rem" }}>
-          {/* <Icon name="language" /> */}
-
-          <span>{t(`lang.Native.${lang}`)}</span>{" "}
-          {lang === "en" && (
-            <a lang="no" href="/no">
-              {t(`lang.Native.no`)}
-            </a>
-          )} {lang === "no" && (
-            <a lang="en" href="/en">
-              {t(`lang.Native.en`)}
-            </a>
-          )}
-        </span>
       </div>
     </footer>
   );
