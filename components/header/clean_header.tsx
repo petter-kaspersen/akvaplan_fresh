@@ -1,4 +1,4 @@
-import { ApnLogo } from "akvaplan_fresh/components/mod.ts";
+import { ApnLogo, Icon } from "akvaplan_fresh/components/mod.ts";
 
 import { routes } from "akvaplan_fresh/services/nav.ts";
 import { lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
@@ -6,7 +6,24 @@ import { lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
 import borders from "open-props/src/props.borders.js";
 import { SiteMenu } from "./site_menu.tsx";
 
-const Empty = (_ign: unknown) => <span></span>;
+const LangSwitcher = ({ lang }) => (
+  <span
+    style={{
+      fontSize: "var(--font-size-0)",
+    }}
+  >
+    <span>{t(`lang.Native.${lang}`)}</span>{" "}
+    {lang === "en" && (
+      <a lang="no" href="/no">
+        {t(`lang.Native.no`)}
+      </a>
+    )} {lang === "no" && (
+      <a lang="en" href="/en">
+        {t(`lang.Native.en`)}
+      </a>
+    )}
+  </span>
+);
 
 export function CleanHeader(
   {
@@ -14,7 +31,7 @@ export function CleanHeader(
     lang = langSignal.value,
     Logo = ApnLogo,
     Right = SiteMenu,
-    Left = Empty,
+    Left = LangSwitcher,
   },
 ) {
   return (
