@@ -38,7 +38,12 @@ export function handler(
   if ("/" === pathname && req.headers.has("accept-language")) {
     // Special case for root path /
     // Redirect from accept-language header,  if present
-    const acceptLanguages = parse(req.headers.get("accept-language"));
+    const requestHeaderAcceptLanguages = parse(
+      req.headers.get("accept-language"),
+    );
+    const acceptLanguages = requestHeaderAcceptLanguages.map(({ code }) =>
+      code
+    );
     const lang = acceptsNordic(acceptLanguages) ? "no" : "en";
     return new Response("", {
       status: 307,
