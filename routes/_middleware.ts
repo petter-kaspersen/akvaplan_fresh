@@ -13,7 +13,17 @@ export function handler(
   ctx: MiddlewareHandlerContext<Record<string, unknown>>,
 ) {
   const url = new URL(req.url);
-  const { pathname } = url;
+  const { pathname, hostname } = url;
+
+  const legacyHosts = ["www.akvaplan.niva.no", "akvaplan.niva.no"];
+  if (legacyHosts.includes(hostname)) {
+    const fresh = req.url.replace("www.", "").replace(
+      "akvaplan.niva.",
+      "akvaplan.",
+    );
+    console.log("legacy", req.url, fresh);
+    return Response.redirect(fresh, 301);
+  }
 
   if ("/" === pathname && req.headers.has("accept-language")) {
     // Special case for root path /
