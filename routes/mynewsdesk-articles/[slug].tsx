@@ -27,7 +27,7 @@ export const handler: Handlers = {
     const Location = `/${language}/${type}/${isodate}/${slug}`;
 
     return new Response("", {
-      status: 307,
+      status: 301,
       headers: { Location },
     });
   },

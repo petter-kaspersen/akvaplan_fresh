@@ -4,6 +4,8 @@ import {
   setSiteLang,
 } from "akvaplan_fresh/text/mod.ts";
 
+import { legacyRoutes } from "../services/legacy.ts";
+
 import { parse } from "accept-language-parser";
 
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
@@ -21,8 +23,16 @@ export function handler(
       "akvaplan.niva.",
       "akvaplan.",
     );
-    console.log("legacy", req.url, fresh);
     return Response.redirect(fresh, 301);
+  }
+
+  if (legacyRoutes.has(pathname)) {
+    return new Response("", {
+      status: 307,
+      headers: {
+        Location: legacyRoutes.get(pathname) + `?pathname=${pathname}`,
+      },
+    });
   }
 
   if ("/" === pathname && req.headers.has("accept-language")) {
