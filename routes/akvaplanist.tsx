@@ -4,7 +4,10 @@ import {
   //groupByChar0,
   groupByGiven0,
 } from "akvaplan_fresh/services/akvaplanist.ts";
-import { searchNews } from "akvaplan_fresh/services/news.ts";
+import {
+  multiSearchMynewsdesk,
+  newsFromMynewsdesk,
+} from "akvaplan_fresh/services/mod.ts";
 
 import { buildContainsFilter } from "akvaplan_fresh/search/filter.ts";
 
@@ -13,8 +16,13 @@ import {
   PeopleScroll,
 } from "akvaplan_fresh/components/people/PeopleScroll.tsx";
 import { PeopleCard } from "akvaplan_fresh/components/people/PeopleCard.tsx";
-import { NewsFilmStrip, Page } from "akvaplan_fresh/components/mod.ts";
-import { lang, t, tr } from "akvaplan_fresh/text/mod.ts";
+import {
+  ArticleSquare,
+  HScroll,
+  NewsFilmStrip,
+  Page,
+} from "akvaplan_fresh/components/mod.ts";
+import { lang, normalize, t, tr } from "akvaplan_fresh/text/mod.ts";
 
 import { type Akvaplanist } from "akvaplan_fresh/@interfaces/mod.ts";
 
@@ -53,7 +61,9 @@ export const handler: Handlers = {
     const { groupname, filter } = params;
     const group = groupname?.length > 0 ? groupname : "gn0";
 
-    lang.value = ["en", "no"].includes(params.lang) ? params.lang : "no"; // lang is optional for legacy URL (/ansatte)
+    // lang is optional for legacy URL (/ansatte)
+    lang.value = ["en", "no"].includes(params.lang) ? params.lang : "no";
+
     const page = ["employees", "people"].includes(params.page)
       ? "people"
       : "folk";
@@ -70,7 +80,8 @@ export const handler: Handlers = {
       a?.[sortkey].localeCompare(b?.[sortkey]);
 
     const people = (await akvaplanists()).sort(sort).map(({ unit, ...p }) => {
-      // @todo akvaplanist.tsx: implement proper search (and indexing) (in service?)
+      // @todo akvaplanist.tsx: implement proper search (and indexing)
+      // FIXME Fix ledelse as separate prop (in service!)
       const unitnames = ["en", "no"].map((lang) =>
         tr.get(lang).get(`unit.${unit}`)
       );
@@ -85,9 +96,9 @@ export const handler: Handlers = {
       // }
       return p;
     });
-    const news = (await searchNews({ q: "", lang: "no", limit: 64 })).filter((
-      { type },
-    ) => "person" === type);
+    // const news = (await searchNews({ q: "", lang: "no", limit: 64 })).filter((
+    //   { type },
+    // ) => "person" === type);
 
     const filtered = (filter?.length > 0)
       ? [...people].filter((p: Akvaplanist) => _(p?.[group]) === _(filter))
@@ -103,6 +114,32 @@ export const handler: Handlers = {
 
     const title = t("people.People");
 
+    const person = ("id" === group && results.length === 1)
+      ? results.at(0)
+      : {};
+
+    //@todo Person Country is TELEPHONE
+    //FIXME Person API.
+
+    //@todo separate route for 1 person!?
+    let news = [];
+    if (person.family && person.given) {
+      const containsFamily = buildContainsFilter(person.family);
+      const containsGiven = buildContainsFilter(person.given);
+
+      const _news = await multiSearchMynewsdesk(
+        [person.family, person.given],
+        ["news", "pressrelease"],
+        { limit: 64 },
+      );
+
+      const _filteredNews = (_news ?? []).filter((mnd) =>
+        containsFamily(mnd) && containsGiven(mnd)
+      );
+
+      news = _filteredNews.map(newsFromMynewsdesk({ lang: "en" }));
+    }
+
     return ctx.render({
       lang,
       base,
@@ -113,6 +150,7 @@ export const handler: Handlers = {
       filter,
       results,
       news,
+      person,
       q,
     });
   },
@@ -216,6 +254,7 @@ const PeopleSearchForm = ({ q }) => (
   </p> */
       }
     </menu>
+    <p>{t("people.subtitle")}</p>
   </form>
 );
 
@@ -231,15 +270,20 @@ export default function Akvaplanists(
       filter,
       results,
       q,
+      person,
       news,
     },
   }: PageProps<
     AkvaplanistsProps
   >,
 ) {
-  const pagetitle = filter?.length > 0
+  let pagetitle = filter?.length > 0
     ? `${group}.${t(filter)} / ${t("People")}`
     : t("People");
+
+  if (person && "id" === group) {
+    pagetitle = person.name;
+  }
 
   const caption = "";
 
@@ -266,7 +310,7 @@ export default function Akvaplanists(
                 filter={filter}
                 text={t("people.People")}
               />
-              <p>{subtitle}</p>
+              <p>{t("people.subtitle")}</p>
             </div>
             <Picture />
           </section>
@@ -279,6 +323,10 @@ export default function Akvaplanists(
           <GroupedPeople group={group} grouped={grouped} />
         </>
       )}
+
+      <section>
+        <HScroll maxVisibleChildren={5.5}>{news.map(ArticleSquare)}</HScroll>
+      </section>
     </Page>
   );
 }
