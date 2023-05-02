@@ -29,6 +29,7 @@ export const GroupedPeople = (
         <HScroll scrollerId="news-scroll">
           {grpmembers.map((person) => (
             <PeopleCard
+              id={person.id}
               person={person}
               key={person.id}
             />

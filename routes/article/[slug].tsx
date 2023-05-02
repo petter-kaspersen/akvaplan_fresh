@@ -93,7 +93,7 @@ export default function NewsArticle(
 
   const published = isodate(published_at.datetime);
 
-  const __html = body + `<p>${published}</p>`;
+  const __html = body;
 
   const _caption = {
     fontSize: "0.75rem",
@@ -135,10 +135,11 @@ export default function NewsArticle(
           )}
 
         {contact && (
-          <section>
+          <section class="article-content">
             <PersonCard id={contact} person={contact_person} />
           </section>
         )}
+        <p>{published}</p>
       </Article>
     </Page>
   );

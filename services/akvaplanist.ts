@@ -29,8 +29,8 @@ export const akvaplanists = async (): Promise<Akvaplanist[]> => {
 };
 
 export const akvaplanistMap = async () => {
-  const all = await akvaplanists();
-  return new Map(all.map(({ id, ...apn }) => [id, apn]));
+  const all = await akvaplanists() ?? [];
+  return new Map(all?.map(({ id, ...apn }) => [id, apn]));
 };
 
 export const reducePeopleByKey = (key: string) =>

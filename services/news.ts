@@ -53,7 +53,7 @@ export const searchNews = async (
   );
   const news = newsArticlesWithDOI(articles);
 
-  const { data } = await searchPubs({ q, limit });
+  const { data } = await searchPubs({ q, limit }) ?? {};
   const pubs = data.map(newsFromPubs({ lang }));
   const pubsWithNews = pubs.map((p) => {
     const doi = p.href.split("/doi/").at(1);

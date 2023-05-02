@@ -15,8 +15,14 @@ export default function ArticleHeader({
       <section class="article-title-mobile" aria-disabled="true">
         <h1>{header}</h1>
       </section>
-      <header class="article-header" style={{ minHeight: "600" }}>
-        <img title={imageCaption} alt={imageCaption} src={image} width="1000" />
+      <header class="article-header">
+        <img
+          title={imageCaption}
+          alt={imageCaption}
+          src={image}
+          width="1245"
+          height="700"
+        />
         <h1>{header}</h1>
       </header>
     </>

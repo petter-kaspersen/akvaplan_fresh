@@ -91,7 +91,10 @@ export default (
               >
                 <img
                   alt=""
-                  src="https://mediebank.deno.dev/preview_big/8022361"
+                  title=""
+                  style={{ aspectRatio: 4 / 3 }}
+                  width="100%"
+                  src="https://mediebank.deno.dev/preview/8022361"
                 />
                 <details>
                   <summary>{t("about.Summary")}</summary>
@@ -269,24 +272,33 @@ export default (
                 <dt>Post</dt>
                 <dd>{akvaplan.addr.hq.post}</dd>
 
-                <a
-                  href={`tel:${akvaplan.tel}`}
-                >
-                  <dt>
-                    <Icon name="phone_in_talk" />
-                  </dt>
-                  <dd>+47 77 75 03 00</dd>
-                </a>
-                <a
-                  href={`mailto:${akvaplan.email}`}
-                >
-                  <dt>
-                    <Icon name="contact_mail" />
-                  </dt>
-                  <dd>
+                <dt>Faktura</dt>
+                <dd>
+                  Se <a href="/en/invoicing"></a>
+                </dd>
+
+                <dt>
+                  Telefon
+                </dt>
+                <dd>
+                  <a
+                    href={`tel:${akvaplan.tel}`}
+                  >
+                    <Icon name="phone_in_talk" /> +47 77 75 03 00
+                  </a>
+                </dd>
+
+                <dt>
+                  Epost
+                </dt>
+                <dd>
+                  <a
+                    href={`mailto:${akvaplan.email}`}
+                  >
+                    <Icon name="mail" />
                     {akvaplan.email}
-                  </dd>
-                </a>
+                  </a>
+                </dd>
               </dl>
             </Card>
           </section>

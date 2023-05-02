@@ -113,11 +113,6 @@ export default function Research(
       </section> */
       }
 
-      <AlbumHeader
-        text={t("research.Latest_pubs")}
-        href={routes(lang).get("pubs")}
-      />
-
       <div style={{ fontSize: "1rem" }}>
         {[...grouped].filter((_, i) => i < 3).map(([grpkey, pubs]) => (
           <div>

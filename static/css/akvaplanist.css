@@ -11,10 +11,11 @@
   z-index: 1;
 }
 
-.page-header__content h1 {
+.page-header__content * {
   font-size: var(--font-size-fluid-2);
   margin-bottom: var(--size-2);
-  backdrop-filter: blur(15px);
+  /* backdrop-filter: blur(15px); */
+  background: var(--surface0);
   padding: var(--size-fluid-1);
 }
 

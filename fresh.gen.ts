@@ -15,18 +15,20 @@ import * as $8 from "./routes/doi.tsx";
 import * as $9 from "./routes/fakturering.tsx";
 import * as $10 from "./routes/home.tsx";
 import * as $11 from "./routes/index.tsx";
-import * as $12 from "./routes/mynewsdesk-articles/[slug].tsx";
-import * as $13 from "./routes/nav.tsx";
-import * as $14 from "./routes/news.tsx";
-import * as $15 from "./routes/null.tsx";
-import * as $16 from "./routes/pref.tsx";
-import * as $17 from "./routes/pubs.tsx";
-import * as $18 from "./routes/research.tsx";
-import * as $19 from "./routes/research_topics.tsx";
-import * as $20 from "./routes/search.tsx";
-import * as $21 from "./routes/service_topics.tsx";
-import * as $22 from "./routes/services.tsx";
-import * as $23 from "./routes/topics.tsx";
+import * as $12 from "./routes/legacy.tsx";
+import * as $13 from "./routes/ms-louise.tsx";
+import * as $14 from "./routes/mynewsdesk-articles/[slug].tsx";
+import * as $15 from "./routes/nav.tsx";
+import * as $16 from "./routes/news.tsx";
+import * as $17 from "./routes/null.tsx";
+import * as $18 from "./routes/pref.tsx";
+import * as $19 from "./routes/pubs.tsx";
+import * as $20 from "./routes/research.tsx";
+import * as $21 from "./routes/research_topics.tsx";
+import * as $22 from "./routes/search.tsx";
+import * as $23 from "./routes/service_topics.tsx";
+import * as $24 from "./routes/services.tsx";
+import * as $25 from "./routes/topics.tsx";
 import * as $$0 from "./islands/HScrollWithDynamicImage.tsx";
 import * as $$1 from "./islands/button_open_dialog.tsx";
 import * as $$2 from "./islands/doi_search.tsx";
@@ -49,18 +51,20 @@ const manifest = {
     "./routes/fakturering.tsx": $9,
     "./routes/home.tsx": $10,
     "./routes/index.tsx": $11,
-    "./routes/mynewsdesk-articles/[slug].tsx": $12,
-    "./routes/nav.tsx": $13,
-    "./routes/news.tsx": $14,
-    "./routes/null.tsx": $15,
-    "./routes/pref.tsx": $16,
-    "./routes/pubs.tsx": $17,
-    "./routes/research.tsx": $18,
-    "./routes/research_topics.tsx": $19,
-    "./routes/search.tsx": $20,
-    "./routes/service_topics.tsx": $21,
-    "./routes/services.tsx": $22,
-    "./routes/topics.tsx": $23,
+    "./routes/legacy.tsx": $12,
+    "./routes/ms-louise.tsx": $13,
+    "./routes/mynewsdesk-articles/[slug].tsx": $14,
+    "./routes/nav.tsx": $15,
+    "./routes/news.tsx": $16,
+    "./routes/null.tsx": $17,
+    "./routes/pref.tsx": $18,
+    "./routes/pubs.tsx": $19,
+    "./routes/research.tsx": $20,
+    "./routes/research_topics.tsx": $21,
+    "./routes/search.tsx": $22,
+    "./routes/service_topics.tsx": $23,
+    "./routes/services.tsx": $24,
+    "./routes/topics.tsx": $25,
   },
   islands: {
     "./islands/HScrollWithDynamicImage.tsx": $$0,

@@ -24,3 +24,5 @@ export * from "./page.tsx";
 export * from "./slim_card.tsx";
 export * from "./site_nav.tsx";
 export * from "./service_summary.tsx";
+export * from "./why_us.tsx";
+export * from "./site_lang_links.tsx";

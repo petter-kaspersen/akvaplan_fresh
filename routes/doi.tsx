@@ -117,3 +117,5 @@ export default function DoiPublication(
     </Page>
   );
 }
+
+// FIXME: DOI from hell: /no/doi/10.1577/1548-8659(1994)123%3C0385:spbpac%3E2.3.co;2

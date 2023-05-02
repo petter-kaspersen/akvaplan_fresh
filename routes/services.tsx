@@ -70,11 +70,6 @@ export default function Services(
         <script src={asset("/@nrk/core-scroll.min.js")} />
       </Head>
       <h1>{title}</h1>
-
-      <HScroll maxVisibleChildren={6.5}>
-        {services.map(ArticleSquare)}
-      </HScroll>
-
       {
         /* <HScrollWithDynamicImage
         scrollerId=""
@@ -82,59 +77,9 @@ export default function Services(
       /> */
       }
 
-      <section style={_section}>
-        <Card>
-          <h1>{t("services.lab.Header")}</h1>
-          <p>{t("services.lab.Intro")}</p>
-        </Card>
-        <PeopleCard id={contacts.get("lab")} lang={lang} />
-        <PeopleCard person={people.get("tri")} lang={lang} />
-      </section>
-
-      <section style={_section}>
-        <Card>
-          <h1>{t("services.autonomous.Header")}</h1>
-          <p>{t("services.autonomous.Intro")}</p>
-        </Card>
-        <PeopleCard person={people.get("lca")} lang={lang} />
-        <PeopleCard person={people.get("mth")} lang={lang} />
-      </section>
-
-      <section style={_section}>
-        <Card>
-          <h1>
-            {t("services.consult.Header")}
-          </h1>
-          <p>{t("services.consult.Intro")}</p>
-        </Card>
-        <PeopleCard person={people.get("cst")} lang={lang} />
-        <PeopleCard person={people.get("lhl")} lang={lang} />
-        <PeopleCard person={people.get("ksa")} lang={lang} />
-      </section>
-
-      <section style={_section}>
-        <Card>
-          <h1>
-            {t("services.oceanography.Header")}
-          </h1>
-          <p>{t("services.oceanography.Intro")}</p>
-        </Card>
-        <PeopleCard person={people.get("mad")} lang={lang} />
-      </section>
-
-      <section style={_section}>
-        <Card>
-          <h1>
-            {t("services.aquaculture.Header")}
-          </h1>
-          <p>{t("services.aquaculture.Intro")}</p>
-        </Card>
-
-        <PeopleCard person={people.get("atf")} lang={lang} />
-        {/* <PeopleCard person={people.get("aki")} lang={lang} /> */}
-        <PeopleCard person={people.get("crs")} lang={lang} />
-        <PeopleCard person={people.get("los")} lang={lang} />
-      </section>
+      <HScroll maxVisibleChildren={6.5}>
+        {services.map(ArticleSquare)}
+      </HScroll>
 
       <section style={_section}>
         <Card>
@@ -144,11 +89,69 @@ export default function Services(
           <p>{t("services.accreditations.Intro")}</p>
         </Card>
         <Accreditations lang={lang.value} />
-        <PeopleCard person={people.get("kaj")} lang={lang} />
+        {
+          /* <PeopleCard person={people.get("kaj")} lang={lang} />
         <PeopleCard person={people.get("khs")} lang={lang} />
         <PeopleCard person={people.get("krs")} lang={lang} />
-        <PeopleCard person={people.get("lit")} lang={lang} />
+        <PeopleCard person={people.get("lit")} lang={lang} /> */
+        }
       </section>
     </Page>
   );
+}
+
+{
+  /* <section style={_section}>
+<Card>
+  <h1>{t("services.lab.Header")}</h1>
+  <p>{t("services.lab.Intro")}</p>
+</Card>
+<PeopleCard id={contacts.get("lab")} lang={lang} />
+<PeopleCard person={people.get("tri")} lang={lang} />
+</section>
+
+<section style={_section}>
+<Card>
+  <h1>{t("services.autonomous.Header")}</h1>
+  <p>{t("services.autonomous.Intro")}</p>
+</Card>
+<PeopleCard person={people.get("lca")} lang={lang} />
+<PeopleCard person={people.get("mth")} lang={lang} />
+</section>
+
+<section style={_section}>
+<Card>
+  <h1>
+    {t("services.consult.Header")}
+  </h1>
+  <p>{t("services.consult.Intro")}</p>
+</Card>
+<PeopleCard person={people.get("cst")} lang={lang} />
+<PeopleCard person={people.get("lhl")} lang={lang} />
+<PeopleCard person={people.get("ksa")} lang={lang} />
+</section>
+
+<section style={_section}>
+<Card>
+  <h1>
+    {t("services.oceanography.Header")}
+  </h1>
+  <p>{t("services.oceanography.Intro")}</p>
+</Card>
+<PeopleCard person={people.get("mad")} lang={lang} />
+</section>
+
+<section style={_section}>
+<Card>
+  <h1>
+    {t("services.aquaculture.Header")}
+  </h1>
+  <p>{t("services.aquaculture.Intro")}</p>
+</Card>
+
+<PeopleCard person={people.get("atf")} lang={lang} />
+<PeopleCard person={people.get("aki")} lang={lang} />
+<PeopleCard person={people.get("crs")} lang={lang} />
+<PeopleCard person={people.get("los")} lang={lang} />
+</section> */
 }
