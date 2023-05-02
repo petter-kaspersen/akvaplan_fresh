@@ -10,7 +10,7 @@ const handleClick = (e: MouseEvent) => {
   if (dialog) {
     const { open } = dialog;
     if (open) {
-      console.warn(dialog);
+      //
     } else {
       dialog.showModal();
     }

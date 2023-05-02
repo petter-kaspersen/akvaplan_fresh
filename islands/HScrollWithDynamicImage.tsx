@@ -19,7 +19,10 @@ type ScrollImageProps = {
 
 const ScrollImage = ({ image, onHover }: ScrollImageProps) => {
   return (
-    <div className="scroll-image" onMouseEnter={() => setTimeout(onHover, 500)}>
+    <div
+      className="scroll-image"
+      onMouseEnter={() => setTimeout(onHover, 500)}
+    >
       <a class="image-container" href={image.href}>
         <img alt="" width={400} height={400} loading="lazy" src={image.img} />
       </a>
@@ -41,7 +44,10 @@ export default function HScrollWithDynamicImage({ scrollerId, images }: Props) {
       <div className="dynamic-scroll-container">
         <HScroll scrollerId={scrollerId}>
           {images.map((image) => (
-            <ScrollImage image={image} onHover={() => setBigImage(image)} />
+            <ScrollImage
+              image={image}
+              onHover={() => setBigImage(image)}
+            />
           ))}
         </HScroll>
       </div>

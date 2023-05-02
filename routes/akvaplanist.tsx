@@ -3,10 +3,9 @@ import {
   buildPeopleGrouper,
   //groupByChar0,
   groupByGiven0,
-} from "akvaplan_fresh/services/akvaplanist.ts";
-import {
-  multiSearchMynewsdesk,
-  newsFromMynewsdesk,
+  newsOnPerson,
+  pubsFromPerson,
+  pubsFromPersonGroupedByYear,
 } from "akvaplan_fresh/services/mod.ts";
 
 import { buildContainsFilter } from "akvaplan_fresh/search/filter.ts";
@@ -122,23 +121,18 @@ export const handler: Handlers = {
     //FIXME Person API.
 
     //@todo separate route for 1 person!?
-    let news = [];
-    if (person.family && person.given) {
-      const containsFamily = buildContainsFilter(person.family);
-      const containsGiven = buildContainsFilter(person.given);
+    const news = (person && person.family)
+      ? await newsOnPerson({ person, lang: params.lang })
+      : [];
 
-      const _news = await multiSearchMynewsdesk(
-        [person.family, person.given],
-        ["news", "pressrelease"],
-        { limit: 64 },
-      );
+    const pubsByYear = (person && person.family)
+      ? await pubsFromPersonGroupedByYear({ person, lang: params.lang })
+      : [];
 
-      const _filteredNews = (_news ?? []).filter((mnd) =>
-        containsFamily(mnd) && containsGiven(mnd)
-      );
-
-      news = _filteredNews.map(newsFromMynewsdesk({ lang: "en" }));
-    }
+    const numPubs = [...pubsByYear.values()].map((a) => a.length).reduce(
+      (p, c) => p += c,
+      0,
+    );
 
     return ctx.render({
       lang,
@@ -151,6 +145,8 @@ export const handler: Handlers = {
       results,
       news,
       person,
+      pubsByYear,
+      numPubs,
       q,
     });
   },
@@ -272,6 +268,8 @@ export default function Akvaplanists(
       q,
       person,
       news,
+      pubsByYear,
+      numPubs,
     },
   }: PageProps<
     AkvaplanistsProps
@@ -327,6 +325,25 @@ export default function Akvaplanists(
       <section>
         <HScroll maxVisibleChildren={5.5}>{news.map(ArticleSquare)}</HScroll>
       </section>
+
+      {pubsByYear.size > 0 && (
+        <section>
+          <h1>{t("pubs.Research_pubs")} ({numPubs})</h1>
+          <div style={{ fontSize: "1rem" }}>
+            {[...pubsByYear].map(([grpkey, grppubs]) => (
+              <div>
+                <h3>
+                  {grpkey}
+                </h3>
+                <NewsFilmStrip
+                  news={grppubs}
+                  lang={lang}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </Page>
   );
 }

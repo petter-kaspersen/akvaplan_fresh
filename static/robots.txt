@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /wp-content/
+Disallow: /xmlrpc.php
+Disallow: /wp-login.php
+Disallow: /wp-cron.php
+Disallow: /_/
+Allow: *

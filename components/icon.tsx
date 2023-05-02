@@ -38,9 +38,9 @@ export const Icon = ({ name, ...props } = {}) => {
   }
   return (
     <span
-      class="icon"
-      {...props}
+      {...props ?? {}}
       dangerouslySetInnerHTML={{ __html: svgs.get(name) }}
+      class="icon"
     >
     </span>
   );

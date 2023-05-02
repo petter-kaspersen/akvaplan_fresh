@@ -3,11 +3,7 @@ import { homeAlbums } from "akvaplan_fresh/services/mediebank.ts";
 import { getServicesLevel0 } from "akvaplan_fresh/services/svc.ts";
 import { getResearchLevel0 } from "akvaplan_fresh/services/research.ts";
 import { latestNews } from "akvaplan_fresh/services/news.ts";
-import {
-  pubURL,
-  researchTopicURL,
-  routes,
-} from "akvaplan_fresh/services/nav.ts";
+import { routes } from "akvaplan_fresh/services/nav.ts";
 import { getLangFromURL, lang, t } from "akvaplan_fresh/text/mod.ts";
 
 import {
@@ -17,6 +13,7 @@ import {
   MoreNews,
   NewsFilmStrip,
   Page,
+  WhyUs,
 } from "akvaplan_fresh/components/mod.ts";
 
 import { Handlers, RouteConfig } from "$fresh/server.ts";
@@ -159,6 +156,7 @@ export default function Home(
       }
 
       {/* Research facilities (Fisk Loise) Sensor platforms */}
+      {/* <WhyUs /> */}
     </Page>
   );
 }

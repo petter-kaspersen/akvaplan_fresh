@@ -1,4 +1,4 @@
-import { href } from "./mynewsdesk.ts";
+import { href, multiSearchMynewsdesk } from "./mynewsdesk.ts";
 
 import {
   MynewsdeskItem,

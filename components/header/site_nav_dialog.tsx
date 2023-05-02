@@ -1,4 +1,5 @@
 import { ApnLogo, SiteNav } from "akvaplan_fresh/components/mod.ts";
+
 import { t } from "akvaplan_fresh/text/mod.ts";
 
 export const SiteNavDialog = ({ lang }) => (
@@ -7,7 +8,7 @@ export const SiteNavDialog = ({ lang }) => (
     color-scheme
     style={{
       border: "0",
-      background: "var(--surface2)",
+      background: "var(--surface1) 0.2",
       color: "var(--text1)",
     }}
   >
@@ -24,35 +25,11 @@ export const SiteNavDialog = ({ lang }) => (
     <menu
       style={{
         margin: 0,
-        //padding: "2rem",
-        background: "var(--surface1)",
         display: "grid",
         placeItems: "center",
         color: "var(--text1)",
       }}
     >
-      {
-        /* <form
-      method="get"
-      action={routes(langSignal?.value ?? "no").get("search")}
-      autocomplete="off"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "2fr 1fr",
-        marginTop: "0.5rem",
-        marginBottom: "0.5rem",
-      }}
-    >
-      <input
-        type="search"
-        name="q"
-        value={""}
-        placeholder={t("menu.search.placeholder")}
-      />
-
-      <button type="submit">{t("Search")}</button>
-    </form> */
-      }
       <SiteNav />
     </menu>
     <footer
@@ -63,7 +40,7 @@ export const SiteNavDialog = ({ lang }) => (
     >
       <form method="dialog">
         <button>
-          {lang === "en" ? "Close" : "Lukk"}
+          {t("menu.Close")}
         </button>
       </form>
     </footer>

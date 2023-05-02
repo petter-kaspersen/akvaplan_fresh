@@ -2,7 +2,9 @@ import { Page } from "akvaplan_fresh/components/page.tsx";
 import { Card } from "akvaplan_fresh/components/card.tsx";
 import Text from "akvaplan_fresh/islands/text.tsx";
 import ThemeSwitcher, {} from "akvaplan_fresh/islands/theme_switcher.tsx";
-import { LangLinks } from "akvaplan_fresh/islands/lang_switcher.tsx";
+import LangSwitcher, {
+  LangLinks,
+} from "akvaplan_fresh/islands/lang_switcher.tsx";
 
 import { lang } from "akvaplan_fresh/text/mod.ts";
 import { Head, IS_BROWSER } from "$fresh/runtime.ts";
@@ -35,7 +37,7 @@ export default function Preferences() {
         <p lang="no">JavaScript må være på for å endre innstillinger</p>
       </noscript>
       <h1>
-        <Text code="Settings" />
+        <Text code="nav.Settings" />
       </h1>
 
       <div>
@@ -54,7 +56,8 @@ export default function Preferences() {
               <Text code="lang" />
             </label>
           </h2>
-          <LangLinks />
+          {/* <LangLinks /> */}
+          <LangSwitcher />
         </Card>
 
         <Card>

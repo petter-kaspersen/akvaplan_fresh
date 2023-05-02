@@ -1,18 +1,24 @@
 import {
   getResearchLevel0,
-  getServiceDesc,
   multiSearchMynewsdesk,
   newsFromMynewsdesk,
+  newsFromPubs,
   sortLatest,
 } from "akvaplan_fresh/services/mod.ts";
+
+import { search as searchPubs } from "akvaplan_fresh/services/dois.ts";
+import { buildContainsFilter } from "akvaplan_fresh/search/filter.ts";
+import { groupIntoMap } from "akvaplan_fresh/grouping/mod.ts";
 
 import {
   Article,
   ArticleHeader,
   ArticleSquare,
   HScroll,
+  NewsFilmStrip,
   Page,
   PeopleCard as PersonCard,
+  ServiceSummary as TopicSummary,
 } from "akvaplan_fresh/components/mod.ts";
 
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
@@ -43,16 +49,13 @@ export const handler: Handlers = {
     if (!research) {
       return ctx.renderNotFound();
     }
-
     const { topic } = params;
-
-    //const Desc = getServiceDesc(topic, lang.value);
 
     const base = `/${params.lang}/${params.page}/${params.groupname}`;
 
     const queries = [
-      topic,
       ...(research?.searchwords ?? []),
+      topic,
     ].filter((s) => s.length > 3).map((s) => s.toLowerCase());
 
     const _news = await multiSearchMynewsdesk(
@@ -62,6 +65,17 @@ export const handler: Handlers = {
     ) ?? [];
 
     const news = _news?.map(newsFromMynewsdesk({ lang: params.lang })) ?? [];
+    // FIXME implement multiSearchPubs
+    // FIXME store special searchwords for pubs must (usually) be English
+    // @todo make sure first searchword is in English
+    const { data } = await searchPubs({ q: queries[0], limit: -1 });
+    const pubsToNewsMapper = newsFromPubs({ lang: lang.value });
+    const pubs = data.map(pubsToNewsMapper);
+
+    const grouped = groupIntoMap(
+      pubs,
+      ({ published }) => published?.substring(0, 4),
+    );
 
     return ctx.render({
       lang,
@@ -70,6 +84,7 @@ export const handler: Handlers = {
       research,
       news: new Map([["ui.Read more", news.sort(sortLatest)]]),
       topic,
+      grouped,
     });
   },
 };
@@ -86,7 +101,7 @@ export default function ServiceTopics(
       topic,
       searchwords,
       page,
-      Desc,
+      grouped,
     },
   }: PageProps<
     unknown
@@ -124,11 +139,12 @@ export default function ServiceTopics(
             <div>
               <PersonCard id={research.contact_id} />
             </div>
-            <section class="article-content">
-              <Desc />
+            <section>
+              <TopicSummary topic={topic} lang={lang.value} />
             </section>
           </Article>
-          <div></div>
+          <div>
+          </div>
         </div>
 
         {[...news].slice(0, 3).map(([_name, children]) => (
@@ -138,6 +154,23 @@ export default function ServiceTopics(
             </HScroll>
           </div>
         ))}
+
+        <section>
+          <h1>{t("pubs.Research_pubs")}</h1>
+          <div style={{ fontSize: "1rem" }}>
+            {[...grouped].filter(() => true).map(([grpkey, grppubs]) => (
+              <div>
+                <h3>
+                  {grpkey}
+                </h3>
+                <NewsFilmStrip
+                  news={grppubs}
+                  lang={lang.value}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </Page>
   );

@@ -120,7 +120,7 @@ export default function ServiceTopics(
             <div>
               <PersonCard id={service.contact} />
             </div>
-            <section class="article-content">
+            <section>
               <ServiceSummary topic={topic} lang={lang.value} />
             </section>
           </Article>

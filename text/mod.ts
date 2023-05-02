@@ -11,8 +11,8 @@ const en = new Map<string, string>(Object.entries(_en));
 const no = new Map<string, string>(Object.entries(_no));
 export const tr = new Map([["en", en], ["no", no]]);
 
-export const normalize = (s) =>
-  s.normalize("NFD")
+export const normalize = (s: string) =>
+  s?.normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
     .toLocaleLowerCase();
 
