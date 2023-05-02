@@ -250,7 +250,7 @@ const PeopleSearchForm = ({ q }) => (
   </p> */
       }
     </menu>
-    <p>{t("people.subtitle")}</p>
+    {/* <p>{t("people.subtitle")}</p> */}
   </form>
 );
 
@@ -308,7 +308,7 @@ export default function Akvaplanists(
                 filter={filter}
                 text={t("people.People")}
               />
-              <p>{t("people.subtitle")}</p>
+              {/* <p>{t("people.subtitle")}</p> */}
             </div>
             <Picture />
           </section>
