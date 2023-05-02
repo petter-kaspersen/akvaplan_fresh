@@ -103,15 +103,17 @@ export default function DoiPublication(
           </ol>
         </Card>
         <Card>
-          <p>
-            {t("pubs.View_in")}{" "}
-            <a
-              target="_blank"
-              href={openalex.id}
-            >
-              OpenAlex
-            </a>
-          </p>
+          {openalex?.id && (
+            <p>
+              {t("pubs.View_in")}{" "}
+              <a
+                target="_blank"
+                href={openalex.id}
+              >
+                OpenAlex
+              </a>
+            </p>
+          )}
         </Card>
       </article>
     </Page>
