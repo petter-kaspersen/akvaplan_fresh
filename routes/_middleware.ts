@@ -4,7 +4,10 @@ import {
   setSiteLang,
 } from "akvaplan_fresh/text/mod.ts";
 
-import { legacyRoutes } from "../services/legacy.ts";
+import {
+  legacyRoutes,
+  response307XRobotsTagNoIndex,
+} from "akvaplan_fresh/services/mod.ts";
 
 import { parse } from "accept-language-parser";
 
@@ -29,13 +32,7 @@ export function handler(
 
   if (legacyRoutes.has(pathname)) {
     const Location = new URL(legacyRoutes.get(pathname), url);
-    return new Response("", {
-      status: 307,
-      headers: {
-        Location,
-        "x-robots-tag": "noindex, nofollow, noarchive, nosnippet",
-      },
-    });
+    return response307XRobotsTagNoIndex(Location);
   }
 
   if ("/" === pathname && req.headers.has("accept-language")) {
