@@ -33,7 +33,7 @@ import {
 import { asset, Head } from "$fresh/runtime.ts";
 export const config: RouteConfig = {
   routeOverride:
-    "/:lang(en|no){/:page(research|forskning)}?/:groupname(topic|topics|tema){/:topic}?",
+    "/:lang(en|no)/:page(research|forskning){/:groupname(topic|topics|tema)}?/:topic",
 };
 
 export const handler: Handlers = {
@@ -63,6 +63,8 @@ export const handler: Handlers = {
       ["news", "pressrelease"],
       { limit: 64 },
     ) ?? [];
+
+    console.warn({ queries });
 
     const news = _news?.map(newsFromMynewsdesk({ lang: params.lang })) ?? [];
     // FIXME implement multiSearchPubs
