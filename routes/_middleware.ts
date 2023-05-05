@@ -10,6 +10,7 @@ import { parse } from "accept-language-parser";
 
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
 
+//https://github.com/denoland/fresh/issues/1128
 export function handler(
   req: Request,
   ctx: MiddlewareHandlerContext<Record<string, unknown>>,
@@ -27,10 +28,12 @@ export function handler(
   }
 
   if (legacyRoutes.has(pathname)) {
+    const Location = new URL(legacyRoutes.get(pathname), url);
     return new Response("", {
       status: 307,
       headers: {
-        Location: legacyRoutes.get(pathname) + `?pathname=${pathname}`,
+        Location,
+        "x-robots-tag": "noindex, nofollow, noarchive, nosnippet",
       },
     });
   }
