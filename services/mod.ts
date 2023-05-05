@@ -11,5 +11,5 @@ export * from "./offices.ts";
 export * from "./openalex.ts";
 export * from "./people.ts";
 export * from "./research.ts";
-export * from "./response_30x.ts";
+export * from "./response30x.ts";
 export * from "./svc.ts";
