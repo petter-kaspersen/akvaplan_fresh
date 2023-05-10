@@ -1,6 +1,4 @@
-import DoiSearch, {
-  DoiSearchResultsProps,
-} from "akvaplan_fresh/islands/doi_search.tsx";
+import { routes } from "akvaplan_fresh/services/nav.ts";
 
 import {
   getLangFromURL,
@@ -9,6 +7,10 @@ import {
 } from "akvaplan_fresh/text/mod.ts";
 
 import { buildContainsFilter } from "akvaplan_fresh/search/filter.ts";
+
+import DoiSearch, {
+  DoiSearchResultsProps,
+} from "akvaplan_fresh/islands/doi_search.tsx";
 
 import { Page } from "akvaplan_fresh/components/page.tsx";
 
@@ -23,7 +25,7 @@ import {
 import { Head } from "$fresh/runtime.ts";
 
 export const config: RouteConfig = {
-  routeOverride: "/:lang(en|no)/(pubs|publikasjoner)",
+  routeOverride: "/:lang(en|no)/(pubs|publications|publikasjoner)",
 };
 
 export const handler: Handlers<DoiSearchResultsProps> = {
@@ -34,10 +36,14 @@ export const handler: Handlers<DoiSearchResultsProps> = {
     const { searchParams } = new URL(request.url);
     const _q = searchParams.get("q") ?? "";
     const q = _q.toLocaleLowerCase();
+    const buildYearFilter = (year) =>
+      Number(year) > 1900
+        ? ({ published }) => published.startsWith(year)
+        : () => true;
 
     const title = t("nav.Pubs");
 
-    // We need to load all pubs (via limit=-1) for the in-memory search
+    // We need to load all pubs (via limit=-1) for in-memory search
     const url = `https://dois.deno.dev/doi?limit=-1&sort=-published`;
 
     const response = await fetch(url);
@@ -45,18 +51,24 @@ export const handler: Handlers<DoiSearchResultsProps> = {
     if (response.ok) {
       const json = await response.json();
       const all: SlimPublication[] = json.data;
-      const results: SlimPublication[] = all.filter(buildContainsFilter(q));
-      return context.render({ all, title, results, q, lang });
+      const results: SlimPublication[] = all
+        .filter(buildYearFilter(searchParams.get("year")))
+        .filter(buildContainsFilter(q));
+      const base = routes(lang).get("pubs");
+      return context.render({ all, title, results, q, base, lang });
     }
   },
 };
 
 export default function ApnPubs({ data }: PageProps<DoiSearchResultsProps>) {
-  const { all, results, title, q } = data;
+  const { all, results, title, q, base, lang } = data;
   return (
-    <Page title="Pubs">
+    <Page title="Pubs" base={base}>
+      <link rel="stylesheet" href="/css/hscroll.css" />
+      <script src="/@nrk/core-scroll.min.js" />
+      {/* <Head></Head> */}
       <h1>{title}</h1>
-      <DoiSearch q={q} results={results} all={all} />
+      <DoiSearch q={q} results={results} all={all} lang={lang} />
     </Page>
   );
 }

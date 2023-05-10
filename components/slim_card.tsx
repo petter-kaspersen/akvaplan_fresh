@@ -27,9 +27,11 @@ export function SlimCard(
           />
         </header>{" "}
         <p style={{ fontSize: "1rem" }}>
-          {authors.map(({ family }, n) => (
+          {
+            /* {authors.map(({ family }, n) => (
             <span>{family}{n === authors.length - 1 ? null : ", "}</span>
-          ))}. <em dangerouslySetInnerHTML={{ __html: container }} />{" "}
+          ))}.*/
+          } <em dangerouslySetInnerHTML={{ __html: container }} />{" "}
           (<time>{published}</time>)
         </p>
       </Card>

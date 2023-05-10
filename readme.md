@@ -1,18 +1,19 @@
 # akvaplan_fresh
 
-Akvaplan-niva company site: https://akvaplan.no/
+[Akvaplan-niva](https://akvaplan.no/)'s website
 
 - HTML-first multi-page web app
-- Server side routed and rendered on the edge
+- Rendered on the fly in the edge
 - Fully functional without JavaScript
+- Bilingual including translated/SEO URLs
 
 ## Tech stack
 
 - [Deno](https://deno.land)
 - [Deploy](https://deno.com/deploy)
 - [Fresh](https://fresh.deno.dev/)
-- [Preact](https://preactjs.com/)/Signals
-- TSX components
+- [Preact](https://preactjs.com/)
+- TypeScript/TSX
 
 ### Development
 

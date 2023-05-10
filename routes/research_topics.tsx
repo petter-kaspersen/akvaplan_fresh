@@ -64,8 +64,6 @@ export const handler: Handlers = {
       { limit: 64 },
     ) ?? [];
 
-    console.warn({ queries });
-
     const news = _news?.map(newsFromMynewsdesk({ lang: params.lang })) ?? [];
     // FIXME implement multiSearchPubs
     // FIXME store special searchwords for pubs must (usually) be English

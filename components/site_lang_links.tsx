@@ -1,24 +1,24 @@
 import { lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
 
-const small = {
-  fontSize: "var(--font-size-0)",
+const _style = {
+  color: "var(--text1)",
 };
 export const SiteLangLinks = (
-  { lang = langSignal.value, style = small, ...props } = {},
+  { lang = langSignal.value, native = false, style = _style, ...props } = {},
 ) => (
   <span
-    class="hide-small"
+    class="target"
     style={style}
     {...props}
   >
-    <span>{t(`lang.Native.${lang}`)}</span>{" "}
+    {native && <span>{t(`lang.Native.${lang}`)}</span>}{" "}
     {lang === "en" && (
       <a lang="no" href="/no">
-        Bytt til {t(`lang.native.no`)}
+        {t(`lang.Native.no`)}
       </a>
     )} {lang === "no" && (
       <a lang="en" href="/en">
-        Switch to {t(`lang.Native.en`)}
+        {t(`lang.Native.en`)}
       </a>
     )}
   </span>

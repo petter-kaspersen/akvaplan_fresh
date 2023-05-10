@@ -50,7 +50,6 @@ export function Footer({ lang }) {
           padding: "0.5rem",
         }}
       >
-        <SiteLangLinks />
       </div>
     </footer>
   );

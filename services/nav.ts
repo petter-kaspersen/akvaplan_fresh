@@ -12,12 +12,12 @@ const En = new Map([
   ["services", "/en/services"],
   ["research", "/en/research"],
   ["settings", "/en/settings"],
-  ["pubs", "/en/pubs"],
+  ["pubs", "/en/publications"],
   ["dcat", "/en/dcat"],
   ["documents", "/en/documents"],
   ["akvaplanists", "/en/people"],
   ["people", "/en/people"],
-  ["about", "/en/about-us"],
+  ["about", "/en/about"],
 ]);
 const No = new Map([
   ["search", "/no/_"],
@@ -26,12 +26,12 @@ const No = new Map([
   ["services", "/no/tjenester"],
   ["research", "/no/forskning"],
   ["settings", "/no/innstillinger"],
-  ["pubs", "/no/pubs"],
+  ["pubs", "/no/publikasjoner"],
   ["dcat", "/no/dcat"],
   ["documents", "/no/dokumenter"],
   ["akvaplanists", "/no/folk"],
   ["people", "/no/folk"],
-  ["about", "/no/om-oss"],
+  ["about", "/no/om"],
 ]);
 
 export const routes = (lang: string | StringSignal) =>
@@ -60,6 +60,7 @@ export const buildMobileNav = (lang: string | StringSignal) =>
 //   id
 //     ? `${routes(lang).get("akvaplanists")}/id/${id}/${family}/${given}`
 //     : `${routes(lang).get("akvaplanists")}/name/${family}/${given}`;
+export const peopleURL = ({ lang }) => `${routes(lang).get("akvaplanists")}`;
 
 export const personURL = ({ id, given, family, email, lang }) =>
   id

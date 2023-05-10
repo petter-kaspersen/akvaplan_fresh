@@ -66,9 +66,9 @@ export const searchNews = async (
     return p;
   });
 
-  const akvaplanists = (await searchAkvaplanists({ q, limit })).map(
+  const akvaplanists = (await searchAkvaplanists({ q, limit }))?.map(
     newsFromAkvaplanists({ lang }),
-  );
+  ) ?? [];
   return [...articles, ...pubs, ...akvaplanists].sort(sort);
 };
 export const latestNews = async (params: Search) =>

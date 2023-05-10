@@ -11,7 +11,7 @@ import {
   HScroll,
   Page,
   PeopleCard as PersonCard,
-  SlimCard,
+  repeatAutoFitMinMaxGrid,
 } from "akvaplan_fresh/components/mod.ts";
 
 import {
@@ -54,7 +54,7 @@ export const handler: Handlers = {
     const { searchParams } = new URL(req.url);
     lang.value = params.lang;
 
-    const title = t("Research");
+    const title = t("nav.Research");
     const base = `/${params.lang}/${params.page}/`;
 
     const { groupname, filter } = params;
@@ -65,6 +65,9 @@ export const handler: Handlers = {
 
     const { data } = await searchPubs({ q, limit: 100 });
     const pubs = data;
+    const researchArticles = data
+      .filter(({ type }) => ["journal-article"].includes(type))
+      .map(newsFromPubs({ lang: lang.value }));
 
     const grouped = (pubs).reduce(
       groupReducer(({ published }) => published.substring(0, 7)),
@@ -76,16 +79,38 @@ export const handler: Handlers = {
       title,
       base,
       topics,
+      researchArticles,
       pubs,
       grouped,
     });
   },
 };
 
+// const intro = (lang) =>
+//   lang === "en"
+//     ? (
+//       <p>
+//         Akvaplan-niva conducts research on sustainable aquaculture, arctic
+//         ecosystems, environmental impacts, use of mobile observing platforms
+//         environmental monitoring, and more. Our research is financed through
+//         competitive grants from governmental research agencies, public
+//         non-profit entities, and private companies.
+//       </p>
+//     )
+//     : (
+//       <p>
+//         Akvaplan-niva forsker innen bærekraftig akvakultur, arktiske
+//         økosystemer, miljøpåvirkninger, bruk av mobile observasjonsplattformer.
+//         Forskningen finansieres gjennom konkurranseutsatte tilskudd fra
+//         forskningsrådet, offentlige ideelle organisasjoner og private selskaper.
+//       </p>
+//     );
+
 export default function Research(
-  { data: { lang, title, base, topics, pubs, grouped } }: PageProps<
-    unknown
-  >,
+  { data: { lang, title, base, topics, pubs, grouped, researchArticles } }:
+    PageProps<
+      unknown
+    >,
 ) {
   return (
     <Page title={title} base={base}>
@@ -94,7 +119,8 @@ export default function Research(
       <h1>
         {title}
       </h1>
-      <HScroll maxVisibleChildren={6.5}>
+
+      <HScroll maxVisibleChildren={5.5}>
         {topics.map(ArticleSquare)}
       </HScroll>
 
@@ -105,15 +131,28 @@ export default function Research(
           <p>
             {t("research.people.Intro")}
           </p>
+          <div style={repeatAutoFitMinMaxGrid()}>
+            <PersonCard id="aki" lang={lang} />
+            <PersonCard id="aev" lang={lang} />
+            <PersonCard id="gnc" lang={lang} />
+            <PersonCard id="per" lang={lang} />
+          </div>
         </Card>
-        <PersonCard id="aki" lang={lang} />
-        <PersonCard id="aev" lang={lang} />
-        <PersonCard id="gnc" lang={lang} />
-        <PersonCard id="per" lang={lang} />
       </section> */
       }
 
-      <div style={{ fontSize: "1rem" }}>
+      <section>
+        <AlbumHeader
+          text={t("pubs.Latest_peer_reviewed_research_articles")}
+          href={routes(lang).get("pubs") + "?q=journal-article"}
+        />
+        <HScroll maxVisibleChildren={5.5}>
+          {researchArticles.map(ArticleSquare)}
+        </HScroll>
+      </section>
+
+      {
+        /* <div style={{ fontSize: "1rem" }}>
         {[...grouped].filter((_, i) => i < 3).map(([grpkey, pubs]) => (
           <div>
             <h3>
@@ -124,7 +163,8 @@ export default function Research(
             </ul>
           </div>
         ))}
-      </div>
+      </div> */
+      }
     </Page>
   );
 }

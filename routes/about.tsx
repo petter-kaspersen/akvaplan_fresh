@@ -5,12 +5,13 @@ import {
   Article,
   Card,
   Icon,
+  OfficeCard,
   Page,
   PeopleCard,
 } from "akvaplan_fresh/components/mod.ts";
 
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
-import { routes } from "akvaplan_fresh/services/nav.ts";
+import { offices, routes } from "akvaplan_fresh/services/mod.ts";
 
 import {
   admDir,
@@ -106,7 +107,7 @@ export default (
 
           <section style={_section}>
             <h1 style={_header}>
-              {t("about.Management")}
+              {t("people.Management")}
             </h1>
             <PeopleCard person={admDir} lang={lang} />
 
@@ -114,12 +115,12 @@ export default (
               <menu>
                 <li>
                   <a href={akvaplan.links.leaders}>
-                    {t("about.Leaders")}
+                    {t("people.Leaders")}
                   </a>
                 </li>
                 <li>
                   <a href={akvaplan.links.sectionleaders}>
-                    {t("about.Section_leaders")}
+                    {t("people.Section_leaders")}
                   </a>
                 </li>
                 <li>
@@ -175,6 +176,34 @@ export default (
                 </li>
               </menu>
             </Card>
+          </section>
+
+          <section style={_section}>
+            <h1 style={_header}>{t("about.Identification")}</h1>
+            <dl>
+              <dt>
+                Organisasjonsnummer
+              </dt>
+              <dd>
+                <a
+                  href="https://w2.brreg.no/enhet/sok/detalj.jsp?orgnr=937375158"
+                  target="_blank"
+                >
+                  937375158
+                </a>
+              </dd>
+              <dt>
+                <abbr title={"Research Organization Registry"}>ROR</abbr> ID:
+              </dt>
+              <dd>
+                <a
+                  href=" https://ror.org/03nrps502"
+                  target="_blank"
+                >
+                  https://ror.org/03nrps502
+                </a>
+              </dd>
+            </dl>
           </section>
 
           <section style={_section}>
@@ -253,12 +282,34 @@ export default (
           </section>
 
           <section style={_section}>
-            <h1 style={_header}>{t("about.Contact")}</h1>
+            <h1 style={_header}>{t("about.Office_locations")}</h1>
+            <menu>
+              {[...offices.values()].filter(({ hq }) => true).map((
+                { name },
+              ) => (
+                <li>
+                  <a
+                    href={`${routes(lang).get("people")}/workplace/${
+                      name.split(" ").at(0)
+                    }`}
+                  >
+                    {name}
+                  </a>
+                </li>
+              ))}
+            </menu>
+          </section>
+
+          <section style={_section}>
+            <h1 style={_header}>{t("about.HQ")}</h1>
 
             <Card>
               <dl>
+                <dt>Akvaplan-niva</dt>
+                <dd>{akvaplan.addr.hq.post}</dd>
+
                 <dt>
-                  {t("about.Visit")} ({t("about.HQ")})
+                  {t("about.Visit")}
                 </dt>
                 <dd>
                   {akvaplan.addr.hq.visit} (<a
@@ -269,12 +320,9 @@ export default (
                   </a>)
                 </dd>
 
-                <dt>Post</dt>
-                <dd>{akvaplan.addr.hq.post}</dd>
-
                 <dt>Faktura</dt>
                 <dd>
-                  Se <a href="/en/invoicing"></a>
+                  Se <a href={routes(lang).get("invoicing")}></a>
                 </dd>
 
                 <dt>

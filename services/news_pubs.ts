@@ -1,4 +1,4 @@
-import { defaultThumbnail, href } from "./mynewsdesk.ts";
+import { defaultThumbnail, doiImage } from "./mod.ts";
 
 import {
   News,
@@ -17,6 +17,7 @@ export const newsFromPubs = ({ lang }: NewsMapper) =>
   published,
   href: `/${lang}/doi/${doi}`,
   hreflang: "en",
-  thumb: defaultThumbnail,
+  img: doiImage.get(doi) ?? defaultThumbnail,
+  thumb: doiImage.get(doi) ?? defaultThumbnail,
   type,
 });

@@ -1,3 +1,4 @@
+export const legacyHosts = ["www.akvaplan.niva.no", "akvaplan.niva.no"];
 export const legacyRoutes = new Map<string, string>([
   // NO
   //["/ms-louise", ""],
@@ -21,11 +22,11 @@ export const legacyRoutes = new Map<string, string>([
   ["/teknisk_inspeksjon", "/no/tjenester"],
   // EN
   ["/en/advisory-services", "/en/services"],
-  ["/en/about-us", "/en/about-us"],
+  ["/about-us", "/en/about-us"],
   ["/en/accreditation", "/en/accreditation"],
   ["/en/advisory-services", "/en/advisory-services"],
   ["/en/analytical-services", "/en/analytical-services"],
-  ["/en/employees", "/en/employees"],
+  ["/en/employees", "/en/people"],
   ["/en/feed", "/en/feed"],
   //["/en/home","/en/home"]
   //["/en/invoicing","/en/invoicing"]

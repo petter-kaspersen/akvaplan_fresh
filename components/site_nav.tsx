@@ -1,12 +1,12 @@
 import { siteNav } from "akvaplan_fresh/services/nav.ts";
 import { SiteLangLinks } from "akvaplan_fresh/components/mod.ts";
-import { Handlers, PageProps } from "$fresh/server.ts";
+
+//href={altlang(lamg)}
 
 export function SiteNav() {
   return (
     <nav>
       <ol style={{ display: "grid", gridTemplateColumns: "1fr" }}>
-        
         {siteNav.value.map(({ href, text }) => (
           <li>
             <a class="target" href={href} style={{ color: "var(--text2)" }}>
@@ -15,6 +15,7 @@ export function SiteNav() {
           </li>
         ))}
       </ol>
+      <SiteLangLinks />
     </nav>
   );
 }

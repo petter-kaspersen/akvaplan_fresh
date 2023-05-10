@@ -1,27 +1,30 @@
+// FIXME akvaplanist.tsx – add noindex,nofollow on anything but root route to avoid search engine clutter
 import {
-  akvaplanists,
+  buildGroupFX,
   buildPeopleGrouper,
   //groupByChar0,
-  groupByGiven0,
+  getAugmentedAkvaplanists,
   newsOnPerson,
-  pubsFromPerson,
+  offices,
   pubsFromPersonGroupedByYear,
 } from "akvaplan_fresh/services/mod.ts";
 
-import { buildContainsFilter } from "akvaplan_fresh/search/filter.ts";
-
 import {
-  GroupedPeople,
-  PeopleScroll,
-} from "akvaplan_fresh/components/people/PeopleScroll.tsx";
-import { PeopleCard } from "akvaplan_fresh/components/people/PeopleCard.tsx";
-import {
+  AlbumHeader,
   ArticleSquare,
+  Card,
+  GroupedPeople,
   HScroll,
   NewsFilmStrip,
+  OfficeCard,
+  OneGroup,
   Page,
+  PeopleSearchForm,
 } from "akvaplan_fresh/components/mod.ts";
-import { lang, normalize, t, tr } from "akvaplan_fresh/text/mod.ts";
+
+import { routes } from "akvaplan_fresh/services/mod.ts";
+import { buildContainsFilter } from "akvaplan_fresh/search/filter.ts";
+import { lang, normalize, t } from "akvaplan_fresh/text/mod.ts";
 
 import { type Akvaplanist } from "akvaplan_fresh/@interfaces/mod.ts";
 
@@ -32,7 +35,9 @@ import {
   type RouteConfig,
 } from "$fresh/server.ts";
 
-interface AkvaplanistsProps {
+import { Head } from "$fresh/runtime.ts";
+
+interface AkvaplanistsRouteProps {
   people: Akvaplanist[];
 
   results: Akvaplanist[];
@@ -47,18 +52,46 @@ interface AkvaplanistsProps {
   title: string;
   q?: string;
 }
-const pipe = <span>{" "}|{" "}</span>;
+
+const _section = { padding: 0 };
+
+const findGroup = (groupname) => {
+  if ("ledelse" === groupname) {
+    return "management";
+  }
+  return groupname?.length > 0 ? groupname : "given0";
+};
+
+const getSortKey = (key: string) => {
+  switch (key) {
+    case "given0":
+      return "given";
+    case "family0":
+      return "family";
+    default:
+      return key;
+  }
+};
+
+const buildSort = (
+  { lang, sortkey, sortdir },
+) => {
+  const { compare } = new Intl.Collator(lang);
+  return (a: Akvaplanist, b: Akvaplanist) =>
+    sortdir * compare(a?.[sortkey], b?.[sortkey]);
+};
+
 export const config: RouteConfig = {
   routeOverride:
     "{/:lang}?/:page(people|folk|ansatte|employees|akvaplanist|person){/:groupname}?{/:filter}?{/:fn}?{/:gn}?",
 };
-const _ = (s: string) => s?.toLowerCase();
+
 export const handler: Handlers = {
   async GET(req: Request, ctx: HandlerContext) {
     const { params } = ctx;
 
     const { groupname, filter } = params;
-    const group = groupname?.length > 0 ? groupname : "gn0";
+    const group = findGroup(groupname);
 
     // lang is optional for legacy URL (/ansatte)
     lang.value = ["en", "no"].includes(params.lang) ? params.lang : "no";
@@ -66,43 +99,27 @@ export const handler: Handlers = {
     const page = ["employees", "people"].includes(params.page)
       ? "people"
       : "folk";
-    const base = `/${lang}/${page}/`;
 
-    const fx = group === "gn0"
-      ? groupByGiven0
-      : (p: Akvaplanist) => p?.[group] ?? "_";
-
+    const fx = buildGroupFX({ group, filter });
     const { searchParams } = new URL(req.url);
     const q = searchParams.get("q") ?? "";
-    const sortkey = searchParams.get("sort") ?? "given";
-    const sort = (a: Akvaplanist, b: Akvaplanist) =>
-      a?.[sortkey].localeCompare(b?.[sortkey]);
 
-    const people = (await akvaplanists()).sort(sort).map(({ unit, ...p }) => {
-      // @todo akvaplanist.tsx: implement proper search (and indexing)
-      // FIXME Fix ledelse as separate prop (in service!)
-      const unitnames = ["en", "no"].map((lang) =>
-        tr.get(lang).get(`unit.${unit}`)
-      );
-      if ("LEDELS" === unit) {
-        unitnames.push("ledelse");
-        unitnames.push("management");
-      }
-      p.search = JSON.stringify({ unitnames });
-      p.unit = unit;
-      // {
-      //   position?.[lang ?? "no"] ?? "";
-      // }
-      return p;
-    });
+    const unsorted = await getAugmentedAkvaplanists();
+    const sortkey = getSortKey(searchParams.get("sort") ?? group);
+    const sortdir = searchParams.get("sortdir") ?? 1;
+
+    const sorted = unsorted.sort(
+      buildSort({ lang: lang.value, sortkey, sortdir }),
+    );
     // const news = (await searchNews({ q: "", lang: "no", limit: 64 })).filter((
     //   { type },
     // ) => "person" === type);
 
     const filtered = (filter?.length > 0)
-      ? [...people].filter((p: Akvaplanist) => _(p?.[group]) === _(filter))
-      : people;
-
+      ? [...sorted].filter((p: Akvaplanist) =>
+        normalize(p?.[group]) === normalize(filter)
+      )
+      : sorted;
     const queryFilter = q?.length > 0 ? buildContainsFilter(q) : () => true;
     const results = filtered.filter(queryFilter);
 
@@ -112,6 +129,8 @@ export const handler: Handlers = {
     );
 
     const title = t("people.People");
+
+    const base = `/${lang}/${page}/management`;
 
     const person = ("id" === group && results.length === 1)
       ? results.at(0)
@@ -134,11 +153,13 @@ export const handler: Handlers = {
       0,
     );
 
+    const office = group === "workplace" ? offices.get(filter) : null;
+
     return ctx.render({
       lang,
       base,
       title,
-      total: people.length,
+      total: unsorted.length,
       grouped,
       group,
       filter,
@@ -148,26 +169,11 @@ export const handler: Handlers = {
       pubsByYear,
       numPubs,
       q,
+      office,
+      searchParams,
     });
   },
 };
-
-const inline = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(440px, 1fr))",
-  gridGap: "1rem",
-};
-const OneGroup = (
-  { members },
-) => (
-  <ul style={inline}>
-    {members.map((member: Akvaplanist) => (
-      <li style={inline}>
-        <PeopleCard person={member} key={member.id} />
-      </li>
-    ))}
-  </ul>
-);
 
 const before = "bb7x8e4rmevc5kboua8e";
 const frida = "viemsy7cszuo7laedtcd";
@@ -189,13 +195,14 @@ const Picture = () => (
     />
   </picture>
 );
-{/* <img src={banner} alt={caption} title={caption} /> */}
 
+// <img src={banner} alt={caption} title={caption} />
+// alt H1TTitle with group as prefix to translation: <h1>{t(`${group}.${filter}`)} / <a href=".">{text}</a>
 const H1ATitle = ({ filter, text, group }) =>
   filter?.length > 0
     ? (
       <h1>
-        {t(`${group}.${filter}`)} / <a href=".">{text}</a>
+        {t(`${filter}`)} / <a href=".">{text}</a>
       </h1>
     )
     : (
@@ -203,56 +210,6 @@ const H1ATitle = ({ filter, text, group }) =>
         <a href=".">{text}</a>
       </h1>
     );
-
-const PeopleSearchForm = ({ q }) => (
-  <form autocomplete="off">
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "3fr 1fr",
-        marginBlockStart: "1rem",
-        paddingBlockEnd: "2rem",
-      }}
-    >
-      <input
-        type="search"
-        name="q"
-        value={q}
-        placeholder={t("people.search.placeholder")}
-      />
-
-      <button type="submit">{t("Search")}</button>
-    </div>
-
-    <menu
-      style={{
-        display: "grid",
-        justifyContent: "end",
-        fontSize: "1rem",
-      }}
-    >
-      <p>
-        <label>{t("people.group_by")}</label>:{" "}
-        <a class="" href="gn0">{t("people.gn")}</a> {pipe}
-        {/* <a class="" href="fn0">{t("people.fn")}</a> {pipe} */}
-        <a class="" href="unit">{t("people.unit")}</a> {pipe}
-        <a class="" href="workplace">{t("people.workplace")}</a>
-      </p>
-      {
-        /* <p>
-    <label for="sort-select">{t("people.Sort")}:</label>
-
-    <select name="sort" id="sort-select">
-      <option value="family">{t("people.given")}</option>
-      <option value="family">{t("people.family")}</option>
-      <option value="unit">{t("people.unit")}</option>
-    </select>
-  </p> */
-      }
-    </menu>
-    {/* <p>{t("people.subtitle")}</p> */}
-  </form>
-);
 
 export default function Akvaplanists(
   {
@@ -270,9 +227,11 @@ export default function Akvaplanists(
       news,
       pubsByYear,
       numPubs,
+      office,
+      searchParams,
     },
   }: PageProps<
-    AkvaplanistsProps
+    AkvaplanistsRouteProps
   >,
 ) {
   let pagetitle = filter?.length > 0
@@ -280,7 +239,7 @@ export default function Akvaplanists(
     : t("People");
 
   if (person && "id" === group) {
-    pagetitle = person.name;
+    pagetitle = `${person.given} ${person.family}`;
   }
 
   const caption = "";
@@ -295,11 +254,25 @@ export default function Akvaplanists(
 
   return (
     <Page title={pagetitle} base={base}>
-      <link rel="stylesheet" href="/css/hscroll.css" />
-      <link rel="stylesheet" href="/css/akvaplanist.css" />
-      <script src="/@nrk/core-scroll.min.js" />
-      {group !== "id"
-        ? (
+      <Head>
+        <link rel="stylesheet" href="/css/hscroll.css" />
+        <link rel="stylesheet" href="/css/akvaplanist.css" />
+        <script src="/@nrk/core-scroll.min.js" />
+      </Head>
+
+      {group === "workplace" && office && (
+        <section class="page-header">
+          <H1ATitle
+            group={group}
+            filter={filter}
+            text={t("people.People")}
+          />
+          <OfficeCard office={office} />
+        </section>
+      )}
+
+      {!["id", "workplace"].includes(group) &&
+        (
           <section class="page-header">
             {/* <NewsFilmStrip news={news} lang={lang.value} /> */}
             <div class="page-header__content">
@@ -312,14 +285,24 @@ export default function Akvaplanists(
             </div>
             <Picture />
           </section>
-        )
-        : null}
+        )}
 
       {filter?.length > 0 ? <OneGroup members={results} /> : (
         <>
-          <PeopleSearchForm q={q} />
+          <PeopleSearchForm q={q} sortdir={searchParams.get("sortdir")} />
           <GroupedPeople group={group} grouped={grouped} />
         </>
+      )}
+
+      {person?.bios && (
+        <section class="page-header">
+          <Card>
+            <div
+              class="markdown-body"
+              dangerouslySetInnerHTML={{ __html: person.bios }}
+            />
+          </Card>
+        </section>
       )}
 
       <section>
@@ -330,17 +313,33 @@ export default function Akvaplanists(
         <section>
           <h1>{t("pubs.Research_pubs")} ({numPubs})</h1>
           <div style={{ fontSize: "1rem" }}>
-            {[...pubsByYear].map(([grpkey, grppubs]) => (
-              <div>
-                <h3>
-                  {grpkey}
-                </h3>
-                <NewsFilmStrip
-                  news={grppubs}
-                  lang={lang}
-                />
-              </div>
-            ))}
+            {[...pubsByYear].map(([grpkey, grppubs], i) =>
+              i < 0
+                ? (
+                  <section style={_section}>
+                    <AlbumHeader
+                      text={t("pubs.Latest_peer_reviewed_research_articles")}
+                      href={routes(lang).get("pubs") + "?q=journal-article"}
+                    />
+                    <HScroll maxVisibleChildren={3.5}>
+                      {grppubs.map(({ img, ...rest }) => ({ ...rest })).map(
+                        ArticleSquare,
+                      )}
+                    </HScroll>
+                  </section>
+                )
+                : (
+                  <div>
+                    <h3>
+                      {grpkey}
+                    </h3>
+                    <NewsFilmStrip
+                      news={grppubs}
+                      lang={lang}
+                    />
+                  </div>
+                )
+            )}
           </div>
         </section>
       )}

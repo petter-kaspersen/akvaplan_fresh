@@ -29,6 +29,7 @@ export const MiniNewsCard = (
             alt={caption ?? title}
             title={caption ?? title}
             loading="lazy"
+            style={{ height: "96px" }}
           />
         </a>
       )}

@@ -1,10 +1,15 @@
-import { getSlimPublication } from "akvaplan_fresh/services/dois.ts";
-import { getOpenAlexWork } from "akvaplan_fresh/services/openalex.ts";
-import { buildoiNewsMap } from "akvaplan_fresh/services/news.ts";
+import {
+  buildoiNewsMap,
+  doiImage,
+  findAkvaplanist,
+  getOpenAlexWork,
+  getSlimPublication,
+  personURL,
+} from "akvaplan_fresh/services/mod.ts";
 
-import { Card, Page } from "akvaplan_fresh/components/mod.ts";
+import { ApnSym, Card, Page } from "akvaplan_fresh/components/mod.ts";
 
-import { lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
+import { lang, lang as langSignal, t } from "akvaplan_fresh/text/mod.ts";
 
 import { SlimPublication } from "akvaplan_fresh/@interfaces/slim_publication.ts";
 
@@ -14,8 +19,10 @@ import {
   PageProps,
   RouteConfig,
 } from "$fresh/server.ts";
+import { Akvaplanist } from "../@interfaces/akvaplanist.ts";
 
-//import { Head } from "$fresh/runtime.ts";
+import { Head } from "$fresh/runtime.ts";
+import { router } from "https://deno.land/x/rutt@0.0.14/mod.ts";
 
 export const config: RouteConfig = {
   routeOverride: "{/:lang}?/doi/:prefix/:suffix0/:extra*",
@@ -30,15 +37,30 @@ const doiFromParams = (params: Record<string, string>) => {
 export const handler: Handlers<SlimPublication> = {
   async GET(request: Request, ctx: HandlerContext) {
     const { params } = ctx;
+    const lang = params.lang;
 
-    langSignal.value = params.lang;
+    langSignal.value = lang;
     const doi = doiFromParams(params);
     const slim = await getSlimPublication(doi);
 
     if (slim) {
       const news = await buildoiNewsMap() ?? {};
       const openalex = await getOpenAlexWork({ doi }) ?? {};
-      return ctx.render({ slim, news, openalex });
+      const image = await doiImage.get(doi);
+      let i = 0;
+      let current = 0;
+      for await (const person of (slim.authors ?? [])) {
+        const { given, family } = person;
+        person.name = `${given} ${family}`;
+        const { id } = await findAkvaplanist({ given, family }) ?? {};
+        if (id) {
+          person.id = id;
+          current++;
+        }
+        slim.authors[i++] = person;
+      }
+
+      return ctx.render({ slim, news, openalex, lang, image, current });
     } else {
       return ctx.renderNotFound();
     }
@@ -46,8 +68,8 @@ export const handler: Handlers<SlimPublication> = {
 };
 
 export default function DoiPublication(
-  { params, data: { slim, news, openalex } }: PageProps<
-    { slim: SlimPublication; news: unknown }
+  { params, data: { slim, news, openalex, lang, image, current } }: PageProps<
+    { slim: SlimPublication; news: unknown; image: string }
   >,
 ) {
   const {
@@ -61,10 +83,12 @@ export default function DoiPublication(
     doi,
     ...rest
   } = slim;
+  const { is_oa, oa_status, oa_url } = openalex.open_access;
   const href = `https://doi.org/${doi}`;
 
   return (
     <Page title={title}>
+      <Head></Head>
       <article>
         <Card>
           <h1
@@ -74,7 +98,12 @@ export default function DoiPublication(
             <em dangerouslySetInnerHTML={{ __html: container }} />{" "}
             (<time>{printed ?? published}</time>)
           </p>
+          <p>{oa_url && <a download href={oa_url}>pdf</a>}</p>
+          <p>
+            {image && <img src={image} alt={t("")} width="800" height="450" />}
+          </p>
         </Card>
+
         <Card>
           <p>
             {t(`news.${type}`)}
@@ -93,29 +122,50 @@ export default function DoiPublication(
           <h2 style={{ color: "var(--accent)" }}>
             {authors.length > 1 ? t("pubs.Authors") : t("pubs.Author")}
           </h2>
-          <ol>
-            {authors.map(({ family, given }, n) => (
-              <li>
-                {given} {family}
-                {/* {n === authors.length - 1 ? null : ", "} */}
-              </li>
-            ))}
-          </ol>
-        </Card>
-        <Card>
-          {openalex?.id && (
-            <p>
-              {t("pubs.View_in")}{" "}
-              <a
-                target="_blank"
-                href={openalex.id}
-              >
-                OpenAlex
-              </a>
+          {current > 0 && (
+            <p style={{ fontSize: "1rem" }}>
+              <ApnSym width="1rem" height="1rem" />{" "}
+              = Akvaplan-niva ({t("people.akvaplanist(now)")})
             </p>
           )}
+          <dl style={{ fontSize: "1rem" }}>
+            {authors.map(({ name, given, family, id }, n) => (
+              <>
+                <dt>
+                  {id
+                    ? (
+                      <span>
+                        <a href={personURL({ id, given, family, lang })}>
+                          {name}
+                        </a>{" "}
+                        <ApnSym width="1rem" height="1rem" />
+                      </span>
+                    )
+                    : <span>{name}</span>}
+                </dt>
+
+                {openalex.authorships.at(n)?.institutions.map((
+                  { display_name, id, ror, country_code, type, ...r },
+                ) => <dd>{display_name}</dd>)}
+              </>
+            ))}
+          </dl>
         </Card>
       </article>
+
+      {
+        /* {openalex?.id && (
+        <p>
+          {t("pubs.View_in")}{" "}
+          <a
+            target="_blank"
+            href={openalex.id}
+          >
+            OpenAlex
+          </a>
+        </p>
+      )} */
+      }
     </Page>
   );
 }
