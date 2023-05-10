@@ -6,6 +6,8 @@ export const siteNav: SignalLike<Array> = computed(() =>
 );
 
 const En = new Map([
+  ["about", "/en/about"],
+  ["akvaplanists", "/en/people"],
   ["search", "/en/_"],
   ["news", "/en/news"],
   ["service", "/en/services"],
@@ -15,23 +17,23 @@ const En = new Map([
   ["pubs", "/en/publications"],
   ["dcat", "/en/dcat"],
   ["documents", "/en/documents"],
-  ["akvaplanists", "/en/people"],
+  ["invoicing", "/no/faktura"],
   ["people", "/en/people"],
-  ["about", "/en/about"],
 ]);
 const No = new Map([
-  ["search", "/no/_"],
+  ["about", "/no/om"],
+  ["dcat", "/no/dcat"],
   ["news", "/no/nyheter"],
+  ["research", "/no/forskning"],
   ["service", "/no/tjenester"],
   ["services", "/no/tjenester"],
-  ["research", "/no/forskning"],
   ["settings", "/no/innstillinger"],
+  ["search", "/no/_"],
   ["pubs", "/no/publikasjoner"],
-  ["dcat", "/no/dcat"],
+  ["invoicing", "/no/faktura"],
   ["documents", "/no/dokumenter"],
   ["akvaplanists", "/no/folk"],
   ["people", "/no/folk"],
-  ["about", "/no/om"],
 ]);
 
 export const routes = (lang: string | StringSignal) =>

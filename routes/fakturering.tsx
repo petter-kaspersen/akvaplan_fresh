@@ -19,7 +19,8 @@ interface NullProps {
 }
 
 export const config: RouteConfig = {
-  routeOverride: "{/:lang(en|no)}?/:page(fakturering|invoicing)",
+  routeOverride:
+    "{/:lang(en|no)}?/:page(fakturering|faktura|invoicing|invoice)",
 };
 
 const Fakturering = () => (

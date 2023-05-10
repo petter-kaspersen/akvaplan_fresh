@@ -111,25 +111,23 @@ export default (
             </h1>
             <PeopleCard person={admDir} lang={lang} />
 
-            <Card>
-              <menu>
-                <li>
-                  <a href={akvaplan.links.leaders}>
-                    {t("people.Leaders")}
-                  </a>
-                </li>
-                <li>
-                  <a href={akvaplan.links.sectionleaders}>
-                    {t("people.Section_leaders")}
-                  </a>
-                </li>
-                <li>
-                  <a href={akvaplan.links.board} target="_blank">
-                    {t("about.Board")}
-                  </a>
-                </li>
-              </menu>
-            </Card>
+            <menu>
+              <li>
+                <a href={akvaplan.links.leaders}>
+                  {t("people.Leaders")}
+                </a>
+              </li>
+              <li>
+                <a href={akvaplan.links.sectionleaders}>
+                  {t("people.Section_leaders")}
+                </a>
+              </li>
+              <li>
+                <a href={akvaplan.links.board} target="_blank">
+                  {t("about.Board")}
+                </a>
+              </li>
+            </menu>
           </section>
 
           <section style={_section}>
@@ -320,9 +318,11 @@ export default (
                   </a>)
                 </dd>
 
-                <dt>Faktura</dt>
+                <dt>{t("about.Invoice")}</dt>
                 <dd>
-                  Se <a href={routes(lang).get("invoicing")}></a>
+                  <a href={routes(lang).get("invoicing")}>
+                    {t("about.Invoicing")}
+                  </a>
                 </dd>
 
                 <dt>
@@ -337,7 +337,7 @@ export default (
                 </dd>
 
                 <dt>
-                  Epost
+                  E-post
                 </dt>
                 <dd>
                   <a
