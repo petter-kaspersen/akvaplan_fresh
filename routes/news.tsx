@@ -68,25 +68,20 @@ export default function News(
 ) {
   return (
     <Page title={title} base={base}>
+      <h1>
+        <a href="." style={{ color: "var(--text2)" }}>{title}</a>
+      </h1>
       {[...news].map(([grpkey, grpmembers], i) => (
         <section style={_section}>
-          {i === 0
-            ? (
-              <h1>
-                <a href="." style={{ color: "var(--text2)" }}>{title}</a>
-              </h1>
-            )
-            : (
-              <h1>
-                <span href={`${"month"}/${grpkey.toLowerCase()}`}>
-                  {monthname(new Date(grpmembers[0].published), lang.value)}
-                </span>
-              </h1>
-            )}
+          <h2>
+            <span href={`${"month"}/${grpkey.toLowerCase()}`}>
+              {monthname(new Date(grpmembers[0].published), lang.value)}
+            </span>
+          </h2>
 
           <HScroll
             scrollerId="news-scroll"
-            maxVisibleChildren={grpmembers.length > 5 ? 6.5 : 5}
+            maxVisibleChildren={grpmembers.length > 5 ? 5.5 : 4.5}
           >
             {grpmembers.map(ArticleSquare)}
           </HScroll>

@@ -7,7 +7,8 @@ import {
 
 import { buildContainsFilter } from "akvaplan_fresh/search/filter.ts";
 import { groupIntoMap } from "akvaplan_fresh/grouping/mod.ts";
-
+import { normalize as n } from "akvaplan_fresh/text/mod.ts";
+import { familyAlias, givenAliasMap } from "./person.ts";
 export const newsOnPerson = async (
   { person, lang, limit, mapper = newsFromMynewsdesk({ lang }) },
 ) => {
@@ -27,11 +28,57 @@ export const newsOnPerson = async (
   return _filteredNews.map(mapper);
 };
 
+export const extractInitials = (given: string) =>
+  given?.split(/[\s\.]/).filter((s: string) => s?.length > 0)
+    .map((s: string) => [...s].at(0));
+
+// For a  `person`, check if at least one of authors (named `family` / `given`) matches,
+// ie. are identical or share family name + initials
+export const personInAuthors = (person) => ({ family, given }) => {
+  const fam = family === person.family ||
+    n(family) === n(person.family) ||
+    n(familyAlias(person.id)) === n(family);
+
+  const authorInitials = extractInitials(given);
+
+  if (fam === false || !authorInitials) {
+    return fam;
+  }
+
+  const personInitials = [
+    extractInitials(person?.given ?? ""),
+    ...givenAliasMap.get(person.id)?.map(extractInitials) ?? [],
+  ];
+  const initials = personInitials.map((ini) => ini.join(""));
+
+  const initialsAreMatching = initials.includes(authorInitials.join(""));
+  // if (!initialsAreMatching) {
+  //   console.warn(
+  //     JSON.stringify({
+  //       person: { initials, family: person.family, given: person.given },
+  //       candidate: {
+  //         rejected: !initialsAreMatching,
+  //         family,
+  //         given,
+  //       },
+  //     }),
+  //   );
+  // }
+  return fam &&
+    (given === person.given || n(given) === n(person.given) ||
+      initialsAreMatching);
+};
 export const pubsFromPerson = async (
   { person, lang, limit, mapper = newsFromPubs({ lang }) },
 ) => {
-  const { data } = await searchPubs({ q: person.family, limit: -1 });
-  return data.map(mapper);
+  const { data } = await searchPubs({ q: person.family, limit: -1 }) ?? {};
+
+  return data
+    .filter(({ authors }) =>
+      authors
+        .some(personInAuthors(person))
+    )
+    .map(mapper);
 };
 
 export const pubsFromPersonGroupedByYear = async (

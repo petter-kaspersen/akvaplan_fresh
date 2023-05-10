@@ -62,6 +62,14 @@ export const handler: Handlers = {
       maxNumNews,
     );
 
+    const researchArticles = news.filter(({ type }) =>
+      ["journal-article"].includes(type)
+    )
+      .slice(
+        0,
+        16, //maxNumNews,
+      );
+
     return ctx.render({
       news,
       services,
@@ -69,6 +77,7 @@ export const handler: Handlers = {
       lang,
       articles,
       articlesNotInSiteLang,
+      researchArticles,
     });
   },
 };
@@ -77,7 +86,15 @@ export const handler: Handlers = {
 // );
 export default function Home(
   {
-    data: { news, topics, lang, services, articles, articlesNotInSiteLang },
+    data: {
+      news,
+      topics,
+      lang,
+      services,
+      articles,
+      articlesNotInSiteLang,
+      researchArticles,
+    },
   },
 ) {
   const maxVisNews = 5.5;
@@ -115,34 +132,37 @@ export default function Home(
           {articlesNotInSiteLang.map(ArticleSquare)}
         </HScroll>
       </section>
+
       {
         /* <section style={_section}>
         <AlbumHeader
-          text={t("home.album.press_releases")}
-          href={routes(lang).get("news")}
+          text={t("pubs.Latest_peer_reviewed_research_articles")}
+          href={routes(lang).get("pubs") + "?q=journal-article"}
         />
-        <HScroll maxVisibleChildren={5}>
-          {pr.map(ArticleSquare)}
+        <HScroll maxVisibleChildren={maxVisNews}>
+          {researchArticles.map(ArticleSquare)}
         </HScroll>
       </section> */
       }
+
       <section style={_section}>
         <AlbumHeader
           text={t("home.album.services")}
           href={routes(lang).get("services")}
         />
         <HScroll
-          maxVisibleChildren={Math.min(services.length, 6.5)}
+          maxVisibleChildren={Math.min(services?.length, 6.5)}
         >
           {services.map(ArticleSquare)}
         </HScroll>
       </section>
+
       <section style={_section}>
         <AlbumHeader
           text={t("home.album.research")}
           href={routes(lang).get("research")}
         />
-        <HScroll maxVisibleChildren={Math.min(topics?.length, 7)}>
+        <HScroll maxVisibleChildren={Math.min(topics?.length, 6.5)}>
           {topics?.map(ArticleSquare)}
         </HScroll>
       </section>

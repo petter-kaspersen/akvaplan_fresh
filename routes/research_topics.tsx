@@ -33,7 +33,7 @@ import {
 import { asset, Head } from "$fresh/runtime.ts";
 export const config: RouteConfig = {
   routeOverride:
-    "/:lang(en|no){/:page(research|forskning)}?/:groupname(topic|topics|tema){/:topic}?",
+    "/:lang(en|no)/:page(research|forskning){/:groupname(topic|topics|tema)}?/:topic",
 };
 
 export const handler: Handlers = {

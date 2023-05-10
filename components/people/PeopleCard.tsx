@@ -1,9 +1,9 @@
 import { akvaplanistMap } from "akvaplan_fresh/services/akvaplanist.ts";
-import { personURL } from "akvaplan_fresh/services/nav.ts";
+import { peopleURL, personURL } from "akvaplan_fresh/services/nav.ts";
 
 import { ApnSym, Card, Icon } from "akvaplan_fresh/components/mod.ts";
 
-import { t } from "akvaplan_fresh/text/mod.ts";
+import { lang as langSignal, languages, t } from "akvaplan_fresh/text/mod.ts";
 
 import { type Akvaplanist } from "akvaplan_fresh/@interfaces/mod.ts";
 
@@ -15,12 +15,11 @@ interface PeopleProps {
   lang?: string;
 }
 const people = await akvaplanistMap();
-// TODO: Handle lang variants (for position, unit, etc.)
 
 export function PeopleCard(
   {
     person,
-    lang,
+    lang = langSignal.value,
     id,
   }: PeopleProps,
 ) {
@@ -28,8 +27,18 @@ export function PeopleCard(
     person = { id, ...people.get(id) };
   }
 
-  const { tel, email, name, given, family, position, unit, workplace } =
-    person ?? {};
+  const {
+    tel,
+    email,
+    name,
+    given,
+    family,
+    position,
+    unit,
+    workplace,
+    management,
+    responsibility,
+  } = person ?? {};
 
   return (
     <Card customClass="people-card">
@@ -42,7 +51,7 @@ export function PeopleCard(
         {name?.length > 1
           ? <span>{name}</span>
           : (
-            <a href={personURL({ id, given, family })}>
+            <a href={personURL({ id, given, family, lang })}>
               <span style={{ color: "var(--text1)" }}>{given}</span>
               &nbsp;
               <span style={{ color: "var(--text2)" }}>{family}</span>
@@ -54,11 +63,17 @@ export function PeopleCard(
         {position?.[lang ?? "no"] ?? ""}
       </span>
 
+      {responsibility && (
+        <div class="people-workplace">
+          {responsibility?.[lang ?? "no"] ?? ""}
+        </div>
+      )}
+
       <div class="people-workplace">
-        {unit && (
+        {unit && unit !== "LEDELS" && (
           <a
             style={{ color: "var(--text2)" }}
-            href={`/no/folk/unit/${unit}`}
+            href={`${peopleURL({ lang })}/unit/${unit}`}
           >
             {t(`unit.${unit}`)}
           </a>
@@ -67,12 +82,21 @@ export function PeopleCard(
       {workplace?.length > 0 && (
         <div class="people-workplace">
           <a
-            href={`/no/folk/workplace/${workplace}`}
+            href={`${peopleURL({ lang })}/workplace/${workplace}`}
             style={{ color: "var(--text2)" }}
           >
             {workplace}
           </a>
         </div>
+      )}
+
+      {management === true && (
+        <a
+          class="people-workplace"
+          href={`${peopleURL({ lang })}/management`}
+        >
+          {t("people.Management")}
+        </a>
       )}
 
       <div class="">

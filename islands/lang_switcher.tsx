@@ -29,7 +29,7 @@ export default function LangSwitcherBtns(
   const handleLangClick = (e: Event) => {
     const { ownerDocument: { documentElement }, dataset: { lang } } = e.target;
     langSignal.value = lang;
-    console.log({ lang });
+
     if (lang) {
       setLang(lang, documentElement);
     } else {

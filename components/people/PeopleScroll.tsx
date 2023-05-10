@@ -15,11 +15,30 @@ export function PeopleScroll({ people }: Props) {
   );
 }
 
+const inline = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(440px, 1fr))",
+  gridGap: "1rem",
+};
+export const OneGroup = (
+  { members },
+) => (
+  <ul style={inline}>
+    {members.map((person: Akvaplanist) => (
+      <li style={inline}>
+        <PeopleCard person={person} id={person.id} key={person.id} />
+      </li>
+    ))}
+  </ul>
+);
+
 export const GroupedPeople = (
   { grouped, group },
 ) => (
   <div>
-    {[...grouped].map(([grpkey, grpmembers]) => (
+    {[...grouped].filter(([grpkey]) => undefined !== grpkey).map((
+      [grpkey, grpmembers],
+    ) => (
       <div>
         <h2>
           <a href={`${group}/${grpkey.toLowerCase()}`}>

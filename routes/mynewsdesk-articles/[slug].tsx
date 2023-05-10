@@ -1,10 +1,6 @@
-// Redirect legacy articles under /mynewsdesk-articles/:slug
-// Example URLs:
-// * /mynewsdesk-articles/gronn-plattform-har-finansiert-prosjektet-havbunnsmineraler-akselererer-energiomstillingen/
-
+// Redirect legacy URLs under /mynewsdesk-articles/:slug
 import { fetchItemBySlug } from "../../services/mynewsdesk.ts";
-import { Page } from "../../components/page.tsx";
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { Handlers } from "$fresh/server.ts";
 
 export const handler: Handlers = {
   async GET(req, ctx) {

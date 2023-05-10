@@ -23,6 +23,7 @@ let _siteLang = null;
 export const getSiteLang = () => _siteLang ?? getLangAttr();
 
 export const setSiteLang = (code: string) => {
+  // does not set signal, but lang signal's first value is read from _siteLang property…
   _siteLang = code;
 };
 
@@ -59,7 +60,7 @@ export const getLangFromURL = (url: URL | string): string | null => {
 export const getLangAttr = (el = getRoot()): string | null =>
   el?.getAttribute("lang");
 
-export const lang = signal<string | null>(getSiteLang());
+export const lang = signal<string>(getSiteLang());
 
 export const base = computed(() => "/" + lang + "/");
 

@@ -6,32 +6,34 @@ export const siteNav: SignalLike<Array> = computed(() =>
 );
 
 const En = new Map([
+  ["about", "/en/about"],
+  ["akvaplanists", "/en/people"],
   ["search", "/en/_"],
   ["news", "/en/news"],
   ["service", "/en/services"],
   ["services", "/en/services"],
   ["research", "/en/research"],
   ["settings", "/en/settings"],
-  ["pubs", "/en/pubs"],
+  ["pubs", "/en/publications"],
   ["dcat", "/en/dcat"],
   ["documents", "/en/documents"],
-  ["akvaplanists", "/en/people"],
+  ["invoicing", "/no/faktura"],
   ["people", "/en/people"],
-  ["about", "/en/about-us"],
 ]);
 const No = new Map([
-  ["search", "/no/_"],
+  ["about", "/no/om"],
+  ["dcat", "/no/dcat"],
   ["news", "/no/nyheter"],
+  ["research", "/no/forskning"],
   ["service", "/no/tjenester"],
   ["services", "/no/tjenester"],
-  ["research", "/no/forskning"],
   ["settings", "/no/innstillinger"],
-  ["pubs", "/no/pubs"],
-  ["dcat", "/no/dcat"],
+  ["search", "/no/_"],
+  ["pubs", "/no/publikasjoner"],
+  ["invoicing", "/no/faktura"],
   ["documents", "/no/dokumenter"],
   ["akvaplanists", "/no/folk"],
   ["people", "/no/folk"],
-  ["about", "/no/om-oss"],
 ]);
 
 export const routes = (lang: string | StringSignal) =>
@@ -60,6 +62,7 @@ export const buildMobileNav = (lang: string | StringSignal) =>
 //   id
 //     ? `${routes(lang).get("akvaplanists")}/id/${id}/${family}/${given}`
 //     : `${routes(lang).get("akvaplanists")}/name/${family}/${given}`;
+export const peopleURL = ({ lang }) => `${routes(lang).get("akvaplanists")}`;
 
 export const personURL = ({ id, given, family, email, lang }) =>
   id

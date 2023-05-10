@@ -123,6 +123,10 @@ export default function NewsArticle(
         >
         </section>
 
+        <p>
+          {published}
+        </p>
+
         {(links && links?.length > 0) &&
           (
             <section class="article-content">
@@ -139,7 +143,6 @@ export default function NewsArticle(
             <PersonCard id={contact} person={contact_person} />
           </section>
         )}
-        <p>{published}</p>
       </Article>
     </Page>
   );
