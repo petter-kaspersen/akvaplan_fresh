@@ -130,7 +130,7 @@ export const handler: Handlers = {
 
     const title = t("people.People");
 
-    const base = `/${lang}/${page}/management`;
+    const base = `/${lang}/${page}/${group}`;
 
     const person = ("id" === group && results.length === 1)
       ? results.at(0)
