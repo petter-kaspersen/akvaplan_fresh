@@ -11,10 +11,13 @@ import {
 } from "akvaplan_fresh/components/mod.ts";
 
 import { lang, t } from "akvaplan_fresh/text/mod.ts";
-import { offices, routes } from "akvaplan_fresh/services/mod.ts";
+import {
+  findAkvaplanist,
+  offices,
+  routes,
+} from "akvaplan_fresh/services/mod.ts";
 
 import {
-  admDir,
   akvaplan as apn,
   boardURL,
 } from "akvaplan_fresh/services/akvaplanist.ts";
@@ -40,9 +43,11 @@ export const config: RouteConfig = {
 };
 
 export const handler: Handlers = {
-  GET(req: Request, ctx: HandlerContext) {
+  async GET(req: Request, ctx: HandlerContext) {
     const { params } = ctx;
     lang.value = params.lang;
+
+    const admDir = await findAkvaplanist({ id: "mkr" });
 
     const akvaplan = {
       ...apn,
@@ -51,6 +56,7 @@ export const handler: Handlers = {
         leaders: routes(lang.value).get("people") + "/unit/ledels",
         sectionleaders: routes(lang.value).get("people") + "/?q=seksjonsleder",
       },
+      admDir,
     };
 
     const title = t("about.About_us");
@@ -109,7 +115,7 @@ export default (
             <h1 style={_header}>
               {t("people.Management")}
             </h1>
-            <PeopleCard person={admDir} lang={lang} />
+            <PeopleCard person={akvaplan.admDir} lang={lang} />
 
             <menu>
               <li>

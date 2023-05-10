@@ -151,6 +151,7 @@ export const boardURL = (
 
 //@todo Get director from service
 export const admDir = {
+  "id": "mkr",
   "given": "Merete",
   "family": "Kristiansen",
   "position": {
